@@ -148,11 +148,11 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="inline-block px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-[10px] md:text-xs font-bold tracking-[0.2em] mb-6 md:mb-8 uppercase">
-            Future of Digital Experiences
+          FUTURE-READY WEB EXPERIENCES
           </span>
           <h1 className="text-5xl sm:text-7xl lg:text-9xl font-space font-extrabold tracking-tighter leading-[0.9] text-white mb-6 md:mb-8">
-            CREATIVE <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-600">UNIVERSE</span>
+            Building Interactive <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-600">Web Experience</span>
           </h1>
         </motion.div>
 
@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 1, delay: 0.8 }}
           className="max-w-xl mx-auto text-zinc-400 text-base md:text-lg lg:text-xl font-light mb-10 md:mb-12 px-4"
         >
-          We build high-end interactive platforms that blend cutting-edge technology with cinematic storytelling.
+        Im Infas.mk passionate web developer from India. I build high-end interactive platforms that blend cutting-edge technology with cinematic storytelling.
         </motion.p>
 
         <motion.div
