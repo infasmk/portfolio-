@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
           className="text-xl md:text-2xl font-bold font-space tracking-tighter"
         >
           <a href="#" className="flex items-center">
-            <span className="text-white">NOVA</span>
+            <span className="text-white">Portfolio</span>
             <span className="text-blue-500">.</span>
           </a>
         </motion.div>
