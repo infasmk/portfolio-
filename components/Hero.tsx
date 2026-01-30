@@ -1,4 +1,3 @@
-
 import React, { Suspense, useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, Sphere, MeshDistortMaterial, Environment, ContactShadows, Points, PointMaterial, TorusKnot, MeshWobbleMaterial } from '@react-three/drei';
