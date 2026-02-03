@@ -35,6 +35,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
       
       {/* Modal Container */}
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -96,9 +97,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <a
-                href={project.link || "#"}
+                href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => console.log("Link clicked:", project.link)}
                 className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-blue-600 hover:text-white transition-all active:scale-95 shadow-lg shadow-white/10"
               >
                 VISIT LIVE SITE <ExternalLink size={18} />
