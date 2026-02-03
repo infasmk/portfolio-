@@ -18,7 +18,8 @@ export const PROJECTS: Project[] = [
     category: "E-Commerce",
     image: "https://picsum.photos/seed/nebula/1200/800",
     tech: ["Next.js", "Stripe", "Tailwind"],
-    description: "High-end fashion retail experience with immersive 3D product viewing."
+    description: "High-end fashion retail experience with immersive 3D product viewing.",
+    link:"https://aevo-22.vercel.app/"
   },
   {
     id: 3,
@@ -26,7 +27,8 @@ export const PROJECTS: Project[] = [
     category: "Blockchain",
     image: "https://picsum.photos/seed/nova/1200/800",
     tech: ["Solidity", "React", "Ether.js"],
-    description: "Decentralized finance platform for automated yield optimization."
+    description: "Decentralized finance platform for automated yield optimization.",
+    link:"https://aevo-22.vercel.app/"
   },
   {
     id: 4,
@@ -34,7 +36,8 @@ export const PROJECTS: Project[] = [
     category: "Application",
     image: "https://picsum.photos/seed/zenith/1200/800",
     tech: ["React Native", "Firebase", "Framer"],
-    description: "Wellness and meditation app focused on micro-interactions."
+    description: "Wellness and meditation app focused on micro-interactions.",
+    link:"https://aevo-22.vercel.app/"
   }
 ];
 
