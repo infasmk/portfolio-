@@ -64,12 +64,12 @@ const About: React.FC = () => {
           >
             <motion.div variants={itemVariants}>
               <h2 className="text-blue-500 font-space font-bold tracking-[0.2em] uppercase text-xs mb-4">
-                // OUR STORY
+                // About Me
               </h2>
               <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold font-space text-white leading-[1.1] tracking-tighter">
                 Crafting digital <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-white italic">masterpieces</span> <br />
-                since 2018.
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-white italic">Web Interfaces</span> <br />
+                masterpieces.
               </h3>
             </motion.div>
 
@@ -77,7 +77,8 @@ const About: React.FC = () => {
               variants={itemVariants}
               className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-lg"
             >
-              We are a team of multidisciplinary creatives, developers, and dreamers based in the digital ether. Our work bridges the gap between pure technology and human emotion, creating lasting impressions through immersive web environments.
+            heyy.. I am <span className="font-semibold text-zinc-200">Infas.mk</span>From NIT Raipur. I design and develop modern web interfaces that combine clean code, smooth animations, and thoughtful user experience. My focus is on creating responsive, high-performance digital products that feel intuitive, immersive, and purposeful.
+              create interactive web experiences using Three.js and modern front-end technologies, blending real-time 3D graphics with clean UI and performance-focused code.
             </motion.p>
 
             <motion.div
@@ -85,12 +86,12 @@ const About: React.FC = () => {
               className="grid grid-cols-2 gap-4 md:gap-8 pt-4"
             >
               <div className="group bg-white/5 p-4 md:p-6 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all duration-500">
-                <h4 className="text-2xl md:text-3xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">120+</h4>
-                <p className="text-zinc-500 text-[10px] md:text-xs uppercase tracking-wider font-bold">Projects Launched</p>
+                <h4 className="text-2xl md:text-3xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">157+</h4>
+                <p className="text-zinc-500 text-[10px] md:text-xs uppercase tracking-wider font-bold">Projects </p>
               </div>
               <div className="group bg-white/5 p-4 md:p-6 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all duration-500">
-                <h4 className="text-2xl md:text-3xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">15</h4>
-                <p className="text-zinc-500 text-[10px] md:text-xs uppercase tracking-wider font-bold">Industry Awards</p>
+                <h4 className="text-2xl md:text-3xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">25+</h4>
+                <p className="text-zinc-500 text-[10px] md:text-xs uppercase tracking-wider font-bold">Clints</p>
               </div>
             </motion.div>
 
@@ -99,7 +100,7 @@ const About: React.FC = () => {
               className="pt-6"
             >
               <button className="group relative text-white font-bold text-sm md:text-base inline-flex items-center gap-2">
-                <span className="relative z-10">LEARN MORE ABOUT US</span>
+                <span className="relative z-10">Thank you</span>
                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-blue-500 transform origin-left scale-x-100 group-hover:scale-x-110 transition-transform duration-500" />
                 <div className="w-8 h-[1px] bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </button>
