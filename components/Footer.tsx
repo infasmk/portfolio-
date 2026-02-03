@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold font-space tracking-tighter text-white mb-2">
-              NOVA<span className="text-blue-500">.</span>
+              Portfolio<span className="text-blue-500">.</span>
             </h2>
             <p className="text-zinc-600 text-sm">
               &copy; {new Date().getFullYear()} Nova Creative Studio. All rights reserved.
