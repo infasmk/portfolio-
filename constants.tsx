@@ -9,7 +9,8 @@ export const PROJECTS: Project[] = [
     category: "Web Platform",
     image: "https://picsum.photos/seed/aether/1200/800",
     tech: ["React", "Three.js", "Node.js"],
-    description: "A futuristic data visualization dashboard with real-time analytics."
+    description: "A futuristic data visualization dashboard with real-time analytics.",
+    link:"https://aevo-22.vercel.app/"
   },
   {
     id: 2,
