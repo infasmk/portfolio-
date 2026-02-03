@@ -180,7 +180,7 @@ const Hero: React.FC = () => {
           >
             EXPLORE PROJECTS
           </button>
-        
+        </br>
         </motion.div>
       </div>
      
