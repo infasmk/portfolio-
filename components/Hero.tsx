@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 1, delay: 0.8 }}
           className="max-w-xl mx-auto text-zinc-400 text-base md:text-lg lg:text-xl font-light mb-10 md:mb-12 px-4"
         >
-        Im <span className="font-semibold text-zinc-200">Infas.mk</span> passionate web developer from India. I build high-end interactive platforms that blend cutting-edge technology with cinematic storytelling.
+        I am <span className="font-semibold text-zinc-200">Infas.mk</span> From NIT Raipur. I design and develop modern web interfaces that combine clean code, smooth animations, and thoughtful user experience. My focus is on creating responsive, high-performance digital products that feel intuitive, immersive, and purposeful.
         </motion.p>
 
         <motion.div
@@ -180,17 +180,10 @@ const Hero: React.FC = () => {
           >
             EXPLORE PROJECTS
           </button>
-          <button 
-            onClick={() => {
-              const el = document.getElementById('about');
-              el?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 text-zinc-300 rounded-full font-bold hover:bg-white/10 transition-all"
-          >
-            OUR PHILOSOPHY
-          </button>
+        
         </motion.div>
       </div>
+     
 
       <motion.div
         animate={{ y: [0, 8, 0] }}
@@ -200,6 +193,8 @@ const Hero: React.FC = () => {
         <div className="w-1 h-1.5 md:h-2 bg-blue-500 rounded-full" />
       </motion.div>
     </section>
+     <br>
+      </br>
   );
 };
 
