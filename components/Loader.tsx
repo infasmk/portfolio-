@@ -97,8 +97,8 @@ const Loader: React.FC = () => {
           <p>Aesthetics: 100% // Performance: 100%</p>
         </div>
         <div className="text-right opacity-40">
-          <p>EST 2018</p>
-          <p>NOVA STUDIO</p>
+          <p>TEAM AWT</p>
+          <p>Infas.mk</p>
         </div>
       </div>
     </motion.div>
