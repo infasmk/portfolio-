@@ -96,7 +96,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelect }) =>
           </button>
           
           <div className="text-xl font-bold font-space tracking-tighter">
-            NOVA<span className="text-blue-500">.</span>
+            Portfolio<span className="text-blue-500">.</span>
           </div>
           
           <div className="hidden md:block">
