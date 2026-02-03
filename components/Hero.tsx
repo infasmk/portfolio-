@@ -192,9 +192,10 @@ const Hero: React.FC = () => {
       >
         <div className="w-1 h-1.5 md:h-2 bg-blue-500 rounded-full" />
       </motion.div>
-    </section>
-     <br>
+        <br>
       </br>
+    </section>
+   
   );
 };
 
