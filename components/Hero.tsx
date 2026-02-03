@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 1, delay: 0.8 }}
           className="max-w-xl mx-auto text-zinc-400 text-base md:text-lg lg:text-xl font-light mb-10 md:mb-12 px-4"
         >
-        Im Infas.mk passionate web developer from India. I build high-end interactive platforms that blend cutting-edge technology with cinematic storytelling.
+        Im <span className="font-semibold text-zinc-200">Infas.mk</span> passionate web developer from India. I build high-end interactive platforms that blend cutting-edge technology with cinematic storytelling.
         </motion.p>
 
         <motion.div
