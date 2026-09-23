@@ -126,7 +126,7 @@ export const Skills: React.FC = () => {
     <section
       id="stack"
       ref={containerRef}
-      className="relative h-[360vh] bg-[#050505]"
+      className="relative h-[360vh] bg-transparent"
     >
       {/* Sticky viewport pinned while user scrolls */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-10 md:py-14">

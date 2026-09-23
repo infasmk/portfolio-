@@ -34,29 +34,29 @@ export const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({ isAllProje
         className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-300"
       >
         <GhostFibers
-          lineColor="#0284c7"
-          glowColor="#1e3a8a"
-          speed={0.2}
-          scale={1.8}
+          lineColor="#22d3ee"
+          glowColor="#3b82f6"
+          speed={0.25}
+          scale={2.2}
           rotation={0}
           rotationSpeed={0.2}
-          layers={4}
-          waveAmplitude={0.015}
+          layers={5}
+          waveAmplitude={0.02}
           waveFrequency={3}
-          waveSpeed={0.15}
+          waveSpeed={0.16}
           layerSpeed={0.08}
-          twist={0.1}
+          twist={0.12}
           twistFrequency={5}
           twistSpeed={1.2}
           lineFrequency={5}
           lineSpacing={2}
           lineSharpness={16}
-          glowFalloff={10}
-          glowIntensity={1.8}
-          brightness={2.2}
-          blueBoost={1.25}
-          vignette={0.8}
-          grain={0.05}
+          glowFalloff={9}
+          glowIntensity={2.4}
+          brightness={2.6}
+          blueBoost={1.35}
+          vignette={0.65}
+          grain={0.04}
         />
       </motion.div>
 

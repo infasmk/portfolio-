@@ -175,7 +175,7 @@ const SquadMemberCard: React.FC<SquadMemberCardProps> = ({ member, index }) => {
 
 export const Team: React.FC = () => {
   return (
-    <section id="team" className="py-24 md:py-36 bg-[#050505] relative overflow-hidden">
+    <section id="team" className="py-24 md:py-36 bg-transparent relative overflow-hidden">
       {/* Background Lighting */}
       <div className="absolute top-1/3 -right-20 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[200px] pointer-events-none" />
 
