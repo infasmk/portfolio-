@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { motion as motionBase } from 'framer-motion';
 import { X, ExternalLink, ArrowLeft, Github, Calendar, Layers, Trophy, CheckCircle2 } from 'lucide-react';
 import { Project } from '../types';
-import { soundManager } from './SoundManager';
 
 const motion = motionBase as any;
 
@@ -30,16 +29,13 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.35 }}
       className="fixed inset-0 z-[10002] overflow-y-auto bg-[#050505] text-white selection:bg-cyan-500/30"
     >
       {/* Fixed Sticky Header for Detail View */}
       <div className="sticky top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-5 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.08]">
         <button
-          onClick={() => {
-            soundManager.playClick();
-            onClose();
-          }}
+          onClick={onClose}
           className="group flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
         >
           <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
@@ -53,10 +49,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
         </span>
 
         <button
-          onClick={() => {
-            soundManager.playClick();
-            onClose();
-          }}
+          onClick={onClose}
           className="p-2.5 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
           aria-label="Close Case Study"
         >
@@ -98,7 +91,6 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
                 href={project.link}
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => soundManager.playWarp()}
                 className="px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] transition-all"
               >
                 <span>OPEN LIVE EXPERIENCE</span>
@@ -110,7 +102,6 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
                 href={project.github}
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => soundManager.playClick()}
                 className="px-6 py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:border-white/30 transition-all"
               >
                 <Github size={15} />
@@ -135,7 +126,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </motion.div>
 
-        {/* Structured Case Study Content (Requirement 12) */}
+        {/* Structured Case Study Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Main Case Study Flow */}
           <div className="lg:col-span-8 space-y-12">
@@ -224,10 +215,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
             </div>
 
             <button
-              onClick={() => {
-                soundManager.playClick();
-                onClose();
-              }}
+              onClick={onClose}
               className="w-full py-4 rounded-xl border border-white/10 text-zinc-400 hover:text-white hover:border-white/30 font-space font-bold text-xs uppercase tracking-wider transition-all"
             >
               CLOSE CASE STUDY [ESC]

@@ -1,6 +1,6 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, Environment, Points, PointMaterial } from '@react-three/drei';
+import { Float, Points, PointMaterial, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Ambient Starfield / Particle Dust
@@ -20,8 +20,8 @@ const QuantumParticles = () => {
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (pointsRef.current) {
-      pointsRef.current.rotation.y = t * 0.03;
-      pointsRef.current.rotation.x = t * 0.015;
+      pointsRef.current.rotation.y = t * 0.025;
+      pointsRef.current.rotation.x = t * 0.012;
     }
   });
 
@@ -33,7 +33,7 @@ const QuantumParticles = () => {
         size={0.03}
         sizeAttenuation
         depthWrite={false}
-        opacity={0.45}
+        opacity={0.4}
       />
     </Points>
   );
@@ -44,12 +44,10 @@ const WebBitsMonogram = ({ wireframe = false }: { wireframe?: boolean }) => {
   const groupRef = useRef<THREE.Group>(null!);
   const outerRingRef = useRef<THREE.Mesh>(null!);
   const innerRingRef = useRef<THREE.Mesh>(null!);
-  const { mouse } = useThree();
 
-  // Create custom extruded lightning bolt geometry
+  // Create extruded lightning bolt geometry
   const boltGeometry = useMemo(() => {
     const shape = new THREE.Shape();
-    // Lightning bolt coordinates forming a sharp W / electric bolt
     shape.moveTo(-0.2, 1.4);
     shape.lineTo(0.5, 0.2);
     shape.lineTo(0.05, 0.2);
@@ -110,28 +108,18 @@ const WebBitsMonogram = ({ wireframe = false }: { wireframe?: boolean }) => {
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    if (groupRef.current) {
-      // Natural floating rotation + mouse tracking lerp
-      const targetRotX = mouse.y * 0.4 + Math.sin(t * 0.8) * 0.08;
-      const targetRotY = mouse.x * 0.5 + t * 0.25;
-
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotX, 0.06);
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.06);
-      groupRef.current.position.y = Math.sin(t * 1.5) * 0.12;
-    }
-
     if (outerRingRef.current) {
-      outerRingRef.current.rotation.x = t * 0.4;
-      outerRingRef.current.rotation.z = t * 0.2;
+      outerRingRef.current.rotation.x = t * 0.3;
+      outerRingRef.current.rotation.z = t * 0.15;
     }
     if (innerRingRef.current) {
-      innerRingRef.current.rotation.y = -t * 0.5;
-      innerRingRef.current.rotation.x = -t * 0.3;
+      innerRingRef.current.rotation.y = -t * 0.4;
+      innerRingRef.current.rotation.x = -t * 0.2;
     }
   });
 
   return (
-    <group ref={groupRef} scale={1.15}>
+    <group ref={groupRef} scale={1.2}>
       {/* Central Lightning Core */}
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.3}>
         <group position={[-0.05, 0, 0]}>
@@ -205,7 +193,7 @@ interface Hero3DProps {
 
 export const Hero3D: React.FC<Hero3DProps> = ({ wireframe = false }) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full cursor-grab active:cursor-grabbing">
       <Canvas
         camera={{ position: [0, 0, 5.2], fov: 60 }}
         dpr={[1, 1.5]}
@@ -221,7 +209,16 @@ export const Hero3D: React.FC<Hero3DProps> = ({ wireframe = false }) => {
 
         <QuantumParticles />
         <WebBitsMonogram wireframe={wireframe} />
-        <Environment preset="night" />
+
+        {/* Mouse Drag Orbit Controls allowing user to spin and inspect 3D */}
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          rotateSpeed={0.8}
+          dampingFactor={0.05}
+          autoRotate={true}
+          autoRotateSpeed={0.8}
+        />
       </Canvas>
     </div>
   );

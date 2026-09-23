@@ -13,19 +13,12 @@ export const BackgroundEffects: React.FC = () => {
     restDelta: 0.001
   });
 
-  // Dynamic color & lighting transitions based on scroll depth (Requirement 25)
-  // Hero (0): deep electric blue
-  // About (0.25): cyan subtle grid
-  // Projects (0.5): dark studio graphite
-  // Team (0.75): soft blue ambient
-  // Contact (1.0): high-contrast cyan/indigo
+  // Parallax shifts on scroll
   const blob1Y = useTransform(smoothScroll, [0, 1], [0, -350]);
   const blob2Y = useTransform(smoothScroll, [0, 1], [0, -600]);
-  const blobScale = useTransform(smoothScroll, [0, 0.5, 1], [1, 1.25, 0.95]);
+  const gridY = useTransform(smoothScroll, [0, 1], [0, -120]);
 
-  const ambientOpacity = useTransform(smoothScroll, [0, 0.4, 0.8, 1], [0.8, 0.5, 0.65, 0.9]);
-
-  // High performance, lightweight particle system
+  // Continuous drifting particle canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -36,15 +29,15 @@ export const BackgroundEffects: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Keep count modest (45 particles) for optimal CPU/battery efficiency
-    const count = 45;
+    const count = 50;
     const particles = Array.from({ length: count }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.5 + 0.5,
-      speedX: (Math.random() - 0.5) * 0.2,
-      speedY: (Math.random() - 0.5) * 0.2,
+      size: Math.random() * 1.5 + 0.4,
+      speedX: (Math.random() - 0.5) * 0.25,
+      speedY: (Math.random() - 0.5) * 0.25,
       opacity: Math.random() * 0.4 + 0.1,
+      phase: Math.random() * Math.PI * 2,
     }));
 
     const handleResize = () => {
@@ -54,13 +47,15 @@ export const BackgroundEffects: React.FC = () => {
     };
     window.addEventListener('resize', handleResize, { passive: true });
 
+    let t = 0;
     const render = () => {
+      t += 0.01;
       ctx.clearRect(0, 0, width, height);
 
       for (let i = 0; i < count; i++) {
         const p = particles[i];
         p.x += p.speedX;
-        p.y += p.speedY;
+        p.y += p.speedY + Math.sin(t + p.phase) * 0.1;
 
         if (p.x < 0) p.x = width;
         else if (p.x > width) p.x = 0;
@@ -85,35 +80,64 @@ export const BackgroundEffects: React.FC = () => {
   }, []);
 
   return (
-    <motion.div
-      style={{ opacity: ambientOpacity }}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#050505]"
-    >
-      {/* Scroll-Linked Ambient Aurora Mesh Blobs */}
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#050505]">
+      {/* Continuous Animated Aurora Orbs with Scroll Parallax */}
       <motion.div
-        style={{ y: blob1Y, scale: blobScale }}
-        className="absolute -top-[15%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-blue-700/10 blur-[160px]"
+        style={{ y: blob1Y }}
+        animate={{
+          x: [0, 40, -30, 0],
+          scale: [1, 1.12, 0.95, 1],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="absolute -top-[10%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-blue-700/10 blur-[160px]"
       />
 
       <motion.div
         style={{ y: blob2Y }}
-        className="absolute top-[45%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-cyan-600/8 blur-[180px]"
+        animate={{
+          x: [0, -50, 30, 0],
+          scale: [1, 1.15, 1],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="absolute top-[40%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-cyan-600/8 blur-[180px]"
       />
 
-      <div className="absolute -bottom-[20%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-indigo-900/10 blur-[180px]" />
+      <motion.div
+        animate={{
+          scale: [0.9, 1.1, 0.9],
+          opacity: [0.05, 0.12, 0.05],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="absolute -bottom-[20%] left-[20%] w-[55vw] h-[55vw] rounded-full bg-indigo-900/10 blur-[180px]"
+      />
 
-      {/* Subtle Dot Grid */}
-      <div className="absolute inset-0 bg-grid opacity-[0.04]" />
+      {/* Parallax Digital Grid */}
+      <motion.div
+        style={{ y: gridY }}
+        className="absolute inset-0 bg-grid opacity-[0.04]"
+      />
 
-      {/* Floating Canvas Particles */}
+      {/* Continuous Drifting Particles */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-10 mix-blend-screen opacity-50"
       />
 
       {/* Depth Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(5,5,5,0.85)_100%)] z-20" />
-    </motion.div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(5,5,5,0.85)_100%)] z-20" />
+    </div>
   );
 };
 

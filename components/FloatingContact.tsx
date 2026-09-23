@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion as motionBase, AnimatePresence } from 'framer-motion';
 import { Zap, MessageSquare, Mail, Instagram, Github, X } from 'lucide-react';
 import { BRAND } from '../constants';
-import { soundManager } from './SoundManager';
 
 const motion = motionBase as any;
 
@@ -38,7 +37,7 @@ export const FloatingContact: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 select-none">
-      {/* Expanded Radial/Stack Options */}
+      {/* Expanded Options */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -59,7 +58,6 @@ export const FloatingContact: React.FC = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 }}
-                  onClick={() => soundManager.playClick()}
                   className={`flex items-center gap-3 px-3.5 py-2 rounded-xl text-zinc-400 text-xs font-mono tracking-wider transition-all ${item.color}`}
                 >
                   <Icon size={16} />
@@ -73,10 +71,7 @@ export const FloatingContact: React.FC = () => {
 
       {/* Main Trigger Button */}
       <button
-        onClick={() => {
-          soundManager.playClick();
-          setIsOpen(!isOpen);
-        }}
+        onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle Quick Contact"
         className="w-13 h-13 p-3.5 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-cyan-300 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 active:scale-95 transition-all border border-cyan-400/30 flex items-center justify-center cursor-pointer"
       >

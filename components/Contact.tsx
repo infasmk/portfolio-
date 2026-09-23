@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion as motionBase } from 'framer-motion';
 import { Send, CheckCircle, ArrowUpRight, Copy, Check, MessageSquare, Mail, Instagram, Github, Linkedin } from 'lucide-react';
 import { BRAND } from '../constants';
-import { soundManager } from './SoundManager';
 
 const motion = motionBase as any;
 
@@ -12,7 +11,6 @@ export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleCopyEmail = () => {
-    soundManager.playClick();
     navigator.clipboard.writeText(BRAND.socials.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -20,7 +18,6 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    soundManager.playWarp();
     setFormState('sending');
 
     setTimeout(() => {
@@ -88,7 +85,6 @@ export const Contact: React.FC = () => {
           <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={handleCopyEmail}
-              onMouseEnter={() => soundManager.playHover()}
               className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.04] border border-white/10 hover:border-cyan-500/50 text-white font-mono text-xs tracking-wider transition-all"
             >
               {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
@@ -117,8 +113,6 @@ export const Contact: React.FC = () => {
                   href={method.href}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => soundManager.playClick()}
-                  onMouseEnter={() => soundManager.playHover()}
                   data-cursor="OPEN"
                   className="group flex items-center justify-between p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/40 hover:bg-white/[0.04] transition-all"
                 >

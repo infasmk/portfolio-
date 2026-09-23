@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { Zap } from 'lucide-react';
+import { Terminal, Zap, CheckCircle2 } from 'lucide-react';
 
 const motion = motionBase as any;
 
@@ -8,26 +8,50 @@ interface LoaderProps {
   onComplete?: () => void;
 }
 
+const BUILD_LOGS = [
+  { text: "> web-bits@2.4.0 build", time: 100, status: "cmd" },
+  { text: "> vite build --mode production", time: 300, status: "cmd" },
+  { text: "✓ 2536 modules transformed & cached", time: 700, status: "ok" },
+  { text: "✓ [1/3] Compiling WebGL shaders & 3D matrices", time: 1100, status: "ok" },
+  { text: "✓ [2/3] Rendering 6 featured production platforms", time: 1450, status: "ok" },
+  { text: "✓ [3/3] Optimizing kinetic motion & spring physics", time: 1750, status: "ok" },
+  { text: "✓ Build complete in 1.98s // Deploying UI Core", time: 1950, status: "ready" },
+];
+
 export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
-  const [stage, setStage] = useState<0 | 1 | 2 | 3>(0);
+  const [visibleLogs, setVisibleLogs] = useState<number>(1);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Stage 1: Electric energy emerges (150ms)
-    const t1 = setTimeout(() => setStage(1), 180);
-    // Stage 2: Energy ring & logo scale (400ms)
-    const t2 = setTimeout(() => setStage(2), 480);
-    // Stage 3: WEB⚡BITS reveal & ready (750ms)
-    const t3 = setTimeout(() => setStage(3), 780);
-    // Complete and exit smoothly (1050ms)
-    const t4 = setTimeout(() => {
+    // Reveal logs sequentially
+    BUILD_LOGS.forEach((log, index) => {
+      setTimeout(() => {
+        setVisibleLogs(index + 1);
+      }, log.time);
+    });
+
+    // Smoothly progress to 100% over exactly 2000ms
+    const interval = 40; // 50 steps
+    const step = 100 / (2000 / interval);
+    const progressTimer = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + step;
+        if (next >= 100) {
+          clearInterval(progressTimer);
+          return 100;
+        }
+        return next;
+      });
+    }, interval);
+
+    // Complete exactly at 2000ms
+    const completeTimer = setTimeout(() => {
       if (onComplete) onComplete();
-    }, 1100);
+    }, 2000);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
+      clearInterval(progressTimer);
+      clearTimeout(completeTimer);
     };
   }, [onComplete]);
 
@@ -36,92 +60,76 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,
-        scale: 1.05,
-        filter: 'blur(10px)',
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+        filter: 'blur(8px)',
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
       }}
-      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#050505] font-space text-white px-6 select-none"
+      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#050505] font-mono text-white px-6 select-none"
     >
-      {/* Background Ambient Glow */}
-      <div className="absolute w-[300px] h-[300px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none" />
+      {/* Background Glow */}
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
 
-      <div className="relative flex flex-col items-center">
-        {/* Electric Energy Ring */}
-        <div className="relative flex items-center justify-center w-24 h-24 mb-6">
-          <motion.div
-            initial={{ scale: 0.7, opacity: 0 }}
-            animate={{
-              scale: stage >= 1 ? 1 : 0.7,
-              opacity: stage >= 1 ? 1 : 0,
-              rotate: 360,
-            }}
-            transition={{
-              scale: { duration: 0.4 },
-              rotate: { duration: 4, repeat: Infinity, ease: 'linear' },
-            }}
-            className="absolute inset-0 rounded-full border border-blue-500/20 border-t-cyan-400 border-r-blue-500 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-          />
+      {/* Terminal Window Box */}
+      <div className="relative w-full max-w-xl rounded-2xl bg-[#090b10] border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
+        {/* Terminal Title Bar */}
+        <div className="flex items-center justify-between px-5 py-3.5 bg-white/[0.03] border-b border-white/[0.06]">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+            <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+            <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+            <span className="text-[11px] text-zinc-400 font-mono ml-2 flex items-center gap-1.5">
+              <Terminal size={12} className="text-cyan-400" />
+              web-bits-cli: bash — 80x24
+            </span>
+          </div>
 
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{
-              scale: stage >= 2 ? [1, 1.08, 1] : 0.8,
-              opacity: stage >= 2 ? 0.4 : 0,
-            }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute inset-2 rounded-full border border-cyan-500/30"
-          />
-
-          {/* Central Lightning Bolt Monogram */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-              scale: stage >= 1 ? 1 : 0,
-              opacity: stage >= 1 ? 1 : 0,
-            }}
-            transition={{ type: 'spring', damping: 15, stiffness: 260 }}
-            className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-cyan-300 shadow-[0_0_25px_rgba(37,99,235,0.7)]"
-          >
-            <Zap size={22} className="fill-cyan-300 text-cyan-200" />
-            <motion.div
-              animate={{ opacity: [0.2, 0.8, 0.2] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              className="absolute inset-0 rounded-xl bg-cyan-400/20"
-            />
-          </motion.div>
+          <div className="flex items-center gap-1.5 text-[10px] font-space text-cyan-400 font-bold tracking-wider">
+            <Zap size={11} className="fill-cyan-400" />
+            <span>WEB⚡BITS</span>
+          </div>
         </div>
 
-        {/* Brand Text Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{
-            opacity: stage >= 2 ? 1 : 0,
-            y: stage >= 2 ? 0 : 10,
-          }}
-          transition={{ duration: 0.3 }}
-          className="text-center"
-        >
-          <div className="flex items-center gap-1.5 text-2xl font-bold font-space tracking-tight text-white">
-            <span>WEB</span>
-            <span className="text-cyan-400">⚡</span>
-            <span>BITS</span>
-          </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: stage >= 3 ? 1 : 0 }}
-            className="text-[10px] uppercase font-bold tracking-[0.3em] text-zinc-500 mt-2"
-          >
-            CREATIVE TECHNOLOGY STUDIO
-          </motion.p>
-        </motion.div>
+        {/* Terminal Body */}
+        <div className="p-6 space-y-2 text-xs font-mono min-h-[220px]">
+          {BUILD_LOGS.slice(0, visibleLogs).map((log, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.15 }}
+              className={`flex items-start gap-2 ${
+                log.status === "ready"
+                  ? "text-emerald-400 font-bold"
+                  : log.status === "ok"
+                  ? "text-zinc-300"
+                  : "text-zinc-500"
+              }`}
+            >
+              <span>{log.text}</span>
+            </motion.div>
+          ))}
 
-        {/* Quick Skip Button for Instant Navigation */}
-        <button
-          onClick={() => onComplete && onComplete()}
-          className="absolute -bottom-24 px-4 py-1.5 rounded-full border border-white/5 bg-white/[0.02] text-[10px] text-zinc-600 hover:text-white hover:border-white/20 transition-all font-mono tracking-widest"
-        >
-          SKIP [ESC]
-        </button>
+          {/* Active blinking terminal prompt */}
+          <div className="flex items-center gap-1 text-cyan-400 pt-1">
+            <span className="text-zinc-600">~</span>
+            <span className="animate-pulse">_</span>
+          </div>
+        </div>
+
+        {/* Terminal Footer with Real 2s Progress Bar */}
+        <div className="px-6 py-4 bg-white/[0.02] border-t border-white/[0.06] flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono mb-1.5">
+              <span>INITIALIZING PORTFOLIO EXPERIENCE</span>
+              <span className="text-cyan-400 font-bold tabular-nums">{Math.min(100, Math.floor(progress))}%</span>
+            </div>
+            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.6)]"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </motion.div>
   );

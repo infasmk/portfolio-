@@ -17,7 +17,7 @@ export const BRAND = {
     github: "https://github.com/infasmk",
     instagram: "https://instagram.com/infasmk",
     email: "infasmk@gmail.com",
-    whatsapp: "https://wa.me/919876543210", // Clean standard WhatsApp link format
+    whatsapp: "https://wa.me/919876543210",
     linkedin: "https://linkedin.com/in/infasmk",
   }
 };
@@ -82,40 +82,75 @@ export const PROJECTS: Project[] = [
     result: "Featured across creative design communities with 4.9/5 satisfaction rating across 5,000+ early testers.",
     link: "https://aevo-22.vercel.app/",
     github: "https://github.com/infasmk"
+  },
+  {
+    id: 5,
+    title: "Kinetix Studio Engine",
+    category: "Creative Engine & WebGL",
+    year: "2024",
+    role: "Creative Developer",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1200",
+    tech: ["TypeScript", "Three.js", "GLSL", "Vite"],
+    description: "Browser-based generative kinetic motion design engine allowing artists to export interactive 3D web embeds and procedural particle systems.",
+    challenge: "Executing heavy compute shaders and raymarched volumetric noise smoothly across both mobile GPUs and high-end workstations.",
+    solution: "Architected multi-pass render targets with variable resolution shading and adaptive level-of-detail physics trees.",
+    result: "Adopted by 30+ digital agencies globally for launching interactive product microsites.",
+    link: "https://aevo-22.vercel.app/",
+    github: "https://github.com/infasmk"
+  },
+  {
+    id: 6,
+    title: "Hyperion Cloud Core",
+    category: "Enterprise System",
+    year: "2024",
+    role: "Full-Stack Engineer",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+    tech: ["Next.js", "Python", "PostgreSQL", "Docker"],
+    description: "Unified infrastructure monitoring console providing real-time server health heatmaps, anomaly detection, and automated failover orchestration.",
+    challenge: "Aggregating millions of distributed server events per minute while rendering zero-lag live terminal dashboards.",
+    solution: "Constructed an event-driven streaming pipeline utilizing Kafka, WebSockets, and virtualized canvas log viewers.",
+    result: "Reduced incident response time by 45% across participating enterprise beta deployments.",
+    link: "https://aevo-22.vercel.app/",
+    github: "https://github.com/infasmk"
   }
 ];
 
 export const SKILLS = {
   frontend: [
-    { name: "React / Next.js", level: 96, category: "frontend" as const, description: "Component architecture, SSR, RSC & state management" },
-    { name: "TypeScript", level: 92, category: "frontend" as const, description: "Type safety, generics & enterprise design patterns" },
-    { name: "Three.js / WebGL", level: 90, category: "frontend" as const, description: "Shaders, custom geometries, R3F & lighting" },
-    { name: "Tailwind CSS", level: 98, category: "frontend" as const, description: "Design systems, fluid typography & micro-interactions" },
-    { name: "Framer Motion", level: 94, category: "frontend" as const, description: "Spring physics, layout animations & scroll transitions" },
+    { name: "React & Next.js", level: 96, category: "frontend" as const, description: "Component architecture, SSR, RSC & high-performance state" },
+    { name: "TypeScript", level: 94, category: "frontend" as const, description: "Type safety, generics & design patterns" },
+    { name: "Three.js & WebGL", level: 92, category: "frontend" as const, description: "Custom shaders, lighting, 3D scenes & R3F" },
+    { name: "Tailwind CSS", level: 98, category: "frontend" as const, description: "Modern design systems, fluid spacing & responsive layouts" },
+    { name: "Framer Motion", level: 95, category: "frontend" as const, description: "Kinetic animations, spring physics & layout gestures" },
   ],
   backend: [
-    { name: "Node.js", level: 88, category: "backend" as const, description: "Express, Fastify, microservices & async APIs" },
-    { name: "Python", level: 84, category: "backend" as const, description: "Data automation, AI pipelines & algorithmic scripting" },
-    { name: "PostgreSQL / Prisma", level: 86, category: "backend" as const, description: "Relational modeling, indexing & optimization" },
-    { name: "GraphQL & REST", level: 89, category: "backend" as const, description: "High-performance data layer & caching" },
+    { name: "Node.js & Express", level: 88, category: "backend" as const, description: "Asynchronous APIs, Fastify & microservice architecture" },
+    { name: "Python", level: 85, category: "backend" as const, description: "Data automation, AI workflows & algorithmic processing" },
+    { name: "PostgreSQL & Prisma", level: 86, category: "backend" as const, description: "Relational data modeling, indexing & query tuning" },
+    { name: "REST & GraphQL", level: 90, category: "backend" as const, description: "Type-safe schemas, caching & real-time subscriptions" },
   ],
   tools: [
-    { name: "Git / CI/CD", level: 92, category: "tools" as const, description: "Version control, automated pipelines & preview deployments" },
-    { name: "Figma", level: 94, category: "tools" as const, description: "Design systems, component tokens & interactive prototypes" },
-    { name: "Blender", level: 78, category: "tools" as const, description: "3D hard-surface modeling, UV mapping & glTF export" },
-    { name: "Docker", level: 80, category: "tools" as const, description: "Containerized environments & reproducible builds" },
+    { name: "Git & GitHub CI/CD", level: 94, category: "tools" as const, description: "Automated test pipelines, branches & preview deployments" },
+    { name: "Figma UI/UX", level: 92, category: "tools" as const, description: "Design systems, auto-layout tokens & rapid prototyping" },
+    { name: "Docker & Cloud", level: 82, category: "tools" as const, description: "Containerized environments, Vercel & AWS deployments" },
+    { name: "Blender 3D", level: 78, category: "tools" as const, description: "Hard-surface 3D assets, low-poly geometry & glTF pipelines" },
   ]
 };
 
-export const MARQUEE_ITEMS = [
-  "WEB DEVELOPMENT",
-  "UI/UX ARCHITECTURE",
-  "3D EXPERIENCES",
-  "CREATIVE TECHNOLOGY",
-  "DIGITAL PRODUCTS",
-  "INTERACTIVE DESIGN",
-  "WEBGL SHADERS",
-  "SYSTEM PERFORMANCE"
+export const MARQUEE_ROW_1 = [
+  { text: "CREATIVE TECHNOLOGY", tag: "CORE" },
+  { text: "3D WEBGL EXPERIENCES", tag: "THREE.JS" },
+  { text: "HIGH-PERFORMANCE WEB", tag: "99.9% CRASH-FREE" },
+  { text: "INTERACTIVE UI/UX", tag: "TAILWIND" },
+  { text: "NEXT.JS ARCHITECTURES", tag: "FULL-STACK" }
+];
+
+export const MARQUEE_ROW_2 = [
+  { text: "KINETIC MOTION DESIGN", tag: "FRAMER" },
+  { text: "SYSTEM TELEMETRY", tag: "TYPESCRIPT" },
+  { text: "SPATIAL INTERFACES", tag: "WEB AUDIO" },
+  { text: "MODERN PRODUCT DESIGN", tag: "FIGMA" },
+  { text: "PRECISION CODE", tag: "NIT RAIPUR" }
 ];
 
 export const TEAM: TeamMember[] = [
@@ -123,7 +158,7 @@ export const TEAM: TeamMember[] = [
     id: 1,
     name: "Infas.mk",
     role: "Founder & Creative Technologist",
-    bio: "NIT Raipur technologist sculpting high-performance 3D web platforms and cinematic user experiences.",
+    bio: "NIT Raipur engineer sculpting high-performance 3D web platforms and cinematic user experiences.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
     socials: {
       github: "https://github.com/infasmk",

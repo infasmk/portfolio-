@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion as motionBase, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
-import { soundManager } from './SoundManager';
 import Footer from './Footer';
 
 const motion = motionBase as any;
@@ -26,7 +25,7 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
       onMouseMove={handleMouseMove}
       className="min-h-screen bg-[#050505] text-white relative selection:bg-cyan-500/30 overflow-x-hidden"
     >
-      {/* Floating Thumbnail Preview Following Cursor (Requirement 13) */}
+      {/* Floating Thumbnail Preview Following Cursor */}
       <AnimatePresence>
         {hoveredProject && (
           <motion.div
@@ -62,10 +61,7 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
       {/* Top Header */}
       <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-6 bg-[#050505]/75 backdrop-blur-xl border-b border-white/[0.08] flex justify-between items-center">
         <button
-          onClick={() => {
-            soundManager.playClick();
-            onBack();
-          }}
+          onClick={onBack}
           className="group flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
         >
           <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
@@ -112,15 +108,9 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.08 }}
-                onMouseEnter={() => {
-                  setHoveredProject(project);
-                  soundManager.playHover();
-                }}
+                onMouseEnter={() => setHoveredProject(project)}
                 onMouseLeave={() => setHoveredProject(null)}
-                onClick={() => {
-                  soundManager.playWarp();
-                  onProjectSelect(project);
-                }}
+                onClick={() => onProjectSelect(project)}
                 className="group py-8 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer transition-all duration-300 hover:px-4 hover:bg-white/[0.02]"
               >
                 <div className="flex items-baseline gap-6 md:gap-12">

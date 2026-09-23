@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion as motionBase, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight, Volume2, VolumeX, Zap } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { useScrollDirection } from '../hooks/useScrollDirection';
 import { useMagnetic } from '../hooks/useMagnetic';
-import { soundManager } from './SoundManager';
 import { BRAND } from '../constants';
 
 const motion = motionBase as any;
@@ -12,6 +11,33 @@ interface NavbarProps {
   onNavigateProjects?: () => void;
   isProjectView?: boolean;
 }
+
+// Custom Distinctive Geometric WEB⚡BITS Logo
+const WebBitsLogo: React.FC<{ className?: string }> = ({ className = "w-8 h-8" }) => (
+  <svg
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect width="40" height="40" rx="10" fill="#0d1117" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+    <path
+      d="M9 13L14 27L19 15L23 27L28 13"
+      stroke="#38bdf8"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M23 9L15 22H22L17 31"
+      stroke="#22d3ee"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="drop-shadow-[0_0_8px_rgba(34,211,238,0.9)]"
+    />
+  </svg>
+);
 
 const MagneticNavLink: React.FC<{
   href: string;
@@ -30,11 +56,7 @@ const MagneticNavLink: React.FC<{
     >
       <motion.a
         href={href}
-        onClick={(e: React.MouseEvent) => {
-          soundManager.playClick();
-          if (onClick) onClick();
-        }}
-        onMouseEnter={() => soundManager.playHover()}
+        onClick={onClick}
         animate={{ x: position.x, y: position.y }}
         transition={{ type: 'spring', damping: 15, stiffness: 250 }}
         className={`relative text-xs font-semibold tracking-wider uppercase transition-colors duration-300 block ${
@@ -58,7 +80,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
   const { scrollDirection, isAtTop } = useScrollDirection(12);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('work');
-  const [soundOn, setSoundOn] = useState(false);
 
   // Magnetic button for CTA
   const ctaMagnetic = useMagnetic(0.3);
@@ -104,11 +125,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
     { name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  const handleSoundToggle = () => {
-    const state = soundManager.toggle();
-    setSoundOn(state);
-  };
-
   // Auto-hide when scrolling down, show when scrolling up or at top
   const isHidden = !isAtTop && scrollDirection === 'down' && !isMobileMenuOpen;
 
@@ -123,23 +139,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isAtTop
           ? 'py-6 md:py-8 bg-transparent'
-          : 'py-3 md:py-4 bg-[#050505]/75 backdrop-blur-xl border-b border-white/[0.06] shadow-2xl shadow-black/60'
+          : 'py-3 md:py-4 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.06] shadow-2xl shadow-black/60'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between">
-        {/* Brand Monogram */}
-        <motion.a
+        {/* Brand Logo & Title */}
+        <a
           href="#"
-          onClick={() => soundManager.playClick()}
-          className="group flex items-center gap-2.5 cursor-pointer select-none"
+          className="group flex items-center gap-3 cursor-pointer select-none"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-cyan-300 shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:shadow-[0_0_22px_rgba(6,182,212,0.7)] transition-all">
-            <Zap size={16} className="fill-cyan-300" />
+          <div className="transition-transform duration-300 group-hover:scale-105">
+            <WebBitsLogo className="w-9 h-9" />
           </div>
           <span className="font-space font-extrabold text-lg md:text-xl tracking-tighter text-white">
             WEB<span className="text-cyan-400">⚡</span>BITS
           </span>
-        </motion.a>
+        </a>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md shadow-inner">
@@ -153,19 +168,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
           ))}
         </nav>
 
-        {/* Right Action: Sound Toggle + Magnetic "START A PROJECT" CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          {/* Audio Feedback Toggle */}
-          <button
-            onClick={handleSoundToggle}
-            aria-label="Toggle Sound Effects"
-            className="p-2.5 rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 hover:text-white hover:border-white/25 transition-all text-xs flex items-center justify-center"
-            title={soundOn ? 'Mute Sound FX' : 'Enable Sound FX'}
-          >
-            {soundOn ? <Volume2 size={16} className="text-cyan-400" /> : <VolumeX size={16} />}
-          </button>
-
-          {/* Magnetic CTA */}
+        {/* Right Action: Magnetic "START A PROJECT" CTA */}
+        <div className="hidden md:flex items-center">
           <div
             ref={ctaMagnetic.ref}
             onMouseMove={ctaMagnetic.handleMouseMove}
@@ -173,8 +177,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
           >
             <motion.a
               href="#contact"
-              onClick={() => soundManager.playClick()}
-              onMouseEnter={() => soundManager.playHover()}
               animate={{ x: ctaMagnetic.position.x, y: ctaMagnetic.position.y }}
               transition={{ type: 'spring', damping: 15, stiffness: 220 }}
               data-cursor="CONTACT"
@@ -189,17 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center gap-2">
           <button
-            onClick={handleSoundToggle}
-            className="p-2.5 rounded-full border border-white/10 bg-white/[0.05] text-zinc-400"
-          >
-            {soundOn ? <Volume2 size={16} className="text-cyan-400" /> : <VolumeX size={16} />}
-          </button>
-
-          <button
-            onClick={() => {
-              soundManager.playClick();
-              setIsMobileMenuOpen(!isMobileMenuOpen);
-            }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2.5 text-white bg-white/5 rounded-full border border-white/10 active:scale-95 transition-transform"
             aria-label="Toggle Menu"
           >
@@ -208,19 +200,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         </div>
       </div>
 
-      {/* Mobile Fullscreen Cinematic Overlay */}
+      {/* Mobile Fullscreen Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, clipPath: 'circle(0% at 90% 10%)' }}
             animate={{ opacity: 1, clipPath: 'circle(150% at 90% 10%)' }}
             exit={{ opacity: 0, clipPath: 'circle(0% at 90% 10%)' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 bg-[#050505] z-40 md:hidden flex flex-col justify-between p-8 pt-24"
           >
-            {/* Background Mesh Glow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
-
             <div className="flex flex-col space-y-6 relative z-10">
               <span className="text-cyan-400 text-[10px] font-mono tracking-[0.3em] uppercase">
                 // NAVIGATION

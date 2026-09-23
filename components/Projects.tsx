@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
-import { motion as motionBase, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Layers } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { motion as motionBase, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, ArrowRight, LayoutGrid, Rows } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 import ProjectCard from './ProjectCard';
-import { soundManager } from './SoundManager';
 
 const motion = motionBase as any;
 
@@ -17,40 +16,55 @@ export const Projects: React.FC<ProjectsProps> = ({
   onBrowseAll,
   onProjectSelect,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<'stream' | 'grid'>('stream');
 
-  // Vertical scroll translates into horizontal track motion
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end']
-  });
+  const scrollToIndex = (index: number) => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const cards = container.children;
+    if (cards[index]) {
+      const card = cards[index] as HTMLElement;
+      container.scrollTo({
+        left: card.offsetLeft - 48,
+        behavior: 'smooth',
+      });
+      setCurrentIndex(index);
+    }
+  };
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    damping: 24,
-    stiffness: 120,
-    restDelta: 0.001
-  });
+  const handleNext = () => {
+    const nextIdx = (currentIndex + 1) % PROJECTS.length;
+    scrollToIndex(nextIdx);
+  };
 
-  // Calculate horizontal shift: 4 projects of ~75vw + gaps => around -70% transform
-  const x = useTransform(smoothProgress, [0, 1], ['2%', '-68%']);
+  const handlePrev = () => {
+    const prevIdx = (currentIndex - 1 + PROJECTS.length) % PROJECTS.length;
+    scrollToIndex(prevIdx);
+  };
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.clientWidth * 0.6;
+    const activeIdx = Math.round(scrollLeft / cardWidth);
+    setCurrentIndex(Math.min(PROJECTS.length - 1, Math.max(0, activeIdx)));
+  };
 
   return (
-    <section
-      id="projects"
-      ref={containerRef}
-      className="relative h-[320vh] bg-[#050505]"
-    >
-      {/* Sticky viewport frame that stays pinned while scrolling */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-12 md:py-16">
-        {/* Background Ambient Atmosphere */}
-        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[600px] bg-blue-700/10 rounded-full blur-[180px] pointer-events-none" />
+    <section id="projects" className="py-24 md:py-32 bg-[#050505] relative overflow-hidden">
+      {/* Background Ambient Glow */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[700px] bg-blue-700/8 rounded-full blur-[200px] pointer-events-none" />
 
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
         {/* Section Header */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex flex-col sm:flex-row justify-between sm:items-end gap-4 z-20">
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
-                // 02 SIGNATURE SHOWCASE
+                // 02 SIGNATURE SHOWCASE [{PROJECTS.length} PLATFORMS]
               </span>
               <div className="h-[1px] w-16 bg-white/10" />
             </div>
@@ -59,58 +73,107 @@ export const Projects: React.FC<ProjectsProps> = ({
             </h2>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => {
-                soundManager.playClick();
-                if (onBrowseAll) onBrowseAll();
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="group px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.03] hover:border-cyan-500/50 hover:bg-white/10 text-white font-space font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
-            >
-              <span>ARCHIVE [{PROJECTS.length}]</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+          {/* Navigation Controls & Layout Toggle */}
+          <div className="flex items-center gap-3">
+            {/* View Mode Switcher */}
+            <div className="flex items-center p-1 rounded-xl bg-white/[0.03] border border-white/10">
+              <button
+                onClick={() => setViewMode('stream')}
+                className={`p-2 rounded-lg text-xs font-mono transition-all ${
+                  viewMode === 'stream' ? 'bg-cyan-500 text-black shadow-md' : 'text-zinc-400 hover:text-white'
+                }`}
+                title="Horizontal Stream"
+              >
+                <Rows size={16} />
+              </button>
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-lg text-xs font-mono transition-all ${
+                  viewMode === 'grid' ? 'bg-cyan-500 text-black shadow-md' : 'text-zinc-400 hover:text-white'
+                }`}
+                title="Grid Matrix"
+              >
+                <LayoutGrid size={16} />
+              </button>
+            </div>
+
+            {/* Slider Next / Prev Controls (Active in stream mode) */}
+            {viewMode === 'stream' && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrev}
+                  className="p-3 rounded-full border border-white/10 bg-white/[0.03] hover:border-cyan-400 hover:text-cyan-400 text-zinc-300 transition-all active:scale-95"
+                  aria-label="Previous project"
+                >
+                  <ArrowLeft size={16} />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="p-3 rounded-full border border-white/10 bg-white/[0.03] hover:border-cyan-400 hover:text-cyan-400 text-zinc-300 transition-all active:scale-95"
+                  aria-label="Next project"
+                >
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Pinned Horizontal Carousel Track */}
-        <div className="relative z-10 w-full overflow-visible py-4">
-          <motion.div
-            style={{ x }}
-            className="flex gap-8 md:gap-12 pl-6 md:pl-16 will-change-transform"
-          >
-            {PROJECTS.map((project, idx) => (
+        {/* Project Quick Jump Indicator Pills */}
+        <div className="flex items-center gap-2 mt-6 overflow-x-auto pb-2">
+          {PROJECTS.map((p, idx) => (
+            <button
+              key={p.id}
+              onClick={() => {
+                if (viewMode !== 'stream') setViewMode('stream');
+                scrollToIndex(idx);
+              }}
+              className={`px-3 py-1 rounded-full text-xs font-mono transition-all shrink-0 ${
+                currentIndex === idx && viewMode === 'stream'
+                  ? 'bg-cyan-500 text-black font-bold shadow-[0_0_12px_rgba(6,182,212,0.5)]'
+                  : 'bg-white/[0.03] text-zinc-400 hover:text-white border border-white/5'
+              }`}
+            >
+              0{idx + 1} // {p.title.split(' ')[0]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Projects Presentation: Stream Carousel vs Grid Matrix */}
+      {viewMode === 'stream' ? (
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="flex gap-6 md:gap-8 overflow-x-auto px-6 md:px-12 pb-6 pt-2 snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {PROJECTS.map((project, idx) => (
+            <div key={project.id} className="snap-center">
               <ProjectCard
-                key={project.id}
                 project={project}
                 index={idx}
                 total={PROJECTS.length}
                 onSelect={onProjectSelect}
               />
-            ))}
-          </motion.div>
+            </div>
+          ))}
         </div>
-
-        {/* Bottom Scroll Guide Indicator */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center z-20 text-xs font-mono text-zinc-500">
-          <div className="flex items-center gap-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            <span>SCROLL VERTICAL TO PAN HORIZONTALLY</span>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-2">
-            <span>01</span>
-            <div className="w-20 h-[2px] bg-white/10 rounded-full overflow-hidden">
-              <motion.div
-                style={{ scaleX: smoothProgress }}
-                className="h-full bg-cyan-400 origin-left"
+      ) : (
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {PROJECTS.map((project, idx) => (
+            <div key={project.id} className="h-[520px]">
+              <ProjectCard
+                project={project}
+                index={idx}
+                total={PROJECTS.length}
+                onSelect={onProjectSelect}
+                compact={true}
               />
             </div>
-            <span>0{PROJECTS.length}</span>
-          </div>
+          ))}
         </div>
-      </div>
+      )}
     </section>
   );
 };
