@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { motion as motionBase, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, LayoutGrid, Rows } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion as motionBase, useScroll, useTransform, useSpring } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 import ProjectCard from './ProjectCard';
@@ -13,58 +13,45 @@ interface ProjectsProps {
 }
 
 export const Projects: React.FC<ProjectsProps> = ({
-  onBrowseAll,
   onProjectSelect,
 }) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<'stream' | 'grid'>('stream');
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const scrollToIndex = (index: number) => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const cards = container.children;
-    if (cards[index]) {
-      const card = cards[index] as HTMLElement;
-      container.scrollTo({
-        left: card.offsetLeft - 48,
-        behavior: 'smooth',
-      });
-      setCurrentIndex(index);
-    }
-  };
+  // Vertical scroll translates into right-to-left horizontal movement
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end']
+  });
 
-  const handleNext = () => {
-    const nextIdx = (currentIndex + 1) % PROJECTS.length;
-    scrollToIndex(nextIdx);
-  };
+  const smoothProgress = useSpring(scrollYProgress, {
+    damping: 24,
+    stiffness: 120,
+    restDelta: 0.001
+  });
 
-  const handlePrev = () => {
-    const prevIdx = (currentIndex - 1 + PROJECTS.length) % PROJECTS.length;
-    scrollToIndex(prevIdx);
-  };
+  // 6 projects of ~60vw each: translate from right to left (0% to -78%)
+  const x = useTransform(smoothProgress, [0, 1], ['2%', '-78%']);
 
-  const handleScroll = () => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const cardWidth = container.clientWidth * 0.6;
-    const activeIdx = Math.round(scrollLeft / cardWidth);
-    setCurrentIndex(Math.min(PROJECTS.length - 1, Math.max(0, activeIdx)));
-  };
+  // Active project calculation
+  const activeIndex = useTransform(smoothProgress, [0, 1], [1, PROJECTS.length]);
 
   return (
-    <section id="projects" className="py-24 md:py-32 bg-[#050505] relative overflow-hidden">
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[700px] bg-blue-700/8 rounded-full blur-[200px] pointer-events-none" />
+    <section
+      id="projects"
+      ref={containerRef}
+      className="relative h-[340vh] bg-[#050505]"
+    >
+      {/* Sticky viewport pinned while user scrolls */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-10 md:py-14">
+        {/* Background Atmosphere */}
+        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[600px] bg-blue-700/8 rounded-full blur-[200px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-end z-20">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
-                // 02 SIGNATURE SHOWCASE [{PROJECTS.length} PLATFORMS]
+                // 02 SIGNATURE SHOWCASE [06 PLATFORMS]
               </span>
               <div className="h-[1px] w-16 bg-white/10" />
             </div>
@@ -73,107 +60,48 @@ export const Projects: React.FC<ProjectsProps> = ({
             </h2>
           </div>
 
-          {/* Navigation Controls & Layout Toggle */}
-          <div className="flex items-center gap-3">
-            {/* View Mode Switcher */}
-            <div className="flex items-center p-1 rounded-xl bg-white/[0.03] border border-white/10">
-              <button
-                onClick={() => setViewMode('stream')}
-                className={`p-2 rounded-lg text-xs font-mono transition-all ${
-                  viewMode === 'stream' ? 'bg-cyan-500 text-black shadow-md' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Horizontal Stream"
-              >
-                <Rows size={16} />
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg text-xs font-mono transition-all ${
-                  viewMode === 'grid' ? 'bg-cyan-500 text-black shadow-md' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Grid Matrix"
-              >
-                <LayoutGrid size={16} />
-              </button>
-            </div>
-
-            {/* Slider Next / Prev Controls (Active in stream mode) */}
-            {viewMode === 'stream' && (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handlePrev}
-                  className="p-3 rounded-full border border-white/10 bg-white/[0.03] hover:border-cyan-400 hover:text-cyan-400 text-zinc-300 transition-all active:scale-95"
-                  aria-label="Previous project"
-                >
-                  <ArrowLeft size={16} />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="p-3 rounded-full border border-white/10 bg-white/[0.03] hover:border-cyan-400 hover:text-cyan-400 text-zinc-300 transition-all active:scale-95"
-                  aria-label="Next project"
-                >
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            )}
+          <div className="hidden sm:flex items-center gap-3 font-mono text-xs text-zinc-400">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span>SCROLL DOWN TO ADVANCE PROJECTS</span>
           </div>
         </div>
 
-        {/* Project Quick Jump Indicator Pills */}
-        <div className="flex items-center gap-2 mt-6 overflow-x-auto pb-2">
-          {PROJECTS.map((p, idx) => (
-            <button
-              key={p.id}
-              onClick={() => {
-                if (viewMode !== 'stream') setViewMode('stream');
-                scrollToIndex(idx);
-              }}
-              className={`px-3 py-1 rounded-full text-xs font-mono transition-all shrink-0 ${
-                currentIndex === idx && viewMode === 'stream'
-                  ? 'bg-cyan-500 text-black font-bold shadow-[0_0_12px_rgba(6,182,212,0.5)]'
-                  : 'bg-white/[0.03] text-zinc-400 hover:text-white border border-white/5'
-              }`}
-            >
-              0{idx + 1} // {p.title.split(' ')[0]}
-            </button>
-          ))}
+        {/* Pinned Right-to-Left Horizontal Track for all 6 projects */}
+        <div className="relative z-10 w-full overflow-visible py-4">
+          <motion.div
+            style={{ x }}
+            className="flex gap-6 md:gap-8 pl-6 md:pl-16 will-change-transform"
+          >
+            {PROJECTS.map((project, idx) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={idx}
+                total={PROJECTS.length}
+                onSelect={onProjectSelect}
+              />
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottom Pinned Progress Guide */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center z-20 text-xs font-mono text-zinc-500">
+          <div className="flex items-center gap-2">
+            <span>01</span>
+            <div className="w-32 md:w-48 h-[2px] bg-white/10 rounded-full overflow-hidden">
+              <motion.div
+                style={{ scaleX: smoothProgress }}
+                className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 origin-left"
+              />
+            </div>
+            <span>0{PROJECTS.length}</span>
+          </div>
+
+          <span className="text-zinc-500 hidden sm:inline-block">
+            CLICK CARD FOR FULL CASE STUDY
+          </span>
         </div>
       </div>
-
-      {/* Projects Presentation: Stream Carousel vs Grid Matrix */}
-      {viewMode === 'stream' ? (
-        <div
-          ref={scrollContainerRef}
-          onScroll={handleScroll}
-          className="flex gap-6 md:gap-8 overflow-x-auto px-6 md:px-12 pb-6 pt-2 snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {PROJECTS.map((project, idx) => (
-            <div key={project.id} className="snap-center">
-              <ProjectCard
-                project={project}
-                index={idx}
-                total={PROJECTS.length}
-                onSelect={onProjectSelect}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {PROJECTS.map((project, idx) => (
-            <div key={project.id} className="h-[520px]">
-              <ProjectCard
-                project={project}
-                index={idx}
-                total={PROJECTS.length}
-                onSelect={onProjectSelect}
-                compact={true}
-              />
-            </div>
-          ))}
-        </div>
-      )}
     </section>
   );
 };

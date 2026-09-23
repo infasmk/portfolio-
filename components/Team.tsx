@@ -1,157 +1,23 @@
-import React, { useRef, useState } from 'react';
-import { motion as motionBase, useSpring, useMotionValue } from 'framer-motion';
-import { Twitter, Linkedin, Github, Instagram, ArrowUpRight, Sparkles } from 'lucide-react';
-import { TEAM } from '../constants';
-import { TeamMember } from '../types';
+import React from 'react';
+import { motion as motionBase } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
+import { TEAM, BRAND } from '../constants';
+import ProfileCard from './ProfileCard';
 
 const motion = motionBase as any;
 
-const TeamCard: React.FC<{ member: TeamMember; index: number }> = ({ member, index }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // 3D Perspective Tilt on hover
-  const rotateX = useSpring(useMotionValue(0), { damping: 20, stiffness: 200 });
-  const rotateY = useSpring(useMotionValue(0), { damping: 20, stiffness: 200 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const rX = ((mouseY / rect.height) - 0.5) * -12;
-    const rY = ((mouseX / rect.width) - 0.5) * 12;
-    rotateX.set(rX);
-    rotateY.set(rY);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    rotateX.set(0);
-    rotateY.set(0);
-  };
-
-  return (
-    <div style={{ perspective: 1000 }}>
-      <motion.div
-        ref={cardRef}
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: index * 0.15 }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: 'preserve-3d',
-        }}
-        className="group relative flex flex-col rounded-3xl bg-[#090b10] border border-white/[0.08] hover:border-cyan-500/50 p-6 md:p-8 transition-colors duration-500 overflow-hidden cursor-pointer shadow-xl"
-      >
-        {/* Animated Background Accent Glow */}
-        <motion.div
-          animate={{
-            scale: isHovered ? [1, 1.2, 1] : 1,
-            opacity: isHovered ? 0.35 : 0,
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-12 -right-12 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"
-        />
-
-        {/* Large Portrait Image with Cinematic Reveals */}
-        <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden mb-6 bg-zinc-900">
-          <img
-            src={member.image}
-            alt={member.name}
-            className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#090b10] via-transparent to-transparent opacity-80" />
-
-          {/* Staggered Social Icons Overlay */}
-          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-20">
-            <div className="flex gap-2">
-              {member.socials.github && (
-                <a
-                  href={member.socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
-                  title="GitHub"
-                >
-                  <Github size={15} />
-                </a>
-              )}
-              {member.socials.linkedin && (
-                <a
-                  href={member.socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
-                  title="LinkedIn"
-                >
-                  <Linkedin size={15} />
-                </a>
-              )}
-              {member.socials.instagram && (
-                <a
-                  href={member.socials.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
-                  title="Instagram"
-                >
-                  <Instagram size={15} />
-                </a>
-              )}
-              {member.socials.twitter && (
-                <a
-                  href={member.socials.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
-                  title="Twitter"
-                >
-                  <Twitter size={15} />
-                </a>
-              )}
-            </div>
-
-            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest px-2.5 py-1 rounded bg-black/60 backdrop-blur-md border border-cyan-500/30">
-              0{index + 1}
-            </span>
-          </div>
-        </div>
-
-        {/* Member Details */}
-        <div className="relative z-10 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 className="text-2xl font-space font-extrabold text-white mb-1 group-hover:text-cyan-300 transition-colors">
-              {member.name}
-            </h4>
-            <p className="text-cyan-400 font-mono text-xs uppercase tracking-wider mb-3">
-              {member.role}
-            </p>
-            <p className="text-zinc-400 text-sm font-light leading-relaxed mb-6">
-              {member.bio}
-            </p>
-          </div>
-
-          <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-zinc-500 group-hover:text-zinc-300 transition-colors">
-            <span>WEB⚡BITS STUDIO</span>
-            <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 export const Team: React.FC = () => {
+  const getContactLink = (name: string) => {
+    if (name.includes('Infas')) {
+      return BRAND.socials.github;
+    }
+    return BRAND.socials.linkedin;
+  };
+
   return (
-    <section id="team" className="py-24 md:py-32 bg-[#050505] relative overflow-hidden">
+    <section id="team" className="py-24 md:py-36 bg-[#050505] relative overflow-hidden">
       {/* Background Lighting */}
-      <div className="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-cyan-600/5 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/3 -right-20 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[200px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
@@ -173,10 +39,37 @@ export const Team: React.FC = () => {
           </p>
         </div>
 
-        {/* 3D Animated Squad Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Squad Grid with React Bits ProfileCard Component */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {TEAM.map((member, idx) => (
-            <TeamCard key={member.id} member={member} index={idx} />
+            <motion.div
+              key={member.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              className="flex justify-center"
+            >
+              <ProfileCard
+                name={member.name}
+                title={member.role}
+                handle={member.name.toLowerCase().replace(/[^a-z0-9]/g, '')}
+                status={idx === 0 ? "NIT Raipur // Lead" : "Core Squad // Active"}
+                contactText="Profile ↗"
+                avatarUrl={member.image}
+                miniAvatarUrl={member.image}
+                showUserInfo={true}
+                enableTilt={true}
+                behindGlowEnabled={true}
+                behindGlowColor={idx === 0 ? "rgba(34, 211, 238, 0.6)" : "rgba(59, 130, 246, 0.5)"}
+                innerGradient={
+                  idx === 0
+                    ? "linear-gradient(145deg,rgba(37,99,235,0.25) 0%,rgba(6,182,212,0.18) 100%)"
+                    : "linear-gradient(145deg,rgba(15,23,42,0.6) 0%,rgba(30,41,59,0.3) 100%)"
+                }
+                onContactClick={() => window.open(getContactLink(member.name), '_blank')}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
