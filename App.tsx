@@ -61,7 +61,7 @@ export const App: React.FC = () => {
         ) : (
           <div className="relative">
             {/* Dynamic Section-Aware Background */}
-            <BackgroundEffects isAllProjectsView={view === 'projects'} />
+            <BackgroundEffects />
 
             {/* Case Study Full-Screen Overlay */}
             <AnimatePresence>

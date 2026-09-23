@@ -1,15 +1,10 @@
 import React from 'react';
 import { motion as motionBase, useScroll, useTransform, useSpring } from 'framer-motion';
-import GhostFibers from './GhostFibers';
 import DotGrid from './DotGrid';
 
 const motion = motionBase as any;
 
-interface BackgroundEffectsProps {
-  isAllProjectsView?: boolean;
-}
-
-export const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({ isAllProjectsView = false }) => {
+export const BackgroundEffects: React.FC = () => {
   const { scrollYProgress } = useScroll();
 
   const smoothScroll = useSpring(scrollYProgress, {
@@ -22,44 +17,8 @@ export const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({ isAllProje
   const blob1Y = useTransform(smoothScroll, [0, 1], [0, -350]);
   const blob2Y = useTransform(smoothScroll, [0, 1], [0, -600]);
 
-  // GhostFibers is active across all sections EXCEPT Hero (fades in as user scrolls past Hero)
-  const scrollGhostFibersOpacity = useTransform(smoothScroll, [0, 0.06], [0, 1]);
-  const ghostFibersOpacity = isAllProjectsView ? 1 : scrollGhostFibersOpacity;
-
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#050505]">
-      {/* React Bits GhostFibers Background for all sections except Hero */}
-      <motion.div
-        style={{ opacity: ghostFibersOpacity }}
-        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-300"
-      >
-        <GhostFibers
-          lineColor="#22d3ee"
-          glowColor="#3b82f6"
-          speed={0.25}
-          scale={2.2}
-          rotation={0}
-          rotationSpeed={0.2}
-          layers={5}
-          waveAmplitude={0.02}
-          waveFrequency={3}
-          waveSpeed={0.16}
-          layerSpeed={0.08}
-          twist={0.12}
-          twistFrequency={5}
-          twistSpeed={1.2}
-          lineFrequency={5}
-          lineSpacing={2}
-          lineSharpness={16}
-          glowFalloff={9}
-          glowIntensity={2.4}
-          brightness={2.6}
-          blueBoost={1.35}
-          vignette={0.65}
-          grain={0.04}
-        />
-      </motion.div>
-
       {/* Continuous Animated Aurora Orbs with Scroll Parallax */}
       <motion.div
         style={{ y: blob1Y }}
@@ -90,7 +49,7 @@ export const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({ isAllProje
       />
 
       {/* React Bits Interactive DotGrid Layer */}
-      <div className="absolute inset-0 z-10 opacity-40">
+      <div className="absolute inset-0 z-10 opacity-50">
         <DotGrid
           dotSize={2.5}
           gap={32}

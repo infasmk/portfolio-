@@ -36,7 +36,7 @@ export const About: React.FC = () => {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-28 md:py-40 bg-transparent overflow-hidden"
+      className="relative py-28 md:py-40 bg-[#050505] overflow-hidden"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none" />

@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-20 md:py-28 bg-transparent relative overflow-hidden select-none border-t border-white/[0.08]">
+    <footer className="py-20 md:py-28 bg-[#050505] relative overflow-hidden select-none border-t border-white/[0.08]">
       {/* Animated Top Border Beam */}
       <div className="absolute top-0 left-0 right-0 h-[1.5px] overflow-hidden">
         <motion.div

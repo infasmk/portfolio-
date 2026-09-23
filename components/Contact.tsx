@@ -59,7 +59,7 @@ export const Contact: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-28 md:py-40 bg-transparent relative overflow-hidden">
+    <section id="contact" className="py-28 md:py-40 bg-[#050505] relative overflow-hidden">
       {/* Background Cinematic Atmosphere */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-blue-600/10 via-cyan-500/5 to-transparent rounded-full blur-[200px] pointer-events-none" />
 

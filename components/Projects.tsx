@@ -91,7 +91,7 @@ export const Projects: React.FC<ProjectsProps> = ({
     <section
       id="projects"
       ref={containerRef}
-      className="relative h-[460vh] bg-transparent"
+      className="relative h-[460vh] bg-[#050505]"
     >
       {/* Sticky viewport pinned while user scrolls */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 md:py-10">
