@@ -1,24 +1,93 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion as motionBase, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Volume2, VolumeX, Zap } from 'lucide-react';
+import { useScrollDirection } from '../hooks/useScrollDirection';
+import { useMagnetic } from '../hooks/useMagnetic';
+import { soundManager } from './SoundManager';
+import { BRAND } from '../constants';
 
-// Fix for framer-motion type issues where initial/animate/exit are not recognized
 const motion = motionBase as any;
 
-const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+interface NavbarProps {
+  onNavigateProjects?: () => void;
+  isProjectView?: boolean;
+}
+
+const MagneticNavLink: React.FC<{
+  href: string;
+  name: string;
+  active?: boolean;
+  onClick?: () => void;
+}> = ({ href, name, active, onClick }) => {
+  const { ref, position, handleMouseMove, handleMouseLeave } = useMagnetic(0.2);
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative px-3 py-1.5"
+    >
+      <motion.a
+        href={href}
+        onClick={(e: React.MouseEvent) => {
+          soundManager.playClick();
+          if (onClick) onClick();
+        }}
+        onMouseEnter={() => soundManager.playHover()}
+        animate={{ x: position.x, y: position.y }}
+        transition={{ type: 'spring', damping: 15, stiffness: 250 }}
+        className={`relative text-xs font-semibold tracking-wider uppercase transition-colors duration-300 block ${
+          active ? 'text-white' : 'text-zinc-400 hover:text-white'
+        }`}
+      >
+        {name}
+        {active && (
+          <motion.div
+            layoutId="activeNavIndicator"
+            className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          />
+        )}
+      </motion.a>
+    </div>
+  );
+};
+
+export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectView = false }) => {
+  const { scrollDirection, isAtTop } = useScrollDirection(12);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('work');
+  const [soundOn, setSoundOn] = useState(false);
 
+  // Magnetic button for CTA
+  const ctaMagnetic = useMagnetic(0.3);
+
+  // Handle section detection on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (isProjectView) return;
 
-  // Lock scroll when mobile menu is open
+    const sections = ['work', 'about', 'stack', 'team', 'contact'];
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 250;
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isProjectView]);
+
+  // Lock body scroll on mobile menu
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -28,59 +97,110 @@ const Navbar: React.FC = () => {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Team', href: '#team' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'WORK', href: '#projects', id: 'work' },
+    { name: 'ABOUT', href: '#about', id: 'about' },
+    { name: 'STACK', href: '#stack', id: 'stack' },
+    { name: 'TEAM', href: '#team', id: 'team' },
+    { name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'py-3 md:py-4 bg-black/50 backdrop-blur-lg border-b border-white/5' : 'py-6 md:py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl md:text-2xl font-bold font-space tracking-tighter"
-        >
-          <a href="#" className="flex items-center">
-            <span className="text-white">Portfolio</span>
-            <span className="text-blue-500">.</span>
-          </a>
-        </motion.div>
+  const handleSoundToggle = () => {
+    const state = soundManager.toggle();
+    setSoundOn(state);
+  };
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-2 py-1.5">
+  // Auto-hide when scrolling down, show when scrolling up or at top
+  const isHidden = !isAtTop && scrollDirection === 'down' && !isMobileMenuOpen;
+
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{
+        y: isHidden ? -100 : 0,
+        opacity: isHidden ? 0 : 1,
+      }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isAtTop
+          ? 'py-6 md:py-8 bg-transparent'
+          : 'py-3 md:py-4 bg-[#050505]/75 backdrop-blur-xl border-b border-white/[0.06] shadow-2xl shadow-black/60'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between">
+        {/* Brand Monogram */}
+        <motion.a
+          href="#"
+          onClick={() => soundManager.playClick()}
+          className="group flex items-center gap-2.5 cursor-pointer select-none"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-cyan-300 shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:shadow-[0_0_22px_rgba(6,182,212,0.7)] transition-all">
+            <Zap size={16} className="fill-cyan-300" />
+          </div>
+          <span className="font-space font-extrabold text-lg md:text-xl tracking-tighter text-white">
+            WEB<span className="text-cyan-400">⚡</span>BITS
+          </span>
+        </motion.a>
+
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md shadow-inner">
           {navLinks.map((link) => (
-            <a
+            <MagneticNavLink
               key={link.name}
               href={link.href}
-              className="px-6 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-300 relative group"
-            >
-              {link.name}
-              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-blue-500 group-hover:w-1/2 transition-all duration-300" />
-            </a>
+              name={link.name}
+              active={activeSection === link.id}
+            />
           ))}
+        </nav>
+
+        {/* Right Action: Sound Toggle + Magnetic "START A PROJECT" CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Audio Feedback Toggle */}
+          <button
+            onClick={handleSoundToggle}
+            aria-label="Toggle Sound Effects"
+            className="p-2.5 rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 hover:text-white hover:border-white/25 transition-all text-xs flex items-center justify-center"
+            title={soundOn ? 'Mute Sound FX' : 'Enable Sound FX'}
+          >
+            {soundOn ? <Volume2 size={16} className="text-cyan-400" /> : <VolumeX size={16} />}
+          </button>
+
+          {/* Magnetic CTA */}
+          <div
+            ref={ctaMagnetic.ref}
+            onMouseMove={ctaMagnetic.handleMouseMove}
+            onMouseLeave={ctaMagnetic.handleMouseLeave}
+          >
+            <motion.a
+              href="#contact"
+              onClick={() => soundManager.playClick()}
+              onMouseEnter={() => soundManager.playHover()}
+              animate={{ x: ctaMagnetic.position.x, y: ctaMagnetic.position.y }}
+              transition={{ type: 'spring', damping: 15, stiffness: 220 }}
+              data-cursor="CONTACT"
+              className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black font-space font-bold text-xs uppercase tracking-wider hover:bg-gradient-to-r hover:from-blue-500 hover:to-cyan-400 hover:text-white transition-all shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+            >
+              <span>START A PROJECT</span>
+              <ArrowUpRight size={14} />
+            </motion.a>
+          </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="hidden md:block"
-        >
-          <a
-            href="#contact"
-            className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-blue-600 hover:text-white transition-all duration-300"
-          >
-            LET'S TALK
-          </a>
-        </motion.div>
-
-        {/* Mobile Toggle */}
-        <div className="md:hidden">
+        {/* Mobile Menu Button */}
+        <div className="flex md:hidden items-center gap-2">
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-3 text-white bg-white/5 rounded-full border border-white/10 active:scale-90 transition-transform"
+            onClick={handleSoundToggle}
+            className="p-2.5 rounded-full border border-white/10 bg-white/[0.05] text-zinc-400"
+          >
+            {soundOn ? <Volume2 size={16} className="text-cyan-400" /> : <VolumeX size={16} />}
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
+            className="p-2.5 text-white bg-white/5 rounded-full border border-white/10 active:scale-95 transition-transform"
             aria-label="Toggle Menu"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -88,54 +208,67 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Fullscreen Cinematic Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[40] md:hidden flex flex-col items-center justify-center text-center p-6"
+            initial={{ opacity: 0, clipPath: 'circle(0% at 90% 10%)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at 90% 10%)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at 90% 10%)' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 bg-[#050505] z-40 md:hidden flex flex-col justify-between p-8 pt-24"
           >
-            <div className="flex flex-col space-y-8 w-full">
+            {/* Background Mesh Glow */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="flex flex-col space-y-6 relative z-10">
+              <span className="text-cyan-400 text-[10px] font-mono tracking-[0.3em] uppercase">
+                // NAVIGATION
+              </span>
+
               {navLinks.map((link, idx) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.08 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-4xl font-space font-bold text-zinc-400 hover:text-white active:text-blue-500 transition-colors"
+                  className="text-4xl font-space font-extrabold text-zinc-300 hover:text-white active:text-cyan-400 flex items-center justify-between group"
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  <span className="text-xs font-mono text-zinc-600 group-hover:text-cyan-400 transition-colors">
+                    0{idx + 1}
+                  </span>
                 </motion.a>
               ))}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="pt-10"
-              >
-                <a
-                  href="#contact"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="bg-blue-600 text-white px-10 py-5 rounded-full text-lg font-bold w-full block"
-                >
-                  START A PROJECT
-                </a>
-              </motion.div>
             </div>
-            
-            <div className="absolute bottom-12 flex gap-6 text-zinc-500">
-              <span className="text-xs uppercase tracking-[0.3em]">Twitter</span>
-              <span className="text-xs uppercase tracking-[0.3em]">LinkedIn</span>
-              <span className="text-xs uppercase tracking-[0.3em]">Dribbble</span>
+
+            <div className="relative z-10 pt-8 border-t border-white/10 space-y-6">
+              <a
+                href="#contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-center block tracking-wider uppercase text-sm shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+              >
+                START A PROJECT →
+              </a>
+
+              <div className="flex justify-between items-center text-xs text-zinc-500 font-mono">
+                <a href={BRAND.socials.github} target="_blank" rel="noreferrer" className="hover:text-white">
+                  GITHUB
+                </a>
+                <a href={BRAND.socials.instagram} target="_blank" rel="noreferrer" className="hover:text-white">
+                  INSTAGRAM
+                </a>
+                <a href={BRAND.socials.whatsapp} target="_blank" rel="noreferrer" className="hover:text-white">
+                  WHATSAPP
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.header>
   );
 };
 

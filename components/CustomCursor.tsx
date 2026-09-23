@@ -1,72 +1,124 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion as motionBase, useSpring, useMotionValue } from 'framer-motion';
 
-// Fix for framer-motion type issues where initial/animate/exit are not recognized
 const motion = motionBase as any;
 
-const CustomCursor: React.FC = () => {
-  const [isHovering, setIsHovering] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+export const CustomCursor: React.FC = () => {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [cursorText, setCursorText] = useState<string | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const springConfig = { damping: 25, stiffness: 200 };
-  const springX = useSpring(cursorX, springConfig);
-  const springY = useSpring(cursorY, springConfig);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+    // Detect touch device
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      setIsTouchDevice(true);
+      return;
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      if (!isVisible) setIsVisible(true);
     };
 
-    const handleHover = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' || 
-        target.closest('button') || 
-        target.closest('a') ||
-        target.classList.contains('cursor-pointer')
-      ) {
-        setIsHovering(true);
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const cursorTarget = target.closest('[data-cursor]') as HTMLElement | null;
+      if (cursorTarget) {
+        setCursorText(cursorTarget.getAttribute('data-cursor'));
+        setIsHovered(true);
+        return;
+      }
+
+      const interactive = target.closest('button, a, [role="button"], input, textarea, select');
+      if (interactive) {
+        setCursorText(null);
+        setIsHovered(true);
       } else {
-        setIsHovering(false);
+        setCursorText(null);
+        setIsHovered(false);
       }
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleHover);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseover', handleMouseOver);
 
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleHover);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, [isVisible, mouseX, mouseY]);
+
+  if (isTouchDevice || !isVisible) return null;
 
   return (
     <>
-      {/* Outer Ring */}
+      {/* Outer Follower Ring / Label */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-blue-500 pointer-events-none z-[10001] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[10000] flex items-center justify-center rounded-full text-[9px] font-space font-bold tracking-widest uppercase transition-colors"
         style={{
-          x: springX,
-          y: springY,
+          x: smoothX,
+          y: smoothY,
           translateX: '-50%',
           translateY: '-50%',
-          scale: isHovering ? 1.5 : 1,
-        } as any}
-      />
-      {/* Inner Dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-blue-500 pointer-events-none z-[10001] hidden md:block"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: '-50%',
-          translateY: '-50%',
-        } as any}
-      />
+        }}
+        animate={{
+          width: cursorText ? 68 : isHovered ? 44 : 28,
+          height: cursorText ? 68 : isHovered ? 44 : 28,
+          backgroundColor: cursorText ? 'rgba(37, 99, 235, 0.9)' : isHovered ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+          borderColor: cursorText ? 'rgba(96, 165, 250, 0.8)' : isHovered ? 'rgba(59, 130, 246, 0.6)' : 'rgba(255, 255, 255, 0.25)',
+          borderWidth: cursorText ? 0 : 1,
+          backdropFilter: cursorText ? 'blur(4px)' : 'none',
+          color: '#ffffff',
+          boxShadow: cursorText ? '0 0 25px rgba(37, 99, 235, 0.5)' : 'none',
+        }}
+        transition={{ type: 'spring', damping: 22, stiffness: 350 }}
+      >
+        {cursorText && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6 }}
+            className="select-none tracking-wider text-[10px]"
+          >
+            {cursorText}
+          </motion.span>
+        )}
+      </motion.div>
+
+      {/* Tiny Precision Inner Dot */}
+      {!cursorText && (
+        <motion.div
+          className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-cyan-400 pointer-events-none z-[10001] shadow-[0_0_8px_rgba(34,211,238,0.9)]"
+          style={{
+            x: mouseX,
+            y: mouseY,
+            translateX: '-50%',
+            translateY: '-50%',
+          }}
+          animate={{
+            scale: isHovered ? 0 : 1,
+            opacity: isHovered ? 0 : 1,
+          }}
+          transition={{ duration: 0.15 }}
+        />
+      )}
     </>
   );
 };

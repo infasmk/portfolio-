@@ -1,4 +1,3 @@
-
 export interface Project {
   id: number;
   title: string;
@@ -7,12 +6,20 @@ export interface Project {
   tech: string[];
   description: string;
   link?: string;
+  year?: string;
+  role?: string;
+  challenge?: string;
+  solution?: string;
+  result?: string;
+  github?: string;
 }
 
 export interface Skill {
   name: string;
   level: number;
-  icon: string;
+  icon?: string;
+  category?: 'frontend' | 'backend' | 'tools';
+  description?: string;
 }
 
 export interface TeamMember {
@@ -25,5 +32,6 @@ export interface TeamMember {
     twitter?: string;
     linkedin?: string;
     github?: string;
+    instagram?: string;
   };
 }

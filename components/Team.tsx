@@ -1,70 +1,150 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { Twitter, Linkedin, Github } from 'lucide-react';
+import { Twitter, Linkedin, Github, Instagram, ArrowUpRight } from 'lucide-react';
 import { TEAM } from '../constants';
 import { TeamMember } from '../types';
+import { soundManager } from './SoundManager';
 
-// Fix for framer-motion type issues where initial/animate/exit are not recognized
 const motion = motionBase as any;
 
 const TeamCard: React.FC<{ member: TeamMember; index: number }> = ({ member, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative"
+      transition={{ duration: 0.6, delay: index * 0.12 }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        soundManager.playHover();
+      }}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative flex flex-col rounded-3xl bg-[#090a0f] border border-white/[0.08] hover:border-cyan-500/40 p-6 md:p-8 transition-all duration-500 overflow-hidden"
     >
-      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-6">
+      {/* Background Accent Glow on hover */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      {/* Large Portrait Image with Cinematic Reveals */}
+      <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden mb-6 bg-zinc-900">
         <img
           src={member.image}
           alt={member.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
         />
-        <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity" />
-        
-        <div className="absolute bottom-4 left-4 flex gap-2 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          {member.socials.twitter && (
-            <a href={member.socials.twitter} className="p-2 bg-black/60 backdrop-blur-md rounded-lg text-white hover:bg-blue-500 transition-colors">
-              <Twitter size={16} />
-            </a>
-          )}
-          {member.socials.linkedin && (
-            <a href={member.socials.linkedin} className="p-2 bg-black/60 backdrop-blur-md rounded-lg text-white hover:bg-blue-500 transition-colors">
-              <Linkedin size={16} />
-            </a>
-          )}
-          {member.socials.github && (
-            <a href={member.socials.github} className="p-2 bg-black/60 backdrop-blur-md rounded-lg text-white hover:bg-blue-500 transition-colors">
-              <Github size={16} />
-            </a>
-          )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#090a0f] via-transparent to-transparent opacity-80" />
+
+        {/* Hover Social Links Overlay */}
+        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-20">
+          <div className="flex gap-2">
+            {member.socials.github && (
+              <a
+                href={member.socials.github}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => soundManager.playClick()}
+                className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
+                title="GitHub"
+              >
+                <Github size={16} />
+              </a>
+            )}
+            {member.socials.linkedin && (
+              <a
+                href={member.socials.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => soundManager.playClick()}
+                className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
+                title="LinkedIn"
+              >
+                <Linkedin size={16} />
+              </a>
+            )}
+            {member.socials.instagram && (
+              <a
+                href={member.socials.instagram}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => soundManager.playClick()}
+                className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
+                title="Instagram"
+              >
+                <Instagram size={16} />
+              </a>
+            )}
+            {member.socials.twitter && (
+              <a
+                href={member.socials.twitter}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => soundManager.playClick()}
+                className="p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-zinc-300 hover:text-white hover:bg-cyan-500 hover:text-black transition-all"
+                title="Twitter"
+              >
+                <Twitter size={16} />
+              </a>
+            )}
+          </div>
+
+          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest px-2 py-1 rounded bg-black/40 backdrop-blur-md border border-white/5">
+            0{index + 1}
+          </span>
         </div>
       </div>
-      
-      <h4 className="text-xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">{member.name}</h4>
-      <p className="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">{member.role}</p>
-      <p className="text-zinc-500 text-sm line-clamp-2">{member.bio}</p>
+
+      {/* Member Details */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 className="text-2xl font-space font-extrabold text-white mb-1 group-hover:text-cyan-300 transition-colors">
+            {member.name}
+          </h4>
+          <p className="text-cyan-400 font-mono text-xs uppercase tracking-wider mb-4">
+            {member.role}
+          </p>
+          <p className="text-zinc-400 text-sm font-light leading-relaxed mb-6">
+            {member.bio}
+          </p>
+        </div>
+
+        <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-zinc-500 group-hover:text-zinc-400 transition-colors">
+          <span>WEB⚡BITS STUDIO</span>
+          <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </div>
+      </div>
     </motion.div>
   );
 };
 
-const Team: React.FC = () => {
+export const Team: React.FC = () => {
   return (
-    <section id="team" className="py-32 bg-zinc-950/30">
-      <div className="container mx-auto px-6">
-        <div className="mb-20">
-          <h2 className="text-zinc-500 font-space font-medium tracking-widest uppercase text-sm mb-4">
-            // THE SQUAD
-          </h2>
-          <h3 className="text-5xl md:text-6xl font-bold font-space text-white">
-            MEET THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600">MINDS</span>
-          </h3>
+    <section id="team" className="py-28 md:py-36 bg-[#050505] relative overflow-hidden">
+      {/* Background Lighting */}
+      <div className="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-cyan-600/5 rounded-full blur-[180px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-16">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
+                // 04 COLLECTIVE MINDS
+              </span>
+              <div className="h-[1px] w-16 bg-white/10" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-space font-extrabold text-white tracking-tighter">
+              THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">SQUAD.</span>
+            </h2>
+          </div>
+
+          <p className="max-w-md text-zinc-400 text-sm md:text-base font-light">
+            Engineers, creative developers, and motion designers crafting tomorrow's web standards together.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        {/* Cinematic Team Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {TEAM.map((member, idx) => (
             <TeamCard key={member.id} member={member} index={idx} />
           ))}

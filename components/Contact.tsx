@@ -1,105 +1,236 @@
-
 import React, { useState } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, ArrowUpRight, Copy, Check, MessageSquare, Mail, Instagram, Github, Linkedin } from 'lucide-react';
+import { BRAND } from '../constants';
+import { soundManager } from './SoundManager';
 
-// Fix for framer-motion type issues where initial/animate/exit are not recognized
 const motion = motionBase as any;
 
-const Contact: React.FC = () => {
+export const Contact: React.FC = () => {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [copied, setCopied] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleCopyEmail = () => {
+    soundManager.playClick();
+    navigator.clipboard.writeText(BRAND.socials.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    soundManager.playWarp();
     setFormState('sending');
+
     setTimeout(() => {
       setFormState('success');
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setFormState('idle'), 5000);
-    }, 1500);
+    }, 1200);
   };
 
+  const contactMethods = [
+    {
+      name: 'EMAIL',
+      value: BRAND.socials.email,
+      href: `mailto:${BRAND.socials.email}`,
+      icon: Mail,
+      desc: 'Direct conversation',
+    },
+    {
+      name: 'WHATSAPP',
+      value: 'Instant Chat',
+      href: BRAND.socials.whatsapp,
+      icon: MessageSquare,
+      desc: 'Quick inquiries',
+    },
+    {
+      name: 'GITHUB',
+      value: '@infasmk',
+      href: BRAND.socials.github,
+      icon: Github,
+      desc: 'Code repository',
+    },
+    {
+      name: 'INSTAGRAM',
+      value: '@infasmk',
+      href: BRAND.socials.instagram,
+      icon: Instagram,
+      desc: 'Design experiments',
+    },
+  ];
+
   return (
-    <section id="contact" className="py-20 md:py-32 bg-[#050505] relative">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20">
-          <div className="flex flex-col justify-center">
-            <h2 className="text-blue-500 font-space font-bold tracking-[0.2em] uppercase text-xs mb-4">
-              // CONTACT US
-            </h2>
-            <h3 className="text-4xl sm:text-5xl md:text-7xl font-bold font-space text-white mb-8 md:mb-10 tracking-tighter leading-[1.1]">
-              LET'S CREATE <br /> SOMETHING <br /> <span className="text-blue-600">ICONIC</span>.
-            </h3>
-            
-            <div className="space-y-4 md:space-y-6 text-zinc-400 text-base md:text-lg">
-              <p>Have a project in mind? We'd love to hear about it.</p>
-              <div className="pt-6 md:pt-8 space-y-3 md:space-y-4">
-                <p className="text-white font-bold text-xl md:text-2xl hover:text-blue-500 transition-colors">
-                  <a href="mailto:hello@novastudio.com">hello@novastudio.com</a>
-                </p>
-                <div className="flex flex-col gap-1 text-sm md:text-base">
-                  <p>+1 (555) 000-1234</p>
-                  <p>San Francisco, CA & Remote</p>
-                </div>
-              </div>
-            </div>
+    <section id="contact" className="py-28 md:py-40 bg-[#050505] relative overflow-hidden">
+      {/* Background Cinematic Atmosphere */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-blue-600/10 via-cyan-500/5 to-transparent rounded-full blur-[200px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="flex items-center gap-3 mb-10 md:mb-16">
+          <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
+            // 05 INITIATE COLLABORATION
+          </span>
+          <div className="h-[1px] w-24 bg-white/10" />
+        </div>
+
+        {/* Climax Statement */}
+        <div className="mb-20">
+          <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-space font-extrabold text-white tracking-tighter leading-[0.88] uppercase mb-8">
+            LET'S BUILD <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-300 to-blue-500">
+              SOMETHING
+            </span> <br />
+            USEFUL.
+          </h2>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={handleCopyEmail}
+              onMouseEnter={() => soundManager.playHover()}
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.04] border border-white/10 hover:border-cyan-500/50 text-white font-mono text-xs tracking-wider transition-all"
+            >
+              {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+              <span>{copied ? 'EMAIL COPIED TO CLIPBOARD' : BRAND.socials.email}</span>
+            </button>
+
+            <span className="text-zinc-500 text-xs font-mono hidden sm:inline-block">
+              // TYPICAL RESPONSE TIME: &lt; 24 HOURS
+            </span>
+          </div>
+        </div>
+
+        {/* Contact Matrix: Channels + Interactive Inquiry Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Left Column: Direct Communication Channels */}
+          <div className="lg:col-span-5 space-y-4">
+            <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-widest block mb-4">
+              DIRECT PROTOCOLS
+            </span>
+
+            {contactMethods.map((method) => {
+              const Icon = method.icon;
+              return (
+                <a
+                  key={method.name}
+                  href={method.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => soundManager.playClick()}
+                  onMouseEnter={() => soundManager.playHover()}
+                  data-cursor="OPEN"
+                  className="group flex items-center justify-between p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/40 hover:bg-white/[0.04] transition-all"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-white/[0.03] text-zinc-400 group-hover:text-cyan-400 transition-colors">
+                      <Icon size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-space font-bold text-base group-hover:text-cyan-300 transition-colors">
+                        {method.name}
+                      </h4>
+                      <p className="text-zinc-500 text-xs font-mono">{method.desc}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
+                      {method.value}
+                    </span>
+                    <ArrowUpRight size={16} className="text-zinc-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </a>
+              );
+            })}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white/5 border border-white/10 p-6 md:p-10 rounded-3xl backdrop-blur-xl"
-          >
-            <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Full Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Your Name"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 md:py-4 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-700"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Email Address</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="name@company.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 md:py-4 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-700"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Your Vision</label>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="Tell us about your project goals..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 md:py-4 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none placeholder:text-zinc-700"
-                />
-              </div>
+          {/* Right Column: Project Inquiry Form */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 md:p-12 rounded-3xl bg-[#090a0f] border border-white/10 relative overflow-hidden shadow-2xl"
+            >
+              <h3 className="text-2xl font-space font-bold text-white mb-2">
+                START A PROJECT
+              </h3>
+              <p className="text-zinc-400 text-sm font-light mb-8">
+                Tell us about your objectives, timeline, and vision.
+              </p>
 
-              <button
-                type="submit"
-                disabled={formState !== 'idle'}
-                className={`w-full py-4 md:py-5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 ${
-                  formState === 'success' 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
-              >
-                {formState === 'idle' && (
-                  <>SEND INQUIRY <Send size={18} /></>
-                )}
-                {formState === 'sending' && (
-                  <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                )}
-                {formState === 'success' && (
-                  <>SENT SUCCESSFULLY <CheckCircle size={18} /></>
-                )}
-              </button>
-            </form>
-          </motion.div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                    YOUR NAME / STUDIO
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Satoshi Nakamoto"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 text-sm"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                    EMAIL ADDRESS
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="e.g. satoshi@bitcoin.org"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 text-sm"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                    PROJECT VISION & SCOPE
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Describe your digital experience, deliverables, timeline..."
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 resize-none text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formState !== 'idle'}
+                  className={`w-full py-4 rounded-xl font-space font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-3 transition-all active:scale-95 ${
+                    formState === 'success'
+                      ? 'bg-emerald-500 text-black'
+                      : 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-[0_0_25px_rgba(37,99,235,0.4)]'
+                  }`}
+                >
+                  {formState === 'idle' && (
+                    <>
+                      <span>DISPATCH INQUIRY</span>
+                      <Send size={16} />
+                    </>
+                  )}
+                  {formState === 'sending' && (
+                    <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  )}
+                  {formState === 'success' && (
+                    <>
+                      <span>TRANSMISSION RECEIVED</span>
+                      <CheckCircle size={16} />
+                    </>
+                  )}
+                </button>
+              </form>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,176 +1,163 @@
-
-import React from 'react';
-import { motion as motionBase } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion as motionBase, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
 import { PROJECTS } from '../constants';
-import Footer from './Footer';
 import { Project } from '../types';
+import { soundManager } from './SoundManager';
+import Footer from './Footer';
 
 const motion = motionBase as any;
-
-const ArchiveBackground: React.FC = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Slow Moving Light Leaks */}
-      <motion.div
-        animate={{
-          x: [-100, 100, -100],
-          y: [-50, 50, -50],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="absolute -top-1/4 -left-1/4 w-full h-full bg-blue-600/10 blur-[180px] rounded-full"
-      />
-      <motion.div
-        animate={{
-          x: [100, -100, 100],
-          y: [50, -50, 50],
-          opacity: [0.05, 0.1, 0.05],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="absolute -bottom-1/4 -right-1/4 w-full h-full bg-indigo-900/15 blur-[200px] rounded-full"
-      />
-
-      {/* Subtle Dust/Shimmer Particles */}
-      <div className="absolute inset-0 opacity-20">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: Math.random() * 100 + "%", 
-              y: Math.random() * 100 + "%",
-              scale: Math.random() * 0.5 + 0.5,
-              opacity: Math.random() * 0.3 + 0.1
-            }}
-            animate={{
-              y: [null, "-20%", "20%"],
-              opacity: [0.1, 0.4, 0.1],
-            }}
-            transition={{
-              duration: 10 + Math.random() * 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 5
-            }}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full blur-[1px]"
-          />
-        ))}
-      </div>
-      
-      {/* Texture Overlays */}
-      <div className="absolute inset-0 bg-grid opacity-[0.03]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505] opacity-90" />
-    </div>
-  );
-};
 
 interface AllProjectsProps {
   onBack: () => void;
   onProjectSelect: (project: Project) => void;
 }
 
-const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelect }) => {
+export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelect }) => {
+  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+
   return (
-    <div className="min-h-screen bg-[#050505] text-white relative">
-      <ArchiveBackground />
-      
-      {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/5 px-6 py-6">
-        <div className="container mx-auto flex justify-between items-center">
-          <button 
-            onClick={onBack}
-            className="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors"
+    <div
+      onMouseMove={handleMouseMove}
+      className="min-h-screen bg-[#050505] text-white relative selection:bg-cyan-500/30 overflow-x-hidden"
+    >
+      {/* Floating Thumbnail Preview Following Cursor (Requirement 13) */}
+      <AnimatePresence>
+        {hoveredProject && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: mousePos.x + 30,
+              y: mousePos.y - 120,
+            }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300, mass: 0.5 }}
+            className="fixed pointer-events-none z-50 hidden lg:block w-72 h-48 rounded-2xl overflow-hidden border border-white/20 shadow-2xl shadow-cyan-500/20"
           >
-            <div className="p-2 bg-white/5 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-all">
-              <ArrowLeft size={18} />
+            <img
+              src={hoveredProject.image}
+              alt={hoveredProject.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+              <span className="text-[10px] font-mono text-cyan-300 uppercase">
+                {hoveredProject.category}
+              </span>
+              <span className="text-[10px] font-mono text-zinc-400">
+                {hoveredProject.year}
+              </span>
             </div>
-            <span className="font-bold text-sm tracking-widest uppercase">Back to Home</span>
-          </button>
-          
-          <div className="text-xl font-bold font-space tracking-tighter">
-            Portfolio<span className="text-blue-500">.</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Top Header */}
+      <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-6 bg-[#050505]/75 backdrop-blur-xl border-b border-white/[0.08] flex justify-between items-center">
+        <button
+          onClick={() => {
+            soundManager.playClick();
+            onBack();
+          }}
+          className="group flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+        >
+          <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
+            <ArrowLeft size={16} />
           </div>
-          
-          <div className="hidden md:block">
-            <span className="text-zinc-600 text-xs font-bold uppercase tracking-widest">
-              Gallery / {PROJECTS.length} Items
-            </span>
-          </div>
-        </div>
+          <span>RETURN TO HOME</span>
+        </button>
+
+        <span className="font-space font-extrabold text-lg tracking-tight text-white">
+          WEB<span className="text-cyan-400">⚡</span>BITS
+        </span>
+
+        <span className="text-zinc-500 font-mono text-xs uppercase hidden sm:inline-block">
+          ARCHIVE // 0{PROJECTS.length} ENTRIES
+        </span>
       </header>
 
-      {/* Hero Content */}
-      <section className="pt-40 pb-20 px-6 relative z-10">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-6xl sm:text-7xl md:text-9xl font-space font-extrabold tracking-tighter leading-none mb-8">
-              FULL <br /> <span className="text-zinc-800 italic">ARCHIVE.</span>
-            </h1>
-            <p className="max-w-xl text-zinc-500 text-lg md:text-xl leading-relaxed">
-              Explore our complete collection of digital artifacts, platforms, and interactive experiments.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* Hero Title */}
+      <main className="max-w-7xl mx-auto px-6 md:px-12 pt-40 pb-32 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="mb-20"
+        >
+          <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase block mb-4">
+            // COMPREHENSIVE INDEX
+          </span>
+          <h1 className="text-5xl sm:text-7xl md:text-9xl font-space font-extrabold tracking-tighter leading-none uppercase">
+            SELECTED <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-white italic">
+              WORK.
+            </span>
+          </h1>
+        </motion.div>
 
-      {/* Projects Grid */}
-      <section className="pb-32 px-6 relative z-10">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROJECTS.map((project, idx) => (
+        {/* Editorial Project Rows with Hover Expansion */}
+        <div className="border-t border-white/10 divide-y divide-white/10">
+          {PROJECTS.map((project, idx) => {
+            const formattedNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
+            return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                onClick={() => onProjectSelect(project)}
-                className="group relative cursor-pointer"
+                transition={{ delay: idx * 0.08 }}
+                onMouseEnter={() => {
+                  setHoveredProject(project);
+                  soundManager.playHover();
+                }}
+                onMouseLeave={() => setHoveredProject(null)}
+                onClick={() => {
+                  soundManager.playWarp();
+                  onProjectSelect(project);
+                }}
+                className="group py-8 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer transition-all duration-300 hover:px-4 hover:bg-white/[0.02]"
               >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-zinc-900 mb-6">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                  
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100">
-                    <div className="p-4 bg-white text-black rounded-full font-bold flex items-center gap-2 shadow-xl">
-                      VIEW PROJECT <ExternalLink size={16} />
-                    </div>
+                <div className="flex items-baseline gap-6 md:gap-12">
+                  <span className="font-mono text-xl md:text-2xl font-bold text-zinc-600 group-hover:text-cyan-400 transition-colors">
+                    {formattedNum}
+                  </span>
+                  <div>
+                    <h3 className="text-3xl md:text-5xl font-space font-extrabold text-white tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-cyan-200 group-hover:to-blue-400 transition-all">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs font-mono text-zinc-500 mt-2">
+                      {project.category} // {project.year}
+                    </p>
                   </div>
                 </div>
-                
-                <p className="text-blue-500 text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
-                  {project.category}
-                </p>
-                <h3 className="text-2xl font-space font-bold text-white mb-3">
-                  {project.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-zinc-500 uppercase">
-                      {t}
-                    </span>
-                  ))}
+
+                <div className="flex items-center gap-6 self-end md:self-center">
+                  <div className="hidden lg:flex gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 rounded bg-white/5 text-[10px] font-mono text-zinc-400"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="p-3 rounded-full bg-white/5 border border-white/10 group-hover:bg-cyan-400 group-hover:text-black group-hover:border-cyan-400 transition-all">
+                    <ArrowUpRight size={18} />
+                  </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </section>
+      </main>
 
       <Footer />
     </div>
