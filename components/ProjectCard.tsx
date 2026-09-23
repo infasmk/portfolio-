@@ -65,7 +65,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       className={`shrink-0 select-none ${
         compact
           ? 'w-full'
-          : 'w-[85vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-3xl h-[560px] md:h-[600px]'
+          : 'w-[85vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-3xl h-[460px] sm:h-[520px] md:h-[580px] lg:h-[600px]'
       }`}
     >
       <motion.div

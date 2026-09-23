@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion as motionBase, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
-import Aurora from './Aurora';
+import ColorBends from './ColorBends';
 
 const motion = motionBase as any;
 
@@ -26,13 +26,22 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       className="relative min-h-[95vh] md:min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 pb-16"
     >
-      {/* React Bits Aurora Ambient Shader Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-80 mix-blend-screen">
-        <Aurora
-          colorStops={["#0284c7", "#06b6d4", "#4f46e5"]}
-          blend={0.65}
-          amplitude={1.2}
-          speed={0.6}
+      {/* React Bits ColorBends Ambient Shader Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-85 mix-blend-screen">
+        <ColorBends
+          colors={["#0284c7", "#06b6d4", "#2563eb", "#6366f1"]}
+          rotation={90}
+          speed={0.25}
+          scale={1.1}
+          frequency={1.2}
+          warpStrength={1.4}
+          mouseInfluence={1.2}
+          parallax={0.6}
+          noise={0.12}
+          iterations={1}
+          intensity={1.6}
+          bandWidth={6}
+          transparent={true}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/40 via-transparent to-[#050505]" />
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion as motionBase } from 'framer-motion';
 import { ArrowUp, Zap, Sparkles } from 'lucide-react';
 import { BRAND } from '../constants';
+import Ballpit from './Ballpit';
 
 const motion = motionBase as any;
 
@@ -32,6 +33,33 @@ export const Footer: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        {/* React Bits Ballpit Interactive Physics Arena */}
+        <div className="relative w-full h-[280px] sm:h-[340px] md:h-[380px] mb-16 rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-b from-[#090b14]/70 to-[#050505] shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-sm group">
+          {/* HUD Badging */}
+          <div className="absolute top-4 left-6 z-10 pointer-events-none flex items-center gap-2.5 font-mono text-xs text-zinc-400">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="tracking-widest uppercase">PHYSICS SIMULATION LAB // INTERACTIVE COLLISION MATRIX</span>
+          </div>
+
+          <div className="absolute top-4 right-6 z-10 pointer-events-none hidden sm:flex items-center gap-2 font-mono text-[11px] text-zinc-500">
+            <span>MOVE CURSOR TO SCATTER SPHERES</span>
+          </div>
+
+          <Ballpit
+            count={90}
+            gravity={0.45}
+            friction={0.995}
+            wallBounce={0.92}
+            followCursor={true}
+            colors={["#06b6d4", "#2563eb", "#3b82f6", "#6366f1", "#0284c7"]}
+            ambientColor={0x1e1b4b}
+            ambientIntensity={1.4}
+            lightIntensity={180}
+            minSize={0.6}
+            maxSize={1.4}
+          />
+        </div>
+
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 mb-16 pb-12 border-b border-white/[0.06]">
           {/* Brand Identity & Live Status Beacon */}
           <div>

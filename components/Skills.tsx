@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion as motionBase, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Box, Server, Wrench, Sparkles, Cpu, Layers } from 'lucide-react';
 import { SKILLS } from '../constants';
@@ -33,6 +33,9 @@ const SkillRow: React.FC<{ name: string; level: number; description: string }> =
 
 export const Skills: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [maxDistance, setMaxDistance] = useState(1800);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   // Vertical scroll translates into left-to-right horizontal movement
   const { scrollYProgress } = useScroll({
@@ -41,13 +44,43 @@ export const Skills: React.FC = () => {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    damping: 24,
-    stiffness: 120,
+    damping: 26,
+    stiffness: 140,
     restDelta: 0.001,
   });
 
-  // Scrolls from left to right as requested: starts at -55% and moves to 4%
-  const x = useTransform(smoothProgress, [0, 1], ['-52%', '4%']);
+  // Calculate exact horizontal distance for skills track
+  useEffect(() => {
+    const calculateDistance = () => {
+      if (trackRef.current) {
+        const scrollW = trackRef.current.scrollWidth;
+        const viewW = window.innerWidth;
+        const isMobile = viewW < 768;
+        const extraPad = isMobile ? 32 : 80;
+        const dist = Math.max(0, scrollW - viewW + extraPad);
+        setMaxDistance(dist);
+      }
+    };
+
+    calculateDistance();
+    const t = setTimeout(calculateDistance, 400);
+    window.addEventListener('resize', calculateDistance);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('resize', calculateDistance);
+    };
+  }, []);
+
+  // Update active category index
+  useEffect(() => {
+    return smoothProgress.on('change', (latest: number) => {
+      const idx = Math.min(categories.length - 1, Math.max(0, Math.floor(latest * categories.length)));
+      setActiveIdx(idx);
+    });
+  }, [smoothProgress]);
+
+  // Scrolls from left to right: starts shifted left by -maxDistance and moves to 0
+  const x = useTransform(smoothProgress, [0, 1], [-maxDistance, 0]);
 
   const categories = [
     {
@@ -93,7 +126,7 @@ export const Skills: React.FC = () => {
     <section
       id="stack"
       ref={containerRef}
-      className="relative h-[280vh] bg-[#050505]"
+      className="relative h-[360vh] bg-[#050505]"
     >
       {/* Sticky viewport pinned while user scrolls */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-10 md:py-14">
@@ -116,13 +149,14 @@ export const Skills: React.FC = () => {
 
           <div className="hidden sm:flex items-center gap-3 font-mono text-xs text-zinc-400">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            <span>LEFT-TO-RIGHT SYSTEM PAN</span>
+            <span>LEFT-TO-RIGHT SYSTEM PAN [0{activeIdx + 1} / 0{categories.length}]</span>
           </div>
         </div>
 
         {/* Pinned Left-to-Right Horizontal Track */}
         <div className="relative z-10 w-full overflow-visible py-4">
           <motion.div
+            ref={trackRef}
             style={{ x }}
             className="flex gap-6 md:gap-8 pl-6 md:pl-16 will-change-transform"
           >
