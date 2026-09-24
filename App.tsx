@@ -14,16 +14,13 @@ import Team from './components/Team';
 import Contact from './components/Contact';
 import FloatingContact from './components/FloatingContact';
 import Footer from './components/Footer';
-import ProjectDetail from './components/ProjectDetail';
 import AllProjects from './components/AllProjects';
-import { Project } from './types';
 
 const motion = motionBase as any;
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'home' | 'projects'>('home');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Fast branded boot - exits automatically or via callback
   const handleLoaderComplete = () => {
@@ -38,10 +35,6 @@ export const App: React.FC = () => {
   const handleBackToHome = () => {
     setView('home');
     window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  const handleProjectSelect = (project: Project) => {
-    setSelectedProject(project);
   };
 
   return (
@@ -63,16 +56,6 @@ export const App: React.FC = () => {
             {/* Dynamic Section-Aware Background */}
             <BackgroundEffects />
 
-            {/* Case Study Full-Screen Overlay */}
-            <AnimatePresence>
-              {selectedProject && (
-                <ProjectDetail
-                  project={selectedProject}
-                  onClose={() => setSelectedProject(null)}
-                />
-              )}
-            </AnimatePresence>
-
             {/* View Transitions: Home vs All Projects Archive */}
             <motion.div
               key={view}
@@ -88,20 +71,14 @@ export const App: React.FC = () => {
                   <Hero />
                   <Marquee />
                   <About />
-                  <Projects
-                    onBrowseAll={handleBrowseAll}
-                    onProjectSelect={handleProjectSelect}
-                  />
+                  <Projects onBrowseAll={handleBrowseAll} />
                   <Skills />
                   <Team />
                   <Contact />
                   <Footer />
                 </main>
               ) : (
-                <AllProjects
-                  onBack={handleBackToHome}
-                  onProjectSelect={handleProjectSelect}
-                />
+                <AllProjects onBack={handleBackToHome} />
               )}
             </motion.div>
           </div>

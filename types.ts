@@ -1,21 +1,13 @@
 export interface Project {
   id: number | string;
   title: string;
-  subheading?: string; // Subtitle / category shown on the card
-  category?: string; // Alternative alias for subheading
+  subheading?: string; // (Optional) Subtitle / category shown on the card
+  createdBy?: string; // (Optional) Creator or studio name (e.g. "Infas.mk // WEB⚡BITS")
   image: string; // Cover image URL or path
-  createdBy?: string; // Optional: creator/author name (e.g. "Infas.mk")
-  description: string; // Project summary description
-  features?: string[]; // Optional special feature points (bullet highlights)
-  link?: string; // Optional live project URL (e.g. "https://example.com")
-  github?: string; // Optional GitHub repo URL
+  description: string; // Clean project description
+  features?: string[]; // (Optional) Special feature points (bullet highlights). If omitted, won't show!
+  link?: string; // Direct live website URL
   featured?: boolean; // Set to true to include in the first 6 featured projects on the home screen!
-  tech?: string[]; // Optional tech stack badges
-  year?: string; // Optional launch year
-  role?: string; // Optional role or discipline
-  challenge?: string; // Optional case study challenge
-  solution?: string; // Optional case study solution
-  result?: string; // Optional case study outcome
 }
 
 export interface Skill {

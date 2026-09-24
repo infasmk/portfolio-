@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { ArrowUp, Zap, Sparkles } from 'lucide-react';
+import { ArrowUp, Zap, Sparkles, Lock } from 'lucide-react';
 import { BRAND } from '../constants';
 import { Logo } from './Logo';
+import ProjectCodeGenerator from './ProjectCodeGenerator';
+import { PROJECTS } from '../projects';
 
 const motion = motionBase as any;
 
 export const Footer: React.FC = () => {
+  const [clickCount, setClickCount] = useState(0);
+  const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
+  const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Secret 3-click trigger on the Lock icon
+  const handleLockClick = () => {
+    const nextCount = clickCount + 1;
+
+    if (resetTimerRef.current) {
+      clearTimeout(resetTimerRef.current);
+    }
+
+    if (nextCount >= 3) {
+      setClickCount(0);
+      setIsGeneratorOpen(true);
+    } else {
+      setClickCount(nextCount);
+      resetTimerRef.current = setTimeout(() => {
+        setClickCount(0);
+      }, 2500);
+    }
   };
 
   return (
@@ -36,8 +61,29 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 mb-16 pb-12 border-b border-white/[0.06]">
           {/* Brand Identity & Live Status Beacon */}
           <div>
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-2.5">
               <Logo variant="full" size="lg" />
+
+              {/* Secret Lock Icon (SVG, NOT an emoji) */}
+              <button
+                type="button"
+                onClick={handleLockClick}
+                className="relative p-1.5 rounded-lg border border-transparent hover:border-cyan-500/30 bg-transparent hover:bg-white/[0.04] text-zinc-600 hover:text-cyan-400 transition-all cursor-pointer group"
+                title={clickCount > 0 ? `Click ${3 - clickCount} more time${3 - clickCount > 1 ? 's' : ''} to unlock` : "Admin Vault"}
+                aria-label="Admin Project Code Generator"
+              >
+                <Lock
+                  size={15}
+                  className={`transition-all duration-200 group-hover:scale-110 ${
+                    clickCount > 0 ? 'text-cyan-400 animate-pulse' : 'opacity-40 group-hover:opacity-100'
+                  }`}
+                />
+                {clickCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-cyan-400 text-black font-mono font-bold text-[9px] flex items-center justify-center animate-bounce shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+                    {clickCount}
+                  </span>
+                )}
+              </button>
             </div>
 
             <p className="text-zinc-400 text-sm font-light max-w-md leading-relaxed mb-4">
@@ -114,6 +160,13 @@ export const Footer: React.FC = () => {
           </span>
         </div>
       </div>
+
+      {/* Secret Project Code Generator Modal */}
+      <ProjectCodeGenerator
+        isOpen={isGeneratorOpen}
+        onClose={() => setIsGeneratorOpen(false)}
+        nextId={PROJECTS.length + 1}
+      />
     </footer>
   );
 };

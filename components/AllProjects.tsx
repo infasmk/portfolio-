@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, ExternalLink, Github, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, ExternalLink, Sparkles } from 'lucide-react';
 import { ALL_PROJECTS } from '../projects';
 import { Project } from '../types';
 import Footer from './Footer';
@@ -9,7 +9,7 @@ const motion = motionBase as any;
 
 interface AllProjectsProps {
   onBack: () => void;
-  onProjectSelect: (project: Project) => void;
+  onProjectSelect?: (project: Project) => void;
 }
 
 export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelect }) => {
@@ -18,6 +18,14 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
   const displayedProjects = filter === 'featured'
     ? ALL_PROJECTS.filter((p) => p.featured === true)
     : ALL_PROJECTS;
+
+  const handleOpenProject = (project: Project) => {
+    if (project.link) {
+      window.open(project.link, '_blank', 'noopener,noreferrer');
+    } else if (onProjectSelect) {
+      onProjectSelect(project);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-white relative selection:bg-cyan-500/30 overflow-x-hidden">
@@ -92,25 +100,21 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
           </div>
         </motion.div>
 
-        {/* Card-Type Design Grid */}
+        {/* Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedProjects.map((project, idx) => {
-            const subheadingText = project.subheading || project.category;
-
             return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.06, duration: 0.45 }}
-                className="group rounded-3xl bg-[#090b10] border border-white/[0.08] hover:border-cyan-500/40 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10"
+                transition={{ delay: idx * 0.05, duration: 0.45 }}
+                className="group rounded-3xl bg-[#090b10] border border-white/[0.08] hover:border-cyan-500/40 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 cursor-pointer"
+                onClick={() => handleOpenProject(project)}
               >
                 <div>
                   {/* Project Image Banner */}
-                  <div
-                    onClick={() => onProjectSelect(project)}
-                    className="relative aspect-[16/10] w-full overflow-hidden cursor-pointer"
-                  >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -118,10 +122,10 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#090b10] via-transparent to-transparent" />
 
-                    {/* Subheading / Category Badge (Only if provided!) */}
-                    {subheadingText && (
+                    {/* Subheading Badge (Only if provided!) */}
+                    {project.subheading && (
                       <span className="absolute top-4 left-4 text-cyan-300 font-mono text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-black/60 border border-cyan-500/30 backdrop-blur-md">
-                        {subheadingText}
+                        {project.subheading}
                       </span>
                     )}
 
@@ -144,23 +148,20 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                     )}
 
                     {/* Title */}
-                    <h3
-                      onClick={() => onProjectSelect(project)}
-                      className="text-2xl font-space font-extrabold text-white group-hover:text-cyan-300 transition-colors mb-2 cursor-pointer leading-tight"
-                    >
+                    <h3 className="text-2xl font-space font-extrabold text-white group-hover:text-cyan-300 transition-colors mb-2 leading-tight">
                       {project.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-5 line-clamp-3">
+                    <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-4 line-clamp-3">
                       {project.description}
                     </p>
 
                     {/* Special Feature Points (Only shows if provided!) */}
                     {project.features && project.features.length > 0 && (
-                      <div className="mb-6 space-y-1.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                      <div className="space-y-1.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                         <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold block mb-1">
-                          Key Features:
+                          Key Highlights:
                         </span>
                         {project.features.map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start gap-2 text-xs font-mono text-zinc-300 leading-snug">
@@ -170,60 +171,24 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                         ))}
                       </div>
                     )}
-
-                    {/* Tech Badges (if provided) */}
-                    {project.tech && project.tech.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-2">
-                        {project.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono text-zinc-400"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
 
-                {/* Card Action Footer */}
-                <div className="px-6 md:px-7 pb-6 pt-4 border-t border-white/[0.06] flex items-center justify-between gap-3">
-                  {/* Case Study Details Button */}
-                  <button
-                    onClick={() => onProjectSelect(project)}
-                    className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-space font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <span>CASE STUDY</span>
-                    <ArrowUpRight size={13} />
-                  </button>
+                {/* Card Action Footer: Direct Website Link */}
+                <div className="px-6 md:p-7 pb-6 pt-4 border-t border-white/[0.06] flex items-center justify-between gap-3">
+                  <span className="text-xs font-mono text-zinc-500 uppercase">
+                    DIRECT ACCESS
+                  </span>
 
-                  {/* Live Link Button (Only if provided!) */}
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-4 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500 hover:text-black border border-cyan-500/30 text-cyan-300 font-space font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
-                      title="Open Live Site"
-                    >
-                      <ExternalLink size={13} />
-                      <span className="hidden sm:inline">LIVE</span>
-                    </a>
-                  )}
-
-                  {/* GitHub Repo Button (Only if provided!) */}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-all"
-                      title="View GitHub Repository"
-                      aria-label="GitHub Repo"
-                    >
-                      <Github size={15} />
-                    </a>
+                  {project.link ? (
+                    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-cyan-400 text-black font-space font-bold text-xs uppercase tracking-wider group-hover:bg-white group-hover:text-black transition-all shadow-md">
+                      <span>VISIT LIVE SITE</span>
+                      <ArrowUpRight size={14} />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-zinc-400 font-mono text-xs">
+                      <span>PREVIEW</span>
+                    </div>
                   )}
                 </div>
               </motion.div>

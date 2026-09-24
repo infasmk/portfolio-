@@ -9,7 +9,7 @@ const motion = motionBase as any;
 
 interface ProjectsProps {
   onBrowseAll?: () => void;
-  onProjectSelect: (project: Project) => void;
+  onProjectSelect?: (project: Project) => void;
 }
 
 export const Projects: React.FC<ProjectsProps> = ({
@@ -179,25 +179,25 @@ export const Projects: React.FC<ProjectsProps> = ({
             {onBrowseAll && (
               <div
                 onClick={onBrowseAll}
-                className="shrink-0 w-[80vw] sm:w-[50vw] md:w-[35vw] max-w-md h-[480px] sm:h-[530px] md:h-[580px] lg:h-[600px] rounded-[2rem] bg-gradient-to-br from-blue-950/40 via-[#090b10] to-[#050505] border border-cyan-500/30 hover:border-cyan-400 p-8 md:p-10 flex flex-col justify-between cursor-pointer transition-all duration-300 group hover:shadow-[0_0_35px_rgba(6,182,212,0.25)] select-none mr-12"
+                className="shrink-0 w-[75vw] sm:w-[50vw] md:w-[34vw] max-w-md h-[390px] sm:h-[430px] md:h-[460px] lg:h-[480px] rounded-[1.75rem] bg-gradient-to-br from-blue-950/40 via-[#090b10] to-[#050505] border border-cyan-500/30 hover:border-cyan-400 p-7 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 group hover:shadow-[0_0_35px_rgba(6,182,212,0.25)] select-none mr-12"
               >
                 <div className="flex justify-between items-center">
                   <span className="text-cyan-400 font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30">
                     COMPLETE CATALOG
                   </span>
-                  <div className="p-3 rounded-full bg-white/10 group-hover:bg-cyan-400 group-hover:text-black transition-all">
-                    <ArrowRight size={18} />
+                  <div className="p-2.5 rounded-full bg-white/10 group-hover:bg-cyan-400 group-hover:text-black transition-all">
+                    <ArrowRight size={16} />
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-3xl sm:text-4xl font-space font-extrabold text-white tracking-tight mb-3 group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-space font-extrabold text-white tracking-tight mb-2 group-hover:text-cyan-300 transition-colors">
                     EXPLORE ALL PROJECTS
                   </h3>
-                  <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-6">
+                  <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-5">
                     Browse the full index of {ALL_PROJECTS.length} commercial web platforms, experimental 3D engines, and spatial interfaces.
                   </p>
-                  <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-xs uppercase tracking-wider group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all">
+                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-xs uppercase tracking-wider group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all">
                     <span>VIEW FULL ARCHIVE ({ALL_PROJECTS.length})</span>
                     <ArrowRight size={14} />
                   </div>
@@ -232,7 +232,7 @@ export const Projects: React.FC<ProjectsProps> = ({
           )}
 
           <span className="text-zinc-500 hidden sm:inline-block">
-            CLICK ANY CARD FOR FULL CASE STUDY
+            CLICK ANY CARD TO VISIT LIVE WEBSITE ↗
           </span>
         </div>
       </div>
