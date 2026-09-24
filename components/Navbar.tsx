@@ -4,6 +4,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { useScrollDirection } from '../hooks/useScrollDirection';
 import { useMagnetic } from '../hooks/useMagnetic';
 import { BRAND } from '../constants';
+import { Logo } from './Logo';
 
 const motion = motionBase as any;
 
@@ -11,33 +12,6 @@ interface NavbarProps {
   onNavigateProjects?: () => void;
   isProjectView?: boolean;
 }
-
-// Custom Distinctive Geometric WEB⚡BITS Logo
-const WebBitsLogo: React.FC<{ className?: string }> = ({ className = "w-8 h-8" }) => (
-  <svg
-    viewBox="0 0 40 40"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect width="40" height="40" rx="10" fill="#0d1117" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-    <path
-      d="M9 13L14 27L19 15L23 27L28 13"
-      stroke="#38bdf8"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M23 9L15 22H22L17 31"
-      stroke="#22d3ee"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="drop-shadow-[0_0_8px_rgba(34,211,238,0.9)]"
-    />
-  </svg>
-);
 
 const MagneticNavLink: React.FC<{
   href: string;
@@ -146,14 +120,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         {/* Brand Logo & Title */}
         <a
           href="#"
-          className="group flex items-center gap-3 cursor-pointer select-none"
+          className="flex items-center cursor-pointer select-none"
+          aria-label="WebBits Home"
         >
-          <div className="transition-transform duration-300 group-hover:scale-105">
-            <WebBitsLogo className="w-9 h-9" />
-          </div>
-          <span className="font-space font-extrabold text-lg md:text-xl tracking-tighter text-white">
-            WEB<span className="text-cyan-400">⚡</span>BITS
-          </span>
+          {/* Desktop & Tablet: Full Logo (responsive scale on scroll) */}
+          <Logo
+            variant="full"
+            size={isAtTop ? 'md' : 'sm'}
+            className="hidden sm:inline-flex"
+          />
+          {/* Mobile: Monogram Only */}
+          <Logo
+            variant="mark"
+            size="sm"
+            className="sm:hidden"
+          />
         </a>
 
         {/* Desktop Navigation Links */}
@@ -211,9 +192,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
             className="fixed inset-0 bg-[#050505] z-40 md:hidden flex flex-col justify-between p-8 pt-24"
           >
             <div className="flex flex-col space-y-6 relative z-10">
-              <span className="text-cyan-400 text-[10px] font-mono tracking-[0.3em] uppercase">
-                // NAVIGATION
-              </span>
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <Logo variant="full" size="md" />
+                <span className="text-cyan-400 text-[10px] font-mono tracking-[0.3em] uppercase">
+                  // NAVIGATION
+                </span>
+              </div>
 
               {navLinks.map((link, idx) => (
                 <motion.a

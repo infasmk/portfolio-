@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="100%" height="100%" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&amp;display=swap');
+      .brand-text {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 800;
+        font-size: 82px;
+        letter-spacing: -0.035em;
+        dominant-baseline: central;
+      }
+    </style>
+
+    <linearGradient id="logoLeftGrad" x1="0%" y1="10%" x2="100%" y2="90%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="40%" stop-color="#F1F5F9" />
+      <stop offset="75%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+
+    <linearGradient id="logoFoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="40%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <linearGradient id="logoMidFrontGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#F8FAFC" />
+      <stop offset="70%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+
+    <linearGradient id="logoMidBevelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94A3B8" />
+      <stop offset="50%" stop-color="#64748B" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <linearGradient id="logoBoltGrad" x1="30%" y1="100%" x2="70%" y2="0%">
+      <stop offset="0%" stop-color="#1683FF" />
+      <stop offset="35%" stop-color="#0091FF" />
+      <stop offset="75%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#67E8F9" />
+    </linearGradient>
+
+    <linearGradient id="textWebGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+
+    <linearGradient id="textBitsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(15, 12) scale(0.68)">
+    <polygon points="18,61 58,61 96,122 86,174" fill="url(#logoLeftGrad)" />
+    <polygon points="92,88 96,122 86,174 105,124" fill="url(#logoFoldGrad)" />
+    <polygon points="92,88 126,88 152,176 105,124" fill="url(#logoMidFrontGrad)" />
+    <polygon points="126,88 132,94 156,182 152,176" fill="url(#logoMidBevelGrad)" />
+    <polygon points="214,35 155,114 179,116 156,182 218,98 192,96" fill="url(#logoBoltGrad)" />
+  </g>
+
+  <text x="180" y="86" class="brand-text">
+    <tspan fill="url(#textWebGrad)">Web</tspan><tspan fill="url(#textBitsGrad)">Bits</tspan>
+  </text>
+</svg>

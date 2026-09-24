@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="100%" height="100%" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&amp;display=swap');
+      .brand-text-dark {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 800;
+        font-size: 82px;
+        letter-spacing: -0.035em;
+        dominant-baseline: central;
+      }
+    </style>
+
+    <linearGradient id="darkLeftGrad" x1="0%" y1="10%" x2="100%" y2="90%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="40%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <linearGradient id="darkFoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <linearGradient id="darkMidFrontGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="50%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <linearGradient id="darkMidBevelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+
+    <linearGradient id="darkBoltGrad" x1="30%" y1="100%" x2="70%" y2="0%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="40%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+
+    <linearGradient id="darkTextWebGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#090D16" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+
+    <linearGradient id="darkTextBitsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748B" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(15, 12) scale(0.68)">
+    <polygon points="18,61 58,61 96,122 86,174" fill="url(#darkLeftGrad)" />
+    <polygon points="92,88 96,122 86,174 105,124" fill="url(#darkFoldGrad)" />
+    <polygon points="92,88 126,88 152,176 105,124" fill="url(#darkMidFrontGrad)" />
+    <polygon points="126,88 132,94 156,182 152,176" fill="url(#darkMidBevelGrad)" />
+    <polygon points="214,35 155,114 179,116 156,182 218,98 192,96" fill="url(#darkBoltGrad)" />
+  </g>
+
+  <text x="180" y="86" class="brand-text-dark">
+    <tspan fill="url(#darkTextWebGrad)">Web</tspan><tspan fill="url(#darkTextBitsGrad)">Bits</tspan>
+  </text>
+</svg>

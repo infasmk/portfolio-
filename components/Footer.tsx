@@ -2,6 +2,7 @@ import React from 'react';
 import { motion as motionBase } from 'framer-motion';
 import { ArrowUp, Zap, Sparkles } from 'lucide-react';
 import { BRAND } from '../constants';
+import { Logo } from './Logo';
 
 const motion = motionBase as any;
 
@@ -35,13 +36,8 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 mb-16 pb-12 border-b border-white/[0.06]">
           {/* Brand Identity & Live Status Beacon */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-cyan-300 shadow-[0_0_15px_rgba(37,99,235,0.4)]">
-                <Zap size={16} className="fill-cyan-300" />
-              </div>
-              <span className="font-space font-extrabold text-2xl text-white tracking-tighter">
-                WEB<span className="text-cyan-400">⚡</span>BITS
-              </span>
+            <div className="mb-4">
+              <Logo variant="full" size="lg" />
             </div>
 
             <p className="text-zinc-400 text-sm font-light max-w-md leading-relaxed mb-4">

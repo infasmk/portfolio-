@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { Terminal, Zap, CheckCircle2 } from 'lucide-react';
+import { Terminal, CheckCircle2 } from 'lucide-react';
+import { Logo } from './Logo';
 
 const motion = motionBase as any;
 
@@ -68,6 +69,49 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
       {/* Background Glow */}
       <div className="absolute w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
 
+      {/* Brand Page-Load Reveal Sequence (300-500ms reveal) */}
+      <div className="mb-8 flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 0.95, scale: 1 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center gap-3.5"
+        >
+          {/* W⚡ Mark */}
+          <div className="relative">
+            <Logo variant="mark" size="lg" animateOnHover={false} />
+            {/* Animated blue sweep overlay across lightning bolt */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.4] }}
+              transition={{ delay: 0.15, duration: 0.35, ease: 'easeOut' }}
+              className="absolute inset-0 pointer-events-none"
+            />
+          </div>
+
+          {/* Wordmark reveals with smooth opacity transition */}
+          <motion.div
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.28, duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="font-space font-extrabold text-2xl tracking-tight leading-none">
+              <span className="text-white">Web</span>
+              <span className="text-[#94A3B8]">Bits</span>
+            </span>
+          </motion.div>
+        </motion.div>
+
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 0.4, duration: 0.3 }}
+          className="text-[10px] font-mono tracking-[0.25em] text-zinc-400 mt-2 uppercase"
+        >
+          SYSTEM INITIALIZATION
+        </motion.span>
+      </div>
+
       {/* Terminal Window Box */}
       <div className="relative w-full max-w-xl rounded-2xl bg-[#090b10] border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
         {/* Terminal Title Bar */}
@@ -82,9 +126,8 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[10px] font-space text-cyan-400 font-bold tracking-wider">
-            <Zap size={11} className="fill-cyan-400" />
-            <span>WEB⚡BITS</span>
+          <div className="flex items-center gap-1.5">
+            <Logo variant="full" size="xs" animateOnHover={false} />
           </div>
         </div>
 
