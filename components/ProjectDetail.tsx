@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { X, ExternalLink, ArrowLeft, Github, Calendar, Layers, Trophy, CheckCircle2 } from 'lucide-react';
+import { X, ExternalLink, ArrowLeft, Github, Calendar, Layers, Trophy, Sparkles, User } from 'lucide-react';
 import { Project } from '../types';
 
 const motion = motionBase as any;
@@ -23,6 +23,8 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
+
+  const subheadingText = project.subheading || project.category;
 
   return (
     <motion.div
@@ -66,9 +68,17 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
           className="mb-12"
         >
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold tracking-widest uppercase">
-              {project.category}
-            </span>
+            {subheadingText && (
+              <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold tracking-widest uppercase">
+                {subheadingText}
+              </span>
+            )}
+            {project.createdBy && (
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-xs font-mono flex items-center gap-1.5">
+                <User size={12} className="text-cyan-400" />
+                <span>Created by {project.createdBy}</span>
+              </span>
+            )}
             {project.year && (
               <span className="text-zinc-500 font-mono text-xs flex items-center gap-1.5">
                 <Calendar size={13} /> {project.year}
@@ -140,11 +150,31 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
               </p>
             </section>
 
-            {/* The Challenge */}
+            {/* Special Features & Key Highlights (Only if provided!) */}
+            {project.features && project.features.length > 0 && (
+              <section className="space-y-4 p-8 rounded-2xl bg-white/[0.02] border border-cyan-500/20">
+                <div className="flex items-center gap-2 text-cyan-400">
+                  <Sparkles size={16} />
+                  <h3 className="text-xs font-mono font-bold tracking-[0.25em] uppercase">
+                    // 02 SPECIAL FEATURES & HIGHLIGHTS
+                  </h3>
+                </div>
+                <div className="space-y-3 pt-2">
+                  {project.features.map((feat, i) => (
+                    <div key={i} className="flex items-start gap-3 text-zinc-300 text-base font-light">
+                      <span className="text-cyan-400 mt-1 shrink-0">⚡</span>
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* The Challenge (Only if provided!) */}
             {project.challenge && (
               <section className="space-y-4 p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08]">
                 <h3 className="text-xs font-mono font-bold tracking-[0.25em] text-amber-400 uppercase">
-                  // 02 THE ENGINEERING CHALLENGE
+                  // 03 THE ENGINEERING CHALLENGE
                 </h3>
                 <p className="text-zinc-300 text-base md:text-lg font-light leading-relaxed">
                   {project.challenge}
@@ -152,11 +182,11 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
               </section>
             )}
 
-            {/* The Solution */}
+            {/* The Solution (Only if provided!) */}
             {project.solution && (
               <section className="space-y-4 p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08]">
                 <h3 className="text-xs font-mono font-bold tracking-[0.25em] text-cyan-400 uppercase">
-                  // 03 OUR STRATEGIC SOLUTION
+                  // 04 OUR STRATEGIC SOLUTION
                 </h3>
                 <p className="text-zinc-300 text-base md:text-lg font-light leading-relaxed">
                   {project.solution}
@@ -164,13 +194,13 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
               </section>
             )}
 
-            {/* The Measurable Result */}
+            {/* The Measurable Result (Only if provided!) */}
             {project.result && (
               <section className="space-y-4 p-8 rounded-2xl bg-gradient-to-br from-blue-950/30 to-cyan-950/20 border border-cyan-500/20">
                 <div className="flex items-center gap-2 text-cyan-400">
                   <Trophy size={16} />
                   <h3 className="text-xs font-mono font-bold tracking-[0.25em] uppercase">
-                    // 04 MEASURABLE OUTCOMES
+                    // 05 MEASURABLE OUTCOMES
                   </h3>
                 </div>
                 <p className="text-white text-base md:text-lg font-light leading-relaxed">
@@ -183,35 +213,62 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }
           {/* Sidebar Metadata */}
           <div className="lg:col-span-4 space-y-8">
             <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-6">
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
-                  CLIENT / SECTOR
-                </span>
-                <p className="text-white font-space font-bold text-base">{project.category}</p>
-              </div>
-
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
-                  DISCIPLINES INVOLVED
-                </span>
-                <p className="text-zinc-300 font-mono text-xs">{project.role || 'Full-Stack Creative Tech'}</p>
-              </div>
-
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-3">
-                  TECHNOLOGY ARSENAL
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-cyan-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
+              {subheadingText && (
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
+                    CLIENT / SECTOR
+                  </span>
+                  <p className="text-white font-space font-bold text-base">{subheadingText}</p>
                 </div>
-              </div>
+              )}
+
+              {project.createdBy && (
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
+                    CREATED BY
+                  </span>
+                  <p className="text-cyan-400 font-mono text-xs">{project.createdBy}</p>
+                </div>
+              )}
+
+              {project.role && (
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
+                    DISCIPLINES INVOLVED
+                  </span>
+                  <p className="text-zinc-300 font-mono text-xs">{project.role}</p>
+                </div>
+              )}
+
+              {project.tech && project.tech.length > 0 && (
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-3">
+                    TECHNOLOGY ARSENAL
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-cyan-300"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all hover:opacity-90 block text-center"
+                >
+                  <span>VISIT LIVE WEBSITE</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
             </div>
 
             <button
