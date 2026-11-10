@@ -3,6 +3,7 @@ import { motion as motionBase, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import Aurora from './Aurora';
 import ColorBends from './ColorBends';
+import Hyperspeed from './Hyperspeed';
 
 const motion = motionBase as any;
 
@@ -27,10 +28,35 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       className="relative min-h-[95vh] md:min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 pb-16"
     >
-      {/* React Bits Dual-Shader Hero Architecture: ColorBends + Aurora */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Layer 1: Three.js ColorBends interactive fluid waves */}
-        <div className="absolute inset-0 opacity-70 mix-blend-screen">
+      {/* React Bits Multi-Shader Hero Architecture: Hyperspeed + ColorBends + Aurora */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Layer 1: React Bits Hyperspeed 3D Cyber Warp Highway */}
+        <div className="absolute inset-0 opacity-80 mix-blend-screen pointer-events-auto">
+          <Hyperspeed
+            curve="winding"
+            curvature={0.8}
+            speed={1.2}
+            boost={3}
+            fov={90}
+            boostFov={130}
+            lanes={3}
+            roadWidth={12}
+            density={45}
+            trailLength={1.2}
+            lightSize={1.1}
+            glow={0.7}
+            tailColors={['#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef']}
+            headColors={['#22d3ee', '#38bdf8', '#0284c7']}
+            poleColors={['#06b6d4']}
+            roadColor="#060810"
+            roadOpacity={0.15}
+            background="transparent"
+            interactive={true}
+          />
+        </div>
+
+        {/* Layer 2: Three.js ColorBends interactive fluid waves */}
+        <div className="absolute inset-0 opacity-45 mix-blend-screen pointer-events-none">
           <ColorBends
             colors={["#06b6d4", "#2563eb", "#6366f1", "#0284c7"]}
             rotation={90}
@@ -48,8 +74,8 @@ export const Hero: React.FC = () => {
           />
         </div>
 
-        {/* Layer 2: OGL Aurora spectral curtains */}
-        <div className="absolute inset-0 opacity-75 mix-blend-screen">
+        {/* Layer 3: OGL Aurora spectral curtains */}
+        <div className="absolute inset-0 opacity-55 mix-blend-screen pointer-events-none">
           <Aurora
             colorStops={["#06b6d4", "#2563eb", "#6366f1"]}
             blend={0.55}
@@ -59,7 +85,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Ambient Gradient Depth Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/40 via-transparent to-[#050505]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/40 via-transparent to-[#050505] pointer-events-none" />
       </div>
 
       {/* Editorial Headline & Narrative Composition */}

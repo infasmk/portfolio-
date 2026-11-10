@@ -53,7 +53,7 @@ const TECH_LOGOS_ROW_2: LogoItem[] = [
 
 export const Skills: React.FC = () => {
   return (
-    <section id="stack" className="py-20 md:py-28 bg-[#050505] relative overflow-hidden select-none border-t border-white/[0.06]">
+    <section id="stack" className="py-20 md:py-28 bg-[#050505]/75 backdrop-blur-sm relative overflow-hidden select-none border-t border-white/[0.06]">
       {/* Background Ambient Aura */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-blue-700/8 via-cyan-600/5 to-transparent rounded-full blur-[160px] pointer-events-none" />
 
