@@ -62,7 +62,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
   useEffect(() => {
     if (isProjectView) return;
 
-    const sections = ['work', 'about', 'stack', 'team', 'contact'];
+    // 'team' temporarily removed while Squad section is hidden
+    const sections = ['work', 'about', 'stack', 'contact'];
     const handleScroll = () => {
       const scrollPos = window.scrollY + 250;
       for (const section of sections) {
@@ -95,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
     { name: 'WORK', href: '#projects', id: 'work' },
     { name: 'ABOUT', href: '#about', id: 'about' },
     { name: 'STACK', href: '#stack', id: 'stack' },
-    { name: 'TEAM', href: '#team', id: 'team' },
+    // { name: 'TEAM', href: '#team', id: 'team' }, // Hidden for now
     { name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 

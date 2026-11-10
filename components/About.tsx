@@ -129,13 +129,13 @@ export const About: React.FC = () => {
           <div className="lg:col-span-5">
             <div className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] relative">
               <div className="flex items-center gap-5 mb-6">
-                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-cyan-500/30">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.25)] shrink-0 bg-[#090b14] group">
                   <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
-                    alt="Infas.mk"
-                    className="w-full h-full object-cover grayscale contrast-125"
+                    src="/infas.jpg"
+                    alt={BRAND.founder}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
                 </div>
                 <div>
                   <h4 className="text-xl font-space font-bold text-white">{BRAND.founder}</h4>

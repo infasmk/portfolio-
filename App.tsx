@@ -73,7 +73,8 @@ export const App: React.FC = () => {
                   <About />
                   <Projects onBrowseAll={handleBrowseAll} />
                   <Skills />
-                  <Team />
+                  {/* The Squad section - hidden for now as requested */}
+                  {/* <Team /> */}
                   <Contact />
                   <Footer />
                 </main>

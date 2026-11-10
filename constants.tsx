@@ -5,6 +5,7 @@ export const BRAND = {
   tagline: "BUILDING DIGITAL EXPERIENCES THAT PEOPLE REMEMBER.",
   subline: "We design and build interactive websites, digital products, and experimental 3D experiences.",
   founder: "Infas.mk",
+  avatar: "/infas.jpg",
   institution: "NIT Raipur",
   location: "India & Global Remote",
   stats: [
@@ -68,7 +69,7 @@ export const TEAM: TeamMember[] = [
     name: "Infas.mk",
     role: "Founder & Creative Technologist",
     bio: "NIT Raipur engineer sculpting high-performance 3D web platforms and cinematic user experiences.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
+    image: "/infas.jpg",
     socials: {
       github: "https://github.com/infasmk",
       linkedin: "https://linkedin.com/in/infasmk",

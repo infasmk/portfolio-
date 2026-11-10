@@ -67,7 +67,7 @@ export const Contact: React.FC = () => {
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-10 md:mb-16">
           <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
-            // 05 INITIATE COLLABORATION
+            // 04 INITIATE COLLABORATION
           </span>
           <div className="h-[1px] w-24 bg-white/10" />
         </div>
