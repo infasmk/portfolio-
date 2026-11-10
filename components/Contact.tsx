@@ -59,14 +59,14 @@ export const Contact: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-28 md:py-40 bg-[#050505]/80 backdrop-blur-sm relative overflow-hidden">
-      {/* Background Cinematic Atmosphere */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-blue-600/10 via-cyan-500/5 to-transparent rounded-full blur-[200px] pointer-events-none" />
+    <section id="contact" className="py-28 md:py-40 bg-obsidian/80 backdrop-blur-sm relative overflow-hidden">
+      {/* Background Cinematic Atmosphere in Copper */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-copper/15 via-[#8C4E31]/10 to-transparent rounded-full blur-[200px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-10 md:mb-16">
-          <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
+          <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase">
             // 04 INITIATE COLLABORATION
           </span>
           <div className="h-[1px] w-24 bg-white/10" />
@@ -74,9 +74,9 @@ export const Contact: React.FC = () => {
 
         {/* Climax Statement */}
         <div className="mb-20">
-          <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-space font-extrabold text-white tracking-tighter leading-[0.88] uppercase mb-8">
+          <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-space font-extrabold text-warm-ivory tracking-tighter leading-[0.88] uppercase mb-8">
             LET'S BUILD <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">
               SOMETHING
             </span> <br />
             USEFUL.
@@ -85,13 +85,13 @@ export const Contact: React.FC = () => {
           <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={handleCopyEmail}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.04] border border-white/10 hover:border-cyan-500/50 text-white font-mono text-xs tracking-wider transition-all"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-graphite/40 border border-white/[0.08] hover:border-copper/40 text-warm-ivory font-mono text-xs tracking-wider transition-all"
             >
-              {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+              {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-copper" />}
               <span>{copied ? 'EMAIL COPIED TO CLIPBOARD' : BRAND.socials.email}</span>
             </button>
 
-            <span className="text-zinc-500 text-xs font-mono hidden sm:inline-block">
+            <span className="text-muted-silver text-xs font-mono hidden sm:inline-block">
               // TYPICAL RESPONSE TIME: &lt; 24 HOURS
             </span>
           </div>
@@ -101,7 +101,7 @@ export const Contact: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column: Direct Communication Channels */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-widest block mb-4">
+            <span className="text-xs font-mono font-bold text-muted-silver uppercase tracking-widest block mb-4">
               DIRECT PROTOCOLS
             </span>
 
@@ -114,25 +114,25 @@ export const Contact: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="OPEN"
-                  className="group flex items-center justify-between p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/40 hover:bg-white/[0.04] transition-all"
+                  className="group flex items-center justify-between p-6 rounded-2xl bg-deep-charcoal/80 border border-white/[0.08] hover:border-copper/40 hover:bg-graphite/40 transition-all"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-xl bg-white/[0.03] text-zinc-400 group-hover:text-cyan-400 transition-colors">
+                    <div className="p-3 rounded-xl bg-graphite/60 text-muted-silver group-hover:text-copper transition-colors">
                       <Icon size={20} />
                     </div>
                     <div>
-                      <h4 className="text-white font-space font-bold text-base group-hover:text-cyan-300 transition-colors">
+                      <h4 className="text-warm-ivory font-space font-bold text-base group-hover:text-copper-light transition-colors">
                         {method.name}
                       </h4>
-                      <p className="text-zinc-500 text-xs font-mono">{method.desc}</p>
+                      <p className="text-muted-silver text-xs font-mono">{method.desc}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
+                    <span className="text-xs font-mono text-muted-silver group-hover:text-warm-ivory transition-colors">
                       {method.value}
                     </span>
-                    <ArrowUpRight size={16} className="text-zinc-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight size={16} className="text-muted-silver group-hover:text-copper group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </a>
               );
@@ -145,18 +145,18 @@ export const Contact: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 md:p-12 rounded-3xl bg-[#090a0f] border border-white/10 relative overflow-hidden shadow-2xl"
+              className="p-8 md:p-12 rounded-3xl bg-deep-charcoal/90 border border-white/[0.08] relative overflow-hidden shadow-2xl"
             >
-              <h3 className="text-2xl font-space font-bold text-white mb-2">
+              <h3 className="text-2xl font-space font-bold text-warm-ivory mb-2">
                 START A PROJECT
               </h3>
-              <p className="text-zinc-400 text-sm font-light mb-8">
+              <p className="text-muted-silver text-sm font-light mb-8">
                 Tell us about your objectives, timeline, and vision.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                  <label className="text-[10px] font-mono font-bold text-muted-silver uppercase tracking-widest">
                     YOUR NAME / STUDIO
                   </label>
                   <input
@@ -165,12 +165,12 @@ export const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Satoshi Nakamoto"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 text-sm"
+                    className="w-full bg-graphite/40 border border-white/10 rounded-xl px-5 py-4 text-warm-ivory focus:outline-none focus:border-copper transition-colors placeholder:text-muted-silver/30 text-sm"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                  <label className="text-[10px] font-mono font-bold text-muted-silver uppercase tracking-widest">
                     EMAIL ADDRESS
                   </label>
                   <input
@@ -179,12 +179,12 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. satoshi@bitcoin.org"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 text-sm"
+                    className="w-full bg-graphite/40 border border-white/10 rounded-xl px-5 py-4 text-warm-ivory focus:outline-none focus:border-copper transition-colors placeholder:text-muted-silver/30 text-sm"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                  <label className="text-[10px] font-mono font-bold text-muted-silver uppercase tracking-widest">
                     PROJECT VISION & SCOPE
                   </label>
                   <textarea
@@ -193,17 +193,17 @@ export const Contact: React.FC = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Describe your digital experience, deliverables, timeline..."
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-zinc-700 resize-none text-sm"
+                    className="w-full bg-graphite/40 border border-white/10 rounded-xl px-5 py-4 text-warm-ivory focus:outline-none focus:border-copper transition-colors placeholder:text-muted-silver/30 resize-none text-sm"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={formState !== 'idle'}
-                  className={`w-full py-4 rounded-xl font-space font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-3 transition-all active:scale-95 ${
+                  className={`w-full py-4 rounded-xl font-space font-extrabold text-sm tracking-wider uppercase flex items-center justify-center gap-3 transition-all active:scale-95 ${
                     formState === 'success'
-                      ? 'bg-emerald-500 text-black'
-                      : 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-[0_0_25px_rgba(37,99,235,0.4)]'
+                      ? 'bg-emerald-500 text-obsidian'
+                      : 'bg-gradient-to-r from-copper-dark via-copper to-copper-light hover:brightness-110 text-obsidian shadow-[0_0_25px_rgba(184,115,80,0.4)]'
                   }`}
                 >
                   {formState === 'idle' && (
@@ -213,7 +213,7 @@ export const Contact: React.FC = () => {
                     </>
                   )}
                   {formState === 'sending' && (
-                    <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="h-5 w-5 border-2 border-obsidian/30 border-t-obsidian rounded-full animate-spin" />
                   )}
                   {formState === 'success' && (
                     <>

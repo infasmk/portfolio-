@@ -166,25 +166,25 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-5xl max-h-[92vh] bg-[#090b10] border border-cyan-500/30 rounded-2xl sm:rounded-3xl shadow-[0_0_50px_rgba(6,182,212,0.2)] flex flex-col overflow-hidden z-10 text-white"
+          className="relative w-full max-w-5xl max-h-[92vh] bg-deep-charcoal border border-copper/30 rounded-2xl sm:rounded-3xl shadow-[0_0_50px_rgba(184,115,80,0.25)] flex flex-col overflow-hidden z-10 text-warm-ivory"
         >
           {/* Top Bar Header */}
           <div className="px-6 py-4 border-b border-white/10 bg-white/[0.02] flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+              <div className="p-2 rounded-xl bg-copper/10 border border-copper/30 text-copper">
                 <Lock size={18} />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="font-space font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-2">
+                  <h2 className="font-space font-extrabold text-base sm:text-lg tracking-tight text-warm-ivory flex items-center gap-2">
                     PROJECT CODE GENERATOR
                   </h2>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30 font-bold uppercase">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-copper/20 text-copper-light border border-copper/30 font-bold uppercase">
                     Admin Tool
                   </span>
                 </div>
-                <p className="text-zinc-400 text-xs font-mono">
-                  Fill in your project details, click generate, and copy the snippet directly into <code className="text-cyan-300">projects.ts</code>.
+                <p className="text-muted-silver text-xs font-mono">
+                  Fill in your project details, click generate, and copy the snippet directly into <code className="text-copper-light">projects.ts</code>.
                 </p>
               </div>
             </div>
@@ -193,17 +193,17 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
               <button
                 type="button"
                 onClick={loadSample}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 hover:text-white transition-all"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-graphite/40 hover:bg-graphite border border-white/10 text-xs font-mono text-muted-silver hover:text-warm-ivory transition-all cursor-pointer"
                 title="Fill sample project details"
               >
-                <Sparkles size={13} className="text-cyan-400" />
+                <Sparkles size={13} className="text-copper" />
                 <span>Fill Sample</span>
               </button>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-all"
+                className="p-2 rounded-xl bg-graphite/40 hover:bg-graphite border border-white/10 text-muted-silver hover:text-warm-ivory transition-all cursor-pointer"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -218,31 +218,31 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
               {/* Row 1: ID & Featured Toggle */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                    Project ID <span className="text-zinc-600">(Number)</span>
+                  <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                    Project ID <span className="text-muted-silver/60">(Number)</span>
                   </label>
                   <input
                     type="number"
                     value={id}
                     onChange={(e) => setId(parseInt(e.target.value) || 1)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-sm text-white transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-sm text-warm-ivory transition-all"
                     placeholder="e.g. 9"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
+                  <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
                     Showcase Status
                   </label>
-                  <label className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 cursor-pointer hover:border-cyan-500/40 transition-all select-none">
+                  <label className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 cursor-pointer hover:border-copper/40 transition-all select-none">
                     <input
                       type="checkbox"
                       checked={featured}
                       onChange={(e) => setFeatured(e.target.checked)}
-                      className="w-4 h-4 accent-cyan-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-copper rounded cursor-pointer"
                     />
                     <div className="text-xs font-mono">
-                      <span className={featured ? 'text-cyan-300 font-bold' : 'text-zinc-400'}>
+                      <span className={featured ? 'text-copper-light font-bold' : 'text-muted-silver'}>
                         {featured ? 'Featured on Main Screen' : 'Catalog Only'}
                       </span>
                     </div>
@@ -252,43 +252,43 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
 
               {/* Project Title */}
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                  Project Title <span className="text-cyan-400">*</span>
+                <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                  Project Title <span className="text-copper">*</span>
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Aevo Data Matrix"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-space font-bold text-sm text-white placeholder:text-zinc-600 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-space font-bold text-sm text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                 />
               </div>
 
               {/* Row 2: Subheading & Created By */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                    Subheading / Category <span className="text-zinc-600">(Optional)</span>
+                  <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                    Subheading / Category <span className="text-muted-silver/60">(Optional)</span>
                   </label>
                   <input
                     type="text"
                     value={subheading}
                     onChange={(e) => setSubheading(e.target.value)}
                     placeholder="e.g. 3D Web Experience"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-sm text-white placeholder:text-zinc-600 transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-sm text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                    Created By <span className="text-zinc-600">(Optional)</span>
+                  <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                    Created By <span className="text-muted-silver/60">(Optional)</span>
                   </label>
                   <input
                     type="text"
                     value={createdBy}
                     onChange={(e) => setCreatedBy(e.target.value)}
                     placeholder="e.g. Infas.mk // WEB⚡BITS"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-sm text-white placeholder:text-zinc-600 transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-sm text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                   />
                 </div>
               </div>
@@ -296,15 +296,15 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
               {/* Cover Image URL */}
               <div>
                 <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-xs font-mono uppercase text-zinc-400">
-                    Cover Image URL <span className="text-cyan-400">*</span>
+                  <label className="block text-xs font-mono uppercase text-muted-silver">
+                    Cover Image URL <span className="text-copper">*</span>
                   </label>
                   {image && (
                     <a
                       href={image}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-[11px] font-mono text-cyan-400 hover:underline flex items-center gap-1"
+                      className="text-[11px] font-mono text-copper hover:underline flex items-center gap-1"
                     >
                       <span>Check Image</span>
                       <ExternalLink size={10} />
@@ -317,10 +317,10 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
                     placeholder="https://images.unsplash.com/photo-..."
-                    className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-xs text-white placeholder:text-zinc-600 transition-all"
+                    className="flex-1 px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-xs text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                   />
                   {image && (
-                    <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/20 bg-black">
+                    <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/20 bg-obsidian">
                       <img src={image} alt="Thumb" className="w-full h-full object-cover" />
                     </div>
                   )}
@@ -329,22 +329,22 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                  Project Description <span className="text-cyan-400">*</span>
+                <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                  Project Description <span className="text-copper">*</span>
                 </label>
                 <textarea
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="A clear, professional summary of what this project does, key technical highlights, and impact..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-xs leading-relaxed text-white placeholder:text-zinc-600 transition-all resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-xs leading-relaxed text-warm-ivory placeholder:text-muted-silver/30 transition-all resize-none"
                 />
               </div>
 
               {/* Live Website Link */}
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
-                  Website Live Link <span className="text-zinc-600">(Direct Visit URL)</span>
+                <label className="block text-xs font-mono uppercase text-muted-silver mb-1.5">
+                  Website Live Link <span className="text-muted-silver/60">(Direct Visit URL)</span>
                 </label>
                 <div className="relative">
                   <input
@@ -352,9 +352,9 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
                     placeholder="https://my-live-website.com"
-                    className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-xs text-white placeholder:text-zinc-600 transition-all"
+                    className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-xs text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                   />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-silver pointer-events-none">
                     <ExternalLink size={14} />
                   </div>
                 </div>
@@ -364,17 +364,17 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <label className="block text-xs font-mono uppercase text-zinc-400">
-                      Key Feature Highlights <span className="text-zinc-600">(Optional Bullets)</span>
+                    <label className="block text-xs font-mono uppercase text-muted-silver">
+                      Key Feature Highlights <span className="text-muted-silver/60">(Optional Bullets)</span>
                     </label>
-                    <span className="text-[11px] text-zinc-500 font-mono">
+                    <span className="text-[11px] text-muted-silver/60 font-mono">
                       Leave empty if no bullets needed — it won't show.
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={handleAddFeature}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-all"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-copper/10 hover:bg-copper/20 text-copper-light border border-copper/30 text-xs font-mono transition-all cursor-pointer"
                   >
                     <Plus size={12} />
                     <span>Add Point</span>
@@ -384,18 +384,18 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                 <div className="space-y-2">
                   {features.map((feat, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <span className="text-cyan-400 text-xs font-mono">⚡</span>
+                      <span className="text-copper text-xs font-mono">⚡</span>
                       <input
                         type="text"
                         value={feat}
                         onChange={(e) => handleFeatureChange(idx, e.target.value)}
                         placeholder={`Feature point ${idx + 1} (e.g. 60FPS fluid physics)`}
-                        className="flex-1 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none font-mono text-xs text-white placeholder:text-zinc-600 transition-all"
+                        className="flex-1 px-3 py-2 rounded-lg bg-graphite/40 border border-white/10 focus:border-copper focus:outline-none font-mono text-xs text-warm-ivory placeholder:text-muted-silver/30 transition-all"
                       />
                       <button
                         type="button"
                         onClick={() => handleRemoveFeature(idx)}
-                        className="p-2 rounded-lg bg-white/[0.03] hover:bg-rose-500/20 text-zinc-500 hover:text-rose-400 border border-white/5 transition-all"
+                        className="p-2 rounded-lg bg-graphite/40 hover:bg-rose-500/20 text-muted-silver hover:text-rose-400 border border-white/5 transition-all cursor-pointer"
                         title="Remove point"
                       >
                         <Trash2 size={13} />
@@ -410,7 +410,7 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white text-xs font-mono transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg bg-graphite/40 hover:bg-graphite text-muted-silver hover:text-warm-ivory text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <RefreshCw size={12} />
                   <span>Reset Form</span>
@@ -419,18 +419,18 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
             </div>
 
             {/* Right Column: Code Output & Live Card Preview (5 cols) */}
-            <div className="lg:col-span-5 p-6 sm:p-7 flex flex-col justify-between bg-black/40">
+            <div className="lg:col-span-5 p-6 sm:p-7 flex flex-col justify-between bg-obsidian/60">
               <div>
                 {/* Tab Switcher: Code vs Preview */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex rounded-xl bg-white/[0.05] p-1 border border-white/10">
+                  <div className="flex rounded-xl bg-graphite/40 p-1 border border-white/10">
                     <button
                       type="button"
                       onClick={() => setActiveTab('code')}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                         activeTab === 'code'
-                          ? 'bg-cyan-400 text-black font-bold shadow'
-                          : 'text-zinc-400 hover:text-white'
+                          ? 'bg-copper text-obsidian font-bold shadow'
+                          : 'text-muted-silver hover:text-warm-ivory'
                       }`}
                     >
                       <Code2 size={13} />
@@ -439,10 +439,10 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                     <button
                       type="button"
                       onClick={() => setActiveTab('preview')}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                         activeTab === 'preview'
-                          ? 'bg-cyan-400 text-black font-bold shadow'
-                          : 'text-zinc-400 hover:text-white'
+                          ? 'bg-copper text-obsidian font-bold shadow'
+                          : 'text-muted-silver hover:text-warm-ivory'
                       }`}
                     >
                       <Eye size={13} />
@@ -450,7 +450,7 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                     </button>
                   </div>
 
-                  <span className="text-[11px] font-mono text-zinc-500">
+                  <span className="text-[11px] font-mono text-muted-silver/60">
                     Ready to paste
                   </span>
                 </div>
@@ -458,14 +458,14 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                 {/* Tab 1: Formatted TypeScript Output */}
                 {activeTab === 'code' ? (
                   <div className="relative">
-                    <div className="p-4 rounded-2xl bg-[#050608] border border-cyan-500/20 font-mono text-[11px] sm:text-xs text-cyan-200 overflow-x-auto leading-relaxed shadow-inner max-h-[380px] overflow-y-auto">
-                      <pre className="text-zinc-300">
+                    <div className="p-4 rounded-2xl bg-obsidian border border-copper/20 font-mono text-[11px] sm:text-xs text-warm-ivory overflow-x-auto leading-relaxed shadow-inner max-h-[380px] overflow-y-auto">
+                      <pre className="text-muted-silver">
                         <code>{generatedCode}</code>
                       </pre>
                     </div>
 
-                    <div className="mt-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] font-mono text-zinc-400">
-                      💡 <strong className="text-zinc-200">Instructions:</strong> Copy this object and paste it inside the <span className="text-cyan-400">PROJECTS</span> array in <code className="text-white">projects.ts</code>.
+                    <div className="mt-3 p-3 rounded-xl bg-graphite/30 border border-white/5 text-[11px] font-mono text-muted-silver">
+                      💡 <strong className="text-warm-ivory">Instructions:</strong> Copy this object and paste it inside the <span className="text-copper">PROJECTS</span> array in <code className="text-warm-ivory">projects.ts</code>.
                     </div>
                   </div>
                 ) : (
@@ -488,10 +488,10 @@ export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className={`w-full py-3.5 px-6 rounded-2xl font-space font-extrabold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl ${
+                  className={`w-full py-3.5 px-6 rounded-2xl font-space font-extrabold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer ${
                     copied
-                      ? 'bg-emerald-500 text-black shadow-emerald-500/30'
-                      : 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:opacity-95 shadow-cyan-500/30'
+                      ? 'bg-emerald-500 text-obsidian shadow-emerald-500/30'
+                      : 'bg-gradient-to-r from-copper-dark via-copper to-copper-light text-obsidian hover:brightness-110 shadow-copper/30'
                   }`}
                 >
                   {copied ? (

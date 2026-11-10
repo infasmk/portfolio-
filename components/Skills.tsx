@@ -53,17 +53,17 @@ const TECH_LOGOS_ROW_2: LogoItem[] = [
 
 export const Skills: React.FC = () => {
   return (
-    <section id="stack" className="py-20 md:py-28 bg-[#050505]/75 backdrop-blur-sm relative overflow-hidden select-none border-t border-white/[0.06]">
-      {/* Background Ambient Aura */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-blue-700/8 via-cyan-600/5 to-transparent rounded-full blur-[160px] pointer-events-none" />
+    <section id="stack" className="py-20 md:py-28 bg-obsidian/80 backdrop-blur-sm relative overflow-hidden select-none border-t border-white/[0.08]">
+      {/* Background Ambient Aura in Copper */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-copper/10 via-[#8C4E31]/5 to-transparent rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-14 relative z-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-copper/10 border border-copper/30 text-copper text-xs font-mono tracking-widest uppercase mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-copper animate-pulse" />
           <span>// CORE TECHNOLOGIES</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-space font-extrabold text-white tracking-tight">
-          POWERED BY MODERN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">ECOSYSTEMS.</span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-space font-extrabold text-warm-ivory tracking-tight">
+          POWERED BY MODERN <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">ECOSYSTEMS.</span>
         </h2>
       </div>
 
@@ -79,7 +79,7 @@ export const Skills: React.FC = () => {
           hoverSpeed={15}
           scaleOnHover
           fadeOut
-          fadeOutColor="#050505"
+          fadeOutColor="#080808"
           ariaLabel="Frontend and 3D technologies"
         />
 
@@ -93,7 +93,7 @@ export const Skills: React.FC = () => {
           hoverSpeed={15}
           scaleOnHover
           fadeOut
-          fadeOutColor="#050505"
+          fadeOutColor="#080808"
           ariaLabel="Backend and architecture technologies"
         />
       </div>

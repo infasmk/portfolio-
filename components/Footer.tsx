@@ -37,13 +37,13 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-20 md:py-28 bg-[#050505]/85 backdrop-blur-sm relative overflow-hidden select-none border-t border-white/[0.08]">
+    <footer className="py-20 md:py-28 bg-obsidian/85 backdrop-blur-sm relative overflow-hidden select-none border-t border-white/[0.08]">
       {/* Animated Top Border Beam */}
       <div className="absolute top-0 left-0 right-0 h-[1.5px] overflow-hidden">
         <motion.div
           animate={{ x: ['-100%', '100%'] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-          className="w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_rgba(6,182,212,0.8)]"
+          className="w-1/2 h-full bg-gradient-to-r from-transparent via-copper to-transparent shadow-[0_0_12px_rgba(184,115,80,0.8)]"
         />
       </div>
 
@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
           opacity: [0.08, 0.15, 0.08],
         }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-gradient-to-t from-blue-600 to-cyan-500 rounded-full blur-[140px] pointer-events-none"
+        className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-gradient-to-t from-copper-dark to-copper rounded-full blur-[140px] pointer-events-none"
       />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
@@ -68,25 +68,25 @@ export const Footer: React.FC = () => {
               <button
                 type="button"
                 onClick={handleLockClick}
-                className="relative p-1.5 rounded-lg border border-transparent hover:border-cyan-500/30 bg-transparent hover:bg-white/[0.04] text-zinc-600 hover:text-cyan-400 transition-all cursor-pointer group"
+                className="relative p-1.5 rounded-lg border border-transparent hover:border-copper/40 bg-transparent hover:bg-white/[0.04] text-muted-silver/60 hover:text-copper transition-all cursor-pointer group"
                 title={clickCount > 0 ? `Click ${3 - clickCount} more time${3 - clickCount > 1 ? 's' : ''} to unlock` : "Admin Vault"}
                 aria-label="Admin Project Code Generator"
               >
                 <Lock
                   size={15}
                   className={`transition-all duration-200 group-hover:scale-110 ${
-                    clickCount > 0 ? 'text-cyan-400 animate-pulse' : 'opacity-40 group-hover:opacity-100'
+                    clickCount > 0 ? 'text-copper animate-pulse' : 'opacity-40 group-hover:opacity-100'
                   }`}
                 />
                 {clickCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-cyan-400 text-black font-mono font-bold text-[9px] flex items-center justify-center animate-bounce shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-copper text-obsidian font-mono font-bold text-[9px] flex items-center justify-center animate-bounce shadow-[0_0_8px_rgba(184,115,80,0.8)]">
                     {clickCount}
                   </span>
                 )}
               </button>
             </div>
 
-            <p className="text-zinc-400 text-sm font-light max-w-md leading-relaxed mb-4">
+            <p className="text-muted-silver text-sm font-light max-w-md leading-relaxed mb-4">
               Building next-generation interactive web applications, real-time 3D spatial platforms, and high-performance digital architectures.
             </p>
 
@@ -100,42 +100,42 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Social Links with Animated Underlines */}
-          <div className="flex flex-wrap gap-6 md:gap-8 text-xs font-mono text-zinc-400">
+          <div className="flex flex-wrap gap-6 md:gap-8 text-xs font-mono text-muted-silver">
             <a
               href={BRAND.socials.github}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-cyan-400 transition-colors uppercase relative group"
+              className="hover:text-copper-light transition-colors uppercase relative group"
             >
               <span>GITHUB</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
             </a>
             <a
               href={BRAND.socials.instagram}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-cyan-400 transition-colors uppercase relative group"
+              className="hover:text-copper-light transition-colors uppercase relative group"
             >
               <span>INSTAGRAM</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
             </a>
             <a
               href={BRAND.socials.whatsapp}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-cyan-400 transition-colors uppercase relative group"
+              className="hover:text-copper-light transition-colors uppercase relative group"
             >
               <span>WHATSAPP</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
             </a>
             <a
               href={BRAND.socials.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-cyan-400 transition-colors uppercase relative group"
+              className="hover:text-copper-light transition-colors uppercase relative group"
             >
               <span>LINKEDIN</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
             </a>
           </div>
 
@@ -144,7 +144,7 @@ export const Footer: React.FC = () => {
             whileHover={{ y: -4, scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
-            className="p-4 rounded-full bg-white/[0.03] border border-white/10 hover:border-cyan-400 hover:bg-cyan-500/10 text-zinc-300 hover:text-white transition-all shadow-lg self-end lg:self-center"
+            className="p-4 rounded-full bg-graphite/40 border border-white/10 hover:border-copper hover:bg-copper/10 text-warm-ivory transition-all shadow-lg self-end lg:self-center"
             aria-label="Back to top"
           >
             <ArrowUp size={18} />
@@ -152,10 +152,10 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Copyright Footnote */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-zinc-600">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-silver/60">
           <span>&copy; {new Date().getFullYear()} WEB⚡BITS STUDIO. Engineered by {BRAND.founder}.</span>
           <span className="flex items-center gap-1.5">
-            <Sparkles size={11} className="text-cyan-400" />
+            <Sparkles size={11} className="text-copper" />
             POWERED BY REACT, THREE.JS & TAILWIND
           </span>
         </div>

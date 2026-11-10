@@ -64,10 +64,10 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
         filter: 'blur(8px)',
         transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
       }}
-      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#050505] font-mono text-white px-6 select-none"
+      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-obsidian font-mono text-warm-ivory px-6 select-none"
     >
       {/* Background Glow */}
-      <div className="absolute w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-copper/10 blur-[140px] pointer-events-none" />
 
       {/* Brand Page-Load Reveal Sequence (300-500ms reveal) */}
       <div className="mb-8 flex flex-col items-center">
@@ -80,7 +80,7 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           {/* W⚡ Mark */}
           <div className="relative">
             <Logo variant="mark" size="lg" animateOnHover={false} />
-            {/* Animated blue sweep overlay across lightning bolt */}
+            {/* Animated sweep overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 0.4] }}
@@ -96,8 +96,8 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
             transition={{ delay: 0.28, duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="font-space font-extrabold text-2xl tracking-tight leading-none">
-              <span className="text-white">Web</span>
-              <span className="text-[#94A3B8]">Bits</span>
+              <span className="text-warm-ivory">Web</span>
+              <span className="text-muted-silver">Bits</span>
             </span>
           </motion.div>
         </motion.div>
@@ -106,22 +106,22 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ delay: 0.4, duration: 0.3 }}
-          className="text-[10px] font-mono tracking-[0.25em] text-zinc-400 mt-2 uppercase"
+          className="text-[10px] font-mono tracking-[0.25em] text-muted-silver mt-2 uppercase"
         >
           SYSTEM INITIALIZATION
         </motion.span>
       </div>
 
       {/* Terminal Window Box */}
-      <div className="relative w-full max-w-xl rounded-2xl bg-[#090b10] border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
+      <div className="relative w-full max-w-xl rounded-2xl bg-deep-charcoal border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
         {/* Terminal Title Bar */}
         <div className="flex items-center justify-between px-5 py-3.5 bg-white/[0.03] border-b border-white/[0.06]">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-rose-500/80" />
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-            <span className="text-[11px] text-zinc-400 font-mono ml-2 flex items-center gap-1.5">
-              <Terminal size={12} className="text-cyan-400" />
+            <span className="text-[11px] text-muted-silver font-mono ml-2 flex items-center gap-1.5">
+              <Terminal size={12} className="text-copper" />
               web-bits-cli: bash — 80x24
             </span>
           </div>
@@ -143,8 +143,8 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
                 log.status === "ready"
                   ? "text-emerald-400 font-bold"
                   : log.status === "ok"
-                  ? "text-zinc-300"
-                  : "text-zinc-500"
+                  ? "text-warm-ivory"
+                  : "text-muted-silver/60"
               }`}
             >
               <span>{log.text}</span>
@@ -152,8 +152,8 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           ))}
 
           {/* Active blinking terminal prompt */}
-          <div className="flex items-center gap-1 text-cyan-400 pt-1">
-            <span className="text-zinc-600">~</span>
+          <div className="flex items-center gap-1 text-copper pt-1">
+            <span className="text-muted-silver/40">~</span>
             <span className="animate-pulse">_</span>
           </div>
         </div>
@@ -161,13 +161,13 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
         {/* Terminal Footer with Real 2s Progress Bar */}
         <div className="px-6 py-4 bg-white/[0.02] border-t border-white/[0.06] flex items-center justify-between gap-4">
           <div className="flex-1">
-            <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono mb-1.5">
+            <div className="flex justify-between items-center text-[10px] text-muted-silver/60 font-mono mb-1.5">
               <span>INITIALIZING PORTFOLIO EXPERIENCE</span>
-              <span className="text-cyan-400 font-bold tabular-nums">{Math.min(100, Math.floor(progress))}%</span>
+              <span className="text-copper font-bold tabular-nums">{Math.min(100, Math.floor(progress))}%</span>
             </div>
-            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-graphite/40 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.6)]"
+                className="h-full bg-gradient-to-r from-copper-dark via-copper to-copper-light rounded-full shadow-[0_0_10px_rgba(184,115,80,0.6)]"
                 style={{ width: `${progress}%` }}
               />
             </div>

@@ -95,24 +95,24 @@ export const Projects: React.FC<ProjectsProps> = ({
     <section
       id="projects"
       ref={containerRef}
-      className="relative h-[460vh] bg-[#050505]/75 backdrop-blur-sm"
+      className="relative h-[460vh] bg-obsidian/80 backdrop-blur-sm"
     >
       {/* Sticky viewport pinned while user scrolls */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 md:py-10">
         {/* Background Atmosphere */}
-        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[600px] bg-blue-700/8 rounded-full blur-[200px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[600px] bg-copper/8 rounded-full blur-[200px] pointer-events-none" />
 
         {/* Section Header */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-end z-20">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase">
+              <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase font-bold">
                 // 02 SIGNATURE SHOWCASE [{featuredList.length < 10 ? `0${featuredList.length}` : featuredList.length} PLATFORMS]
               </span>
               <div className="h-[1px] w-16 bg-white/10" />
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-space font-extrabold text-white tracking-tighter leading-none">
-              FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">WORKS.</span>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-space font-extrabold text-warm-ivory tracking-tighter leading-none">
+              FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">WORKS.</span>
             </h2>
           </div>
 
@@ -122,18 +122,18 @@ export const Projects: React.FC<ProjectsProps> = ({
             {onBrowseAll && (
               <button
                 onClick={onBrowseAll}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-cyan-400/50 text-white font-space font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-deep-charcoal border border-white/10 hover:border-copper/50 text-warm-ivory font-space font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
               >
-                <Grid size={13} className="text-cyan-400" />
+                <Grid size={13} className="text-copper" />
                 <span>ALL PROJECTS ({ALL_PROJECTS.length})</span>
-                <ArrowRight size={13} className="text-cyan-400" />
+                <ArrowRight size={13} className="text-copper" />
               </button>
             )}
 
-            <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="flex items-center gap-2 font-mono text-xs text-muted-silver">
+              <span className="w-2 h-2 rounded-full bg-copper animate-pulse" />
               <span className="hidden md:inline">FEATURED</span>
-              <span className="text-white font-bold">0{activeIdx + 1}</span>
+              <span className="text-warm-ivory font-bold">0{activeIdx + 1}</span>
               <span>/ 0{featuredList.length}</span>
             </div>
 
@@ -142,7 +142,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                 onClick={handlePrev}
                 disabled={activeIdx === 0}
                 aria-label="Previous Project"
-                className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-cyan-400 transition-all disabled:opacity-30 disabled:pointer-events-none"
+                className="w-8 h-8 rounded-full bg-deep-charcoal border border-white/10 flex items-center justify-center text-muted-silver hover:text-warm-ivory hover:border-copper transition-all disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ArrowLeft size={14} />
               </button>
@@ -150,7 +150,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                 onClick={handleNext}
                 disabled={activeIdx === featuredList.length - 1}
                 aria-label="Next Project"
-                className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-cyan-400 transition-all disabled:opacity-30 disabled:pointer-events-none"
+                className="w-8 h-8 rounded-full bg-deep-charcoal border border-white/10 flex items-center justify-center text-muted-silver hover:text-warm-ivory hover:border-copper transition-all disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ArrowRight size={14} />
               </button>
@@ -179,25 +179,25 @@ export const Projects: React.FC<ProjectsProps> = ({
             {onBrowseAll && (
               <div
                 onClick={onBrowseAll}
-                className="shrink-0 w-[75vw] sm:w-[50vw] md:w-[34vw] max-w-md h-[390px] sm:h-[430px] md:h-[460px] lg:h-[480px] rounded-[1.75rem] bg-gradient-to-br from-blue-950/40 via-[#090b10] to-[#050505] border border-cyan-500/30 hover:border-cyan-400 p-7 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 group hover:shadow-[0_0_35px_rgba(6,182,212,0.25)] select-none mr-12"
+                className="shrink-0 w-[75vw] sm:w-[50vw] md:w-[34vw] max-w-md h-[390px] sm:h-[430px] md:h-[460px] lg:h-[480px] rounded-[1.75rem] bg-gradient-to-br from-[#1A1A1A] via-[#111111] to-[#080808] border border-copper/30 hover:border-copper p-7 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 group hover:shadow-[0_0_35px_rgba(184,115,80,0.25)] select-none mr-12"
               >
                 <div className="flex justify-between items-center">
-                  <span className="text-cyan-400 font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30">
+                  <span className="text-copper font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-copper/10 border border-copper/30">
                     COMPLETE CATALOG
                   </span>
-                  <div className="p-2.5 rounded-full bg-white/10 group-hover:bg-cyan-400 group-hover:text-black transition-all">
+                  <div className="p-2.5 rounded-full bg-white/10 group-hover:bg-copper group-hover:text-obsidian transition-all">
                     <ArrowRight size={16} />
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-space font-extrabold text-white tracking-tight mb-2 group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-space font-extrabold text-warm-ivory tracking-tight mb-2 group-hover:text-copper-light transition-colors">
                     EXPLORE ALL PROJECTS
                   </h3>
-                  <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-5">
+                  <p className="text-muted-silver text-xs sm:text-sm font-light leading-relaxed mb-5">
                     Browse the full index of {ALL_PROJECTS.length} commercial web platforms, experimental 3D engines, and spatial interfaces.
                   </p>
-                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-xs uppercase tracking-wider group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all">
+                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-copper-dark via-copper to-copper-light text-obsidian font-space font-extrabold text-xs uppercase tracking-wider group-hover:shadow-[0_0_20px_rgba(184,115,80,0.4)] transition-all">
                     <span>VIEW FULL ARCHIVE ({ALL_PROJECTS.length})</span>
                     <ArrowRight size={14} />
                   </div>
@@ -208,13 +208,13 @@ export const Projects: React.FC<ProjectsProps> = ({
         </div>
 
         {/* Bottom Pinned Progress Guide */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center z-20 text-xs font-mono text-zinc-500">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center z-20 text-xs font-mono text-muted-silver/60">
           <div className="flex items-center gap-3">
             <span>01</span>
             <div className="w-36 md:w-56 h-[3px] bg-white/10 rounded-full overflow-hidden">
               <motion.div
                 style={{ scaleX: smoothProgress }}
-                className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-400 origin-left"
+                className="h-full bg-gradient-to-r from-copper-dark via-copper to-copper-light origin-left"
               />
             </div>
             <span>0{featuredList.length}</span>
@@ -224,14 +224,14 @@ export const Projects: React.FC<ProjectsProps> = ({
           {onBrowseAll && (
             <button
               onClick={onBrowseAll}
-              className="sm:hidden text-cyan-400 hover:text-white font-space font-bold text-xs uppercase tracking-wider flex items-center gap-1.5"
+              className="sm:hidden text-copper hover:text-copper-light font-space font-bold text-xs uppercase tracking-wider flex items-center gap-1.5"
             >
               <span>ALL PROJECTS ({ALL_PROJECTS.length})</span>
               <ArrowRight size={13} />
             </button>
           )}
 
-          <span className="text-zinc-500 hidden sm:inline-block">
+          <span className="text-muted-silver/70 hidden sm:inline-block">
             CLICK ANY CARD TO VISIT LIVE WEBSITE ↗
           </span>
         </div>

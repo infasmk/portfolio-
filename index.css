@@ -1,4 +1,68 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Backgrounds */
+  --color-obsidian: #080808;
+  --color-deep-charcoal: #111111;
+  --color-graphite: #1A1A1A;
+  --color-graphite-light: #242424;
+
+  /* Typography */
+  --color-warm-ivory: #F5F2EA;
+  --color-muted-silver: #B8B8B8;
+
+  /* Metallic Copper Accents */
+  --color-copper: #B87350;
+  --color-copper-light: #D48B68;
+  --color-copper-dark: #8C4E31;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(17, 17, 17, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --copper-glow: rgba(184, 115, 80, 0.20);
+}
+
+/* Custom Metallic & Glass Utilities */
+.text-gradient-silver {
+  background: linear-gradient(135deg, #FFFFFF 0%, #EDEDED 50%, #C4C4C4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-copper {
+  background: linear-gradient(135deg, #F5F2EA 0%, #E29875 50%, #B87350 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-bento-glass {
+  background: linear-gradient(135deg, #161619 0%, #111113 50%, #0A0A0C 100%);
+}
+
+.border-glass {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.border-copper-active {
+  border-color: rgba(184, 115, 80, 0.35);
+}
+
+/* Custom Scrollbar in Graphite & Copper */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #242424;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B87350;
+}

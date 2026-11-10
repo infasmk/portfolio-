@@ -38,7 +38,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-cyan-500/30 selection:text-white">
+    <div className="relative min-h-screen bg-obsidian text-warm-ivory selection:bg-copper/30 selection:text-warm-ivory">
       {/* Precision Custom Cursor */}
       <CustomCursor />
 

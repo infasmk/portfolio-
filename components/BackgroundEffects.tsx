@@ -19,8 +19,8 @@ export const BackgroundEffects: React.FC = () => {
   const blob2Y = useTransform(smoothScroll, [0, 1], [0, -600]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#050505]">
-      {/* Continuous Animated Aurora Orbs with Scroll Parallax */}
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-obsidian">
+      {/* Continuous Animated Copper & Graphite Glow Orbs */}
       <motion.div
         style={{ y: blob1Y }}
         animate={{
@@ -32,7 +32,7 @@ export const BackgroundEffects: React.FC = () => {
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute -top-[10%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-blue-700/10 blur-[160px]"
+        className="absolute -top-[10%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-copper/10 blur-[180px]"
       />
 
       <motion.div
@@ -46,11 +46,11 @@ export const BackgroundEffects: React.FC = () => {
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute top-[40%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-cyan-600/8 blur-[180px]"
+        className="absolute top-[40%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-[#8C4E31]/10 blur-[180px]"
       />
 
-      {/* React Bits Hyperspeed Global Cyber Highway Background */}
-      <div className="absolute inset-0 z-5 opacity-55 mix-blend-screen pointer-events-none">
+      {/* React Bits Hyperspeed Global Cyber Highway Background in Warm Ivory & Copper */}
+      <div className="absolute inset-0 z-5 opacity-60 mix-blend-screen pointer-events-none">
         <Hyperspeed
           curve="gentle"
           curvature={0.6}
@@ -62,11 +62,12 @@ export const BackgroundEffects: React.FC = () => {
           trailLength={1.3}
           lightSize={1.2}
           glow={0.7}
-          tailColors={['#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef']}
-          headColors={['#22d3ee', '#38bdf8', '#0284c7']}
-          poleColors={['#06b6d4']}
-          roadColor="#060810"
-          roadOpacity={0.15}
+          tailColors={['#FFFFFF', '#D4D4D8', '#8E8E93', '#B87350']}
+          headColors={['#F5F2EA', '#D4D4D8', '#A1A1AA', '#C98563']}
+          poleColors={['#B8B8B8', '#71717A']}
+          roadColor="#080808"
+          lineColor="#151518"
+          roadOpacity={0.18}
           background="transparent"
           interactive={false}
         />
@@ -77,8 +78,8 @@ export const BackgroundEffects: React.FC = () => {
         <DotGrid
           dotSize={2.5}
           gap={32}
-          baseColor="#172554"
-          activeColor="#22d3ee"
+          baseColor="#1A1A1A"
+          activeColor="#B87350"
           proximity={120}
           shockRadius={220}
           shockStrength={3.5}
@@ -88,7 +89,7 @@ export const BackgroundEffects: React.FC = () => {
       </div>
 
       {/* Depth Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(5,5,5,0.85)_100%)] z-20 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(8,8,8,0.85)_100%)] z-20 pointer-events-none" />
     </div>
   );
 };

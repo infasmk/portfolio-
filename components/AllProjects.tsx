@@ -28,28 +28,28 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white relative selection:bg-cyan-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-obsidian text-warm-ivory relative selection:bg-copper/30 selection:text-warm-ivory overflow-x-hidden">
       {/* Background Ambient Glow */}
-      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-blue-700/10 via-cyan-600/5 to-transparent rounded-full blur-[180px] pointer-events-none" />
+      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-copper/15 via-[#8C4E31]/10 to-transparent rounded-full blur-[180px] pointer-events-none" />
 
       {/* Top Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-5 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.08] flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-5 bg-obsidian/80 backdrop-blur-xl border-b border-white/[0.08] flex justify-between items-center">
         <button
           onClick={onBack}
-          className="group flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+          className="group flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-silver hover:text-warm-ivory transition-colors cursor-pointer"
         >
-          <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
+          <div className="p-2 rounded-full bg-graphite/60 border border-white/10 group-hover:bg-copper group-hover:text-obsidian transition-all">
             <ArrowLeft size={16} />
           </div>
           <span>RETURN TO HOME</span>
         </button>
 
-        <span className="font-space font-extrabold text-lg tracking-tight text-white">
-          WEB<span className="text-cyan-400">⚡</span>BITS
+        <span className="font-space font-extrabold text-lg tracking-tight text-warm-ivory">
+          WEB<span className="text-copper">⚡</span>BITS
         </span>
 
-        <span className="text-zinc-400 font-mono text-xs uppercase hidden sm:inline-flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="text-muted-silver font-mono text-xs uppercase hidden sm:inline-flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-copper animate-pulse" />
           <span>CATALOG // {ALL_PROJECTS.length} ENTRIES</span>
         </span>
       </header>
@@ -64,13 +64,13 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
           className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-white/[0.08]"
         >
           <div>
-            <span className="text-cyan-400 font-mono text-xs tracking-[0.3em] uppercase block mb-3">
+            <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase block mb-3">
               // COMPLETE WORKS CATALOG
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-space font-extrabold tracking-tighter leading-none uppercase">
-              ALL <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-white">PROJECTS.</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-space font-extrabold tracking-tighter leading-none uppercase text-warm-ivory">
+              ALL <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">PROJECTS.</span>
             </h1>
-            <p className="text-zinc-400 text-sm sm:text-base font-light mt-3 max-w-xl">
+            <p className="text-muted-silver text-sm sm:text-base font-light mt-3 max-w-xl">
               Explore the full index of production platforms, experimental 3D interfaces, and web applications created by the studio.
             </p>
           </div>
@@ -79,20 +79,20 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
           <div className="flex items-center gap-2">
             <button
               onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
+              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                 filter === 'all'
-                  ? 'bg-white text-black font-bold shadow-md'
-                  : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                  ? 'bg-copper text-obsidian font-bold shadow-md'
+                  : 'bg-graphite/60 text-muted-silver hover:text-warm-ivory border border-white/10'
               }`}
             >
               ALL ({ALL_PROJECTS.length})
             </button>
             <button
               onClick={() => setFilter('featured')}
-              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
+              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                 filter === 'featured'
-                  ? 'bg-cyan-400 text-black font-bold shadow-md'
-                  : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                  ? 'bg-copper text-obsidian font-bold shadow-md'
+                  : 'bg-graphite/60 text-muted-silver hover:text-warm-ivory border border-white/10'
               }`}
             >
               FEATURED ({ALL_PROJECTS.filter((p) => p.featured === true).length})
@@ -109,7 +109,7 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05, duration: 0.45 }}
-                className="group rounded-3xl bg-[#090b10] border border-white/[0.08] hover:border-cyan-500/40 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 cursor-pointer"
+                className="group rounded-3xl bg-deep-charcoal border border-white/[0.08] hover:border-copper/40 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-copper/10 cursor-pointer"
                 onClick={() => handleOpenProject(project)}
               >
                 <div>
@@ -120,19 +120,19 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#090b10] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent" />
 
                     {/* Subheading Badge (Only if provided!) */}
                     {project.subheading && (
-                      <span className="absolute top-4 left-4 text-cyan-300 font-mono text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-black/60 border border-cyan-500/30 backdrop-blur-md">
+                      <span className="absolute top-4 left-4 text-copper-light font-mono text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-obsidian/75 border border-copper/30 backdrop-blur-md">
                         {project.subheading}
                       </span>
                     )}
 
                     {/* Featured Star Badge */}
                     {project.featured && (
-                      <span className="absolute top-4 right-4 text-amber-300 font-mono text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/60 border border-amber-500/30 backdrop-blur-md flex items-center gap-1">
-                        <Sparkles size={10} className="fill-amber-300" />
+                      <span className="absolute top-4 right-4 text-copper-light font-mono text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-obsidian/75 border border-copper-light/30 backdrop-blur-md flex items-center gap-1">
+                        <Sparkles size={10} className="fill-copper-light" />
                         <span>FEATURED</span>
                       </span>
                     )}
@@ -142,30 +142,30 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
                   <div className="p-6 md:p-7">
                     {/* Created By (Only if provided!) */}
                     {project.createdBy && (
-                      <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mb-2">
-                        Created by <span className="text-zinc-300">{project.createdBy}</span>
+                      <div className="text-[11px] font-mono text-muted-silver/80 uppercase tracking-wider mb-2">
+                        Created by <span className="text-warm-ivory font-medium">{project.createdBy}</span>
                       </div>
                     )}
 
                     {/* Title */}
-                    <h3 className="text-2xl font-space font-extrabold text-white group-hover:text-cyan-300 transition-colors mb-2 leading-tight">
+                    <h3 className="text-2xl font-space font-extrabold text-warm-ivory group-hover:text-copper-light transition-colors mb-2 leading-tight">
                       {project.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-muted-silver text-xs sm:text-sm font-light leading-relaxed mb-4 line-clamp-3">
                       {project.description}
                     </p>
 
                     {/* Special Feature Points (Only shows if provided!) */}
                     {project.features && project.features.length > 0 && (
-                      <div className="space-y-1.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold block mb-1">
+                      <div className="space-y-1.5 p-3.5 rounded-xl bg-graphite/40 border border-white/[0.04]">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-copper font-bold block mb-1">
                           Key Highlights:
                         </span>
                         {project.features.map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-start gap-2 text-xs font-mono text-zinc-300 leading-snug">
-                            <span className="text-cyan-400 mt-0.5 shrink-0">⚡</span>
+                          <div key={fIdx} className="flex items-start gap-2 text-xs font-mono text-muted-silver leading-snug">
+                            <span className="text-copper mt-0.5 shrink-0">⚡</span>
                             <span>{feat}</span>
                           </div>
                         ))}
@@ -176,17 +176,17 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
 
                 {/* Card Action Footer: Direct Website Link */}
                 <div className="px-6 md:p-7 pb-6 pt-4 border-t border-white/[0.06] flex items-center justify-between gap-3">
-                  <span className="text-xs font-mono text-zinc-500 uppercase">
+                  <span className="text-xs font-mono text-muted-silver/60 uppercase">
                     DIRECT ACCESS
                   </span>
 
                   {project.link ? (
-                    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-cyan-400 text-black font-space font-bold text-xs uppercase tracking-wider group-hover:bg-white group-hover:text-black transition-all shadow-md">
+                    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-copper text-obsidian font-space font-extrabold text-xs uppercase tracking-wider group-hover:bg-copper-light group-hover:text-obsidian transition-all shadow-md">
                       <span>VISIT LIVE SITE</span>
                       <ArrowUpRight size={14} />
                     </div>
                   ) : (
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-zinc-400 font-mono text-xs">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-graphite text-muted-silver font-mono text-xs">
                       <span>PREVIEW</span>
                     </div>
                   )}

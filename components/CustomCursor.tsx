@@ -81,12 +81,12 @@ export const CustomCursor: React.FC = () => {
         animate={{
           width: cursorText ? 68 : isHovered ? 44 : 28,
           height: cursorText ? 68 : isHovered ? 44 : 28,
-          backgroundColor: cursorText ? 'rgba(37, 99, 235, 0.9)' : isHovered ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-          borderColor: cursorText ? 'rgba(96, 165, 250, 0.8)' : isHovered ? 'rgba(59, 130, 246, 0.6)' : 'rgba(255, 255, 255, 0.25)',
+          backgroundColor: cursorText ? 'rgba(184, 115, 80, 0.95)' : isHovered ? 'rgba(184, 115, 80, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+          borderColor: cursorText ? 'rgba(212, 139, 104, 0.8)' : isHovered ? 'rgba(184, 115, 80, 0.6)' : 'rgba(255, 255, 255, 0.25)',
           borderWidth: cursorText ? 0 : 1,
           backdropFilter: cursorText ? 'blur(4px)' : 'none',
-          color: '#ffffff',
-          boxShadow: cursorText ? '0 0 25px rgba(37, 99, 235, 0.5)' : 'none',
+          color: cursorText ? '#080808' : '#F5F2EA',
+          boxShadow: cursorText ? '0 0 25px rgba(184, 115, 80, 0.5)' : 'none',
         }}
         transition={{ type: 'spring', damping: 22, stiffness: 350 }}
       >
@@ -95,7 +95,7 @@ export const CustomCursor: React.FC = () => {
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.6 }}
-            className="select-none tracking-wider text-[10px]"
+            className="select-none tracking-wider text-[10px] font-extrabold text-obsidian"
           >
             {cursorText}
           </motion.span>
@@ -105,7 +105,7 @@ export const CustomCursor: React.FC = () => {
       {/* Tiny Precision Inner Dot */}
       {!cursorText && (
         <motion.div
-          className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-cyan-400 pointer-events-none z-[10001] shadow-[0_0_8px_rgba(34,211,238,0.9)]"
+          className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-copper pointer-events-none z-[10001] shadow-[0_0_8px_rgba(184,115,80,0.9)]"
           style={{
             x: mouseX,
             y: mouseY,

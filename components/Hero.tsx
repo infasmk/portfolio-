@@ -30,8 +30,8 @@ export const Hero: React.FC = () => {
     >
       {/* React Bits Multi-Shader Hero Architecture: Hyperspeed + ColorBends + Aurora */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Layer 1: React Bits Hyperspeed 3D Cyber Warp Highway */}
-        <div className="absolute inset-0 opacity-80 mix-blend-screen pointer-events-auto">
+        {/* Layer 1: React Bits Hyperspeed 3D Cyber Warp Highway in Warm Ivory & Metallic Copper */}
+        <div className="absolute inset-0 opacity-85 mix-blend-screen pointer-events-auto">
           <Hyperspeed
             curve="winding"
             curvature={0.8}
@@ -45,20 +45,21 @@ export const Hero: React.FC = () => {
             trailLength={1.2}
             lightSize={1.1}
             glow={0.7}
-            tailColors={['#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef']}
-            headColors={['#22d3ee', '#38bdf8', '#0284c7']}
-            poleColors={['#06b6d4']}
-            roadColor="#060810"
-            roadOpacity={0.15}
+            tailColors={['#FFFFFF', '#D4D4D8', '#8E8E93', '#B87350']}
+            headColors={['#F5F2EA', '#D4D4D8', '#A1A1AA', '#C98563']}
+            poleColors={['#B8B8B8', '#71717A']}
+            roadColor="#080808"
+            lineColor="#151518"
+            roadOpacity={0.2}
             background="transparent"
             interactive={true}
           />
         </div>
 
         {/* Layer 2: Three.js ColorBends interactive fluid waves */}
-        <div className="absolute inset-0 opacity-45 mix-blend-screen pointer-events-none">
+        <div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
           <ColorBends
-            colors={["#06b6d4", "#2563eb", "#6366f1", "#0284c7"]}
+            colors={["#B87350", "#D48B68", "#F5F2EA", "#8C4E31"]}
             rotation={90}
             speed={0.2}
             scale={1.1}
@@ -75,9 +76,9 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Layer 3: OGL Aurora spectral curtains */}
-        <div className="absolute inset-0 opacity-55 mix-blend-screen pointer-events-none">
+        <div className="absolute inset-0 opacity-45 mix-blend-screen pointer-events-none">
           <Aurora
-            colorStops={["#06b6d4", "#2563eb", "#6366f1"]}
+            colorStops={["#B87350", "#F5F2EA", "#8C4E31"]}
             blend={0.55}
             amplitude={1.1}
             speed={0.5}
@@ -85,7 +86,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Ambient Gradient Depth Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/40 via-transparent to-[#050505] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-obsidian/40 via-transparent to-obsidian pointer-events-none" />
       </div>
 
       {/* Editorial Headline & Narrative Composition */}
@@ -99,10 +100,10 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-space font-extrabold tracking-tighter leading-[0.9] text-white mb-6 uppercase"
+            className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-space font-extrabold tracking-tighter leading-[0.9] text-warm-ivory mb-6 uppercase"
           >
             BUILDING <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">
               DIGITAL
             </span> <br />
             EXPERIENCES.
@@ -113,7 +114,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="max-w-xl text-zinc-400 text-base md:text-xl font-light leading-relaxed mb-10"
+            className="max-w-xl text-muted-silver text-base md:text-xl font-light leading-relaxed mb-10"
           >
             We design and build high-performance interactive websites, bespoke digital products, and experimental digital architectures that command attention.
           </motion.p>
@@ -128,7 +129,7 @@ export const Hero: React.FC = () => {
             <button
               onClick={handleExploreClick}
               data-cursor="VIEW"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-blue-600 text-white font-space font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-3 hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] active:scale-95 transition-all"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-copper text-obsidian font-space font-extrabold text-sm tracking-wider uppercase flex items-center justify-center gap-3 hover:bg-copper-light hover:shadow-[0_0_30px_rgba(184,115,80,0.5)] active:scale-95 transition-all"
             >
               <span>EXPLORE WORK</span>
               <ArrowDown size={16} />
@@ -136,7 +137,7 @@ export const Hero: React.FC = () => {
 
             <a
               href="#contact"
-              className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-zinc-300 font-space font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm"
+              className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-warm-ivory font-space font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-white/10 hover:border-copper/50 transition-all backdrop-blur-sm"
             >
               <span>GET IN TOUCH</span>
               <ArrowUpRight size={15} />

@@ -68,13 +68,13 @@ export const Logo: React.FC<LogoProps> = ({
       <style>{`
         @keyframes boltCurrentSweep_${uid} {
           0% {
-            filter: drop-shadow(0 0 0px rgba(0, 194, 255, 0)) brightness(1);
+            filter: drop-shadow(0 0 0px rgba(184, 115, 80, 0)) brightness(1);
           }
           40% {
-            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.85)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.95)) brightness(1.35);
+            filter: drop-shadow(0 0 10px rgba(212, 139, 104, 0.85)) drop-shadow(0 0 2px rgba(245, 242, 234, 0.95)) brightness(1.35);
           }
           100% {
-            filter: drop-shadow(0 0 2px rgba(0, 194, 255, 0.25)) brightness(1);
+            filter: drop-shadow(0 0 2px rgba(184, 115, 80, 0.25)) brightness(1);
           }
         }
 
@@ -158,12 +158,12 @@ export const Logo: React.FC<LogoProps> = ({
             <stop offset="100%" stopColor="#1E293B" />
           </linearGradient>
 
-          {/* Electric Blue Bolt Gradient */}
+          {/* Metallic Copper Bolt Gradient */}
           <linearGradient id={`boltGrad_${uid}`} x1="30%" y1="100%" x2="70%" y2="0%">
-            <stop offset="0%" stopColor="#1683FF" />
-            <stop offset="35%" stopColor="#0091FF" />
-            <stop offset="75%" stopColor="#22D3EE" />
-            <stop offset="100%" stopColor="#67E8F9" />
+            <stop offset="0%" stopColor="#8C4E31" />
+            <stop offset="35%" stopColor="#B87350" />
+            <stop offset="75%" stopColor="#D48B68" />
+            <stop offset="100%" stopColor="#F5F2EA" />
           </linearGradient>
         </defs>
 
@@ -216,8 +216,8 @@ export const Logo: React.FC<LogoProps> = ({
               : 'text-xl'
           } ${wordmarkClassName}`}
         >
-          <span className={isDarkTheme ? 'text-[#090D16]' : 'text-white'}>Web</span>
-          <span className={isDarkTheme ? 'text-[#64748B]' : 'text-[#94A3B8]'}>Bits</span>
+          <span className={isDarkTheme ? 'text-obsidian' : 'text-warm-ivory'}>Web</span>
+          <span className={isDarkTheme ? 'text-graphite' : 'text-muted-silver'}>Bits</span>
         </span>
       )}
     </div>

@@ -41,7 +41,7 @@ const MagneticNavLink: React.FC<{
         {active && (
           <motion.div
             layoutId="activeNavIndicator"
-            className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"
+            className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-copper-dark via-copper to-copper-light rounded-full shadow-[0_0_8px_rgba(184,115,80,0.8)]"
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           />
         )}
@@ -114,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isAtTop
           ? 'py-6 md:py-8 bg-transparent'
-          : 'py-3 md:py-4 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.06] shadow-2xl shadow-black/60'
+          : 'py-3 md:py-4 bg-obsidian/85 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/80'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between">
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md shadow-inner">
+        <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-deep-charcoal/80 border border-white/[0.08] backdrop-blur-md shadow-inner">
           {navLinks.map((link) => (
             <MagneticNavLink
               key={link.name}
@@ -162,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
               animate={{ x: ctaMagnetic.position.x, y: ctaMagnetic.position.y }}
               transition={{ type: 'spring', damping: 15, stiffness: 220 }}
               data-cursor="CONTACT"
-              className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black font-space font-bold text-xs uppercase tracking-wider hover:bg-gradient-to-r hover:from-blue-500 hover:to-cyan-400 hover:text-white transition-all shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+              className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-copper text-obsidian font-space font-extrabold text-xs uppercase tracking-wider hover:bg-copper-light transition-all shadow-[0_4px_20px_rgba(184,115,80,0.3)] hover:shadow-[0_0_25px_rgba(184,115,80,0.5)]"
             >
               <span>START A PROJECT</span>
               <ArrowUpRight size={14} />
@@ -174,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 text-white bg-white/5 rounded-full border border-white/10 active:scale-95 transition-transform"
+            className="p-2.5 text-warm-ivory bg-white/5 rounded-full border border-white/10 active:scale-95 transition-transform"
             aria-label="Toggle Menu"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -190,12 +190,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
             animate={{ opacity: 1, clipPath: 'circle(150% at 90% 10%)' }}
             exit={{ opacity: 0, clipPath: 'circle(0% at 90% 10%)' }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 bg-[#050505] z-40 md:hidden flex flex-col justify-between p-8 pt-24"
+            className="fixed inset-0 bg-obsidian z-40 md:hidden flex flex-col justify-between p-8 pt-24"
           >
             <div className="flex flex-col space-y-6 relative z-10">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <Logo variant="full" size="md" />
-                <span className="text-cyan-400 text-[10px] font-mono tracking-[0.3em] uppercase">
+                <span className="text-copper text-[10px] font-mono tracking-[0.3em] uppercase">
                   // NAVIGATION
                 </span>
               </div>
@@ -208,10 +208,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.08 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-4xl font-space font-extrabold text-zinc-300 hover:text-white active:text-cyan-400 flex items-center justify-between group"
+                  className="text-4xl font-space font-extrabold text-muted-silver hover:text-warm-ivory active:text-copper flex items-center justify-between group"
                 >
                   <span>{link.name}</span>
-                  <span className="text-xs font-mono text-zinc-600 group-hover:text-cyan-400 transition-colors">
+                  <span className="text-xs font-mono text-graphite-light group-hover:text-copper transition-colors">
                     0{idx + 1}
                   </span>
                 </motion.a>
@@ -222,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
               <a
                 href="#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-space font-bold text-center block tracking-wider uppercase text-sm shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-copper-dark via-copper to-copper-light text-obsidian font-space font-extrabold text-center block tracking-wider uppercase text-sm shadow-[0_0_25px_rgba(184,115,80,0.4)]"
               >
                 START A PROJECT →
               </a>
