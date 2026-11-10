@@ -64,14 +64,6 @@ export const Contact: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-copper/15 via-[#8C4E31]/10 to-transparent rounded-full blur-[200px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        {/* Section Header */}
-        <div className="flex items-center gap-3 mb-10 md:mb-16">
-          <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase">
-            // 04 INITIATE COLLABORATION
-          </span>
-          <div className="h-[1px] w-24 bg-white/10" />
-        </div>
-
         {/* Climax Statement */}
         <div className="mb-20">
           <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-space font-extrabold text-warm-ivory tracking-tighter leading-[0.88] uppercase mb-8">

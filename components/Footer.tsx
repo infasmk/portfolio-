@@ -154,10 +154,6 @@ export const Footer: React.FC = () => {
         {/* Copyright Footnote */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-silver/60">
           <span>&copy; {new Date().getFullYear()} WEB⚡BITS STUDIO. Engineered by {BRAND.founder}.</span>
-          <span className="flex items-center gap-1.5">
-            <Sparkles size={11} className="text-copper" />
-            POWERED BY REACT, THREE.JS & TAILWIND
-          </span>
         </div>
       </div>
 

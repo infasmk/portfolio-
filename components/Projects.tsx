@@ -105,12 +105,6 @@ export const Projects: React.FC<ProjectsProps> = ({
         {/* Section Header */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-end z-20">
           <div>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase font-bold">
-                // 02 SIGNATURE SHOWCASE [{featuredList.length < 10 ? `0${featuredList.length}` : featuredList.length} PLATFORMS]
-              </span>
-              <div className="h-[1px] w-16 bg-white/10" />
-            </div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-space font-extrabold text-warm-ivory tracking-tighter leading-none">
               FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">WORKS.</span>
             </h2>

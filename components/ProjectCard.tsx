@@ -64,9 +64,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     }
   };
 
-  const formattedIndex = index < 9 ? `0${index + 1}` : `${index + 1}`;
-  const formattedTotal = total < 9 ? `0${total}` : `${total}`;
-
   return (
     <div
       style={{ perspective: 1200 }}
@@ -88,7 +85,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           transformStyle: 'preserve-3d',
         }}
         data-cursor="VISIT"
-        className="relative w-full h-full rounded-[1.75rem] bg-deep-charcoal border border-white/[0.08] hover:border-copper/50 overflow-hidden cursor-pointer shadow-2xl transition-colors duration-300 group flex flex-col justify-between"
+        className="relative w-full h-full rounded-[1.75rem] bg-deep-charcoal border border-white/[0.08] hover:border-copper/50 overflow-hidden cursor-pointer shadow-2xl transition-colors duration-300 group flex flex-col justify-end"
       >
         {/* Dynamic Specular Glare in Ambient Copper */}
         <motion.div
@@ -108,28 +105,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/75 to-obsidian/20" />
         </div>
 
-        {/* Top Header Overlay */}
-        <div className="relative z-20 p-5 md:p-6 flex justify-between items-start">
-          <div className="flex flex-wrap items-center gap-2">
-            {project.subheading && (
-              <span className="text-copper font-mono text-[10px] md:text-xs font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-copper/10 border border-copper/30 backdrop-blur-md">
-                {project.subheading}
-              </span>
-            )}
-            {project.createdBy && (
-              <span className="text-muted-silver font-mono text-[10px] md:text-xs hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-graphite/60 border border-white/5">
-                by {project.createdBy}
-              </span>
-            )}
-          </div>
-
-          <div className="font-space font-extrabold text-lg md:text-xl text-graphite-light group-hover:text-copper transition-colors font-mono">
-            {formattedIndex} <span className="text-muted-silver/60 text-xs">/ {formattedTotal}</span>
-          </div>
-        </div>
-
         {/* Bottom Content Area */}
         <div className="relative z-20 p-5 md:p-6 flex flex-col justify-end">
+          {/* Subheading */}
+          {project.subheading && (
+            <div className="mb-2">
+              <span className="text-copper font-mono text-[10px] md:text-xs font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-copper/10 border border-copper/30 backdrop-blur-md inline-block">
+                {project.subheading}
+              </span>
+            </div>
+          )}
+
           <h3 className="text-xl sm:text-2xl md:text-3xl font-space font-extrabold text-warm-ivory tracking-tight mb-2 leading-tight group-hover:text-copper-light transition-colors">
             {project.title}
           </h3>

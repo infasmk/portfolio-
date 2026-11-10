@@ -140,13 +140,6 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
 
                   {/* Project Info Content */}
                   <div className="p-6 md:p-7">
-                    {/* Created By (Only if provided!) */}
-                    {project.createdBy && (
-                      <div className="text-[11px] font-mono text-muted-silver/80 uppercase tracking-wider mb-2">
-                        Created by <span className="text-warm-ivory font-medium">{project.createdBy}</span>
-                      </div>
-                    )}
-
                     {/* Title */}
                     <h3 className="text-2xl font-space font-extrabold text-warm-ivory group-hover:text-copper-light transition-colors mb-2 leading-tight">
                       {project.title}

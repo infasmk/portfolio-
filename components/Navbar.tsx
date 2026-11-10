@@ -151,24 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
         </nav>
 
         {/* Right Action: Magnetic "START A PROJECT" CTA */}
-        <div className="hidden md:flex items-center">
-          <div
-            ref={ctaMagnetic.ref}
-            onMouseMove={ctaMagnetic.handleMouseMove}
-            onMouseLeave={ctaMagnetic.handleMouseLeave}
-          >
-            <motion.a
-              href="#contact"
-              animate={{ x: ctaMagnetic.position.x, y: ctaMagnetic.position.y }}
-              transition={{ type: 'spring', damping: 15, stiffness: 220 }}
-              data-cursor="CONTACT"
-              className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-copper text-obsidian font-space font-extrabold text-xs uppercase tracking-wider hover:bg-copper-light transition-all shadow-[0_4px_20px_rgba(184,115,80,0.3)] hover:shadow-[0_0_25px_rgba(184,115,80,0.5)]"
-            >
-              <span>START A PROJECT</span>
-              <ArrowUpRight size={14} />
-            </motion.a>
-          </div>
-        </div>
+       
 
         {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center gap-2">
@@ -195,9 +178,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
             <div className="flex flex-col space-y-6 relative z-10">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <Logo variant="full" size="md" />
-                <span className="text-copper text-[10px] font-mono tracking-[0.3em] uppercase">
-                  // NAVIGATION
-                </span>
               </div>
 
               {navLinks.map((link, idx) => (
@@ -219,13 +199,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
             </div>
 
             <div className="relative z-10 pt-8 border-t border-white/10 space-y-6">
-              <a
-                href="#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-copper-dark via-copper to-copper-light text-obsidian font-space font-extrabold text-center block tracking-wider uppercase text-sm shadow-[0_0_25px_rgba(184,115,80,0.4)]"
-              >
-                START A PROJECT →
-              </a>
+  
 
               <div className="flex justify-between items-center text-xs text-zinc-500 font-mono">
                 <a href={BRAND.socials.github} target="_blank" rel="noreferrer" className="hover:text-white">

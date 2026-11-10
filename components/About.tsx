@@ -43,16 +43,8 @@ export const About: React.FC = () => {
       <div className="absolute bottom-10 -left-1/4 w-[500px] h-[500px] bg-[#8C4E31]/8 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        {/* Section Index Marker */}
-        <div className="flex items-center gap-3 mb-10 md:mb-16">
-          <span className="text-copper font-mono text-xs tracking-[0.3em] uppercase font-bold">
-            // 01 ARCHITECTURE & PHILOSOPHY
-          </span>
-          <div className="h-[1px] w-24 bg-white/10" />
-        </div>
-
         {/* Large Editorial Statement with Scroll-Linked Word Highlights */}
-        <div className="mb-24 md:mb-36">
+        <div className="mb-24 md:mb-36 pt-8 md:pt-12">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-space font-extrabold tracking-tighter leading-[1.05] uppercase">
             <HighlightWord progress={scrollYProgress} range={[0.05, 0.15]}>
               WE
@@ -109,18 +101,6 @@ export const About: React.FC = () => {
                 <p>
                   Rooted in real-time WebGL, Three.js, and modern React architectures, we eliminate the false compromise between groundbreaking visual aesthetics and ultra-fast performance.
                 </p>
-              </div>
-
-              <div className="pt-8 border-t border-white/10 flex flex-wrap gap-4 text-xs font-mono text-muted-silver">
-                <span className="px-3 py-1.5 rounded-lg bg-graphite/60 border border-white/5">
-                  ⚡ 60FPS TARGET
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-graphite/60 border border-white/5">
-                  ⚡ SUB-100MS LATENCY
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-graphite/60 border border-white/5">
-                  ⚡ ACCESSIBLE MOTION
-                </span>
               </div>
             </div>
           </div>

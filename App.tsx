@@ -12,7 +12,6 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Team from './components/Team';
 import Contact from './components/Contact';
-import FloatingContact from './components/FloatingContact';
 import Footer from './components/Footer';
 import AllProjects from './components/AllProjects';
 
@@ -44,9 +43,6 @@ export const App: React.FC = () => {
 
       {/* Global Scroll Progress Bar */}
       <ScrollProgress />
-
-      {/* Floating Quick Action Contact Widget */}
-      <FloatingContact />
 
       <AnimatePresence mode="wait">
         {loading ? (

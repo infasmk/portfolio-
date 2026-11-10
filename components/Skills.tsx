@@ -58,10 +58,6 @@ export const Skills: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-copper/10 via-[#8C4E31]/5 to-transparent rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-14 relative z-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-copper/10 border border-copper/30 text-copper text-xs font-mono tracking-widest uppercase mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-copper animate-pulse" />
-          <span>// CORE TECHNOLOGIES</span>
-        </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-space font-extrabold text-warm-ivory tracking-tight">
           POWERED BY MODERN <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm-ivory via-[#E29875] to-copper">ECOSYSTEMS.</span>
         </h2>
