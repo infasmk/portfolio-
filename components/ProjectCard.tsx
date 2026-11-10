@@ -16,7 +16,9 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   index,
+  total,
   onSelect,
+  compact = false,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -56,7 +58,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
-    // If user clicked directly on the anchor button, let standard browser behavior handle it
     if ((e.target as HTMLElement).closest('a')) {
       return;
     }
@@ -70,7 +71,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div
       style={{ perspective: 1200 }}
-      className="w-full h-full select-none"
+      className={`shrink-0 select-none ${
+        compact
+          ? 'w-full'
+          : 'w-[82vw] sm:w-[60vw] md:w-[46vw] lg:w-[36vw] max-w-xl h-[470px] sm:h-[490px] md:h-[510px]'
+      }`}
     >
       <motion.div
         ref={cardRef}
@@ -105,16 +110,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {/* Subtle gradient vignette at bottom of thumbnail */}
           <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent opacity-80" />
 
-          {/* Floating Category Badge */}
-          {project.subheading && (
-            <div className="absolute top-4 left-4 z-20">
-              <span className="text-copper font-mono text-[10px] sm:text-[11px] font-bold tracking-wider uppercase px-3 py-1 rounded-full bg-obsidian/80 border border-copper/30 backdrop-blur-md shadow-sm">
-                {project.subheading}
-              </span>
-            </div>
-          )}
-
-          {/* Top-Right Quick Link Icon */}
+          {/* Top-Right Quick External Link Icon */}
           <div className="absolute top-4 right-4 z-20">
             <div className="w-8 h-8 rounded-full bg-obsidian/75 border border-white/10 group-hover:border-copper/50 text-muted-silver group-hover:text-copper flex items-center justify-center backdrop-blur-md transition-colors shadow-sm">
               <ExternalLink size={13} />
