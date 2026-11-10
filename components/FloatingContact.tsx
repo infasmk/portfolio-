@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion as motionBase, AnimatePresence } from 'framer-motion';
-import { Zap, MessageSquare, Mail, Instagram, Github, X } from 'lucide-react';
+import { Zap, Mail, Instagram, Github, Linkedin, X } from 'lucide-react';
 import { BRAND } from '../constants';
 
 const motion = motionBase as any;
@@ -9,12 +9,6 @@ export const FloatingContact: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const contactLinks = [
-    {
-      name: 'WhatsApp',
-      icon: MessageSquare,
-      href: BRAND.socials.whatsapp,
-      color: 'hover:bg-copper/20 hover:text-copper-light',
-    },
     {
       name: 'Email',
       icon: Mail,
@@ -31,6 +25,12 @@ export const FloatingContact: React.FC = () => {
       name: 'Instagram',
       icon: Instagram,
       href: BRAND.socials.instagram,
+      color: 'hover:bg-copper/20 hover:text-copper-light',
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      href: BRAND.socials.linkedin,
       color: 'hover:bg-copper/20 hover:text-copper-light',
     },
   ];

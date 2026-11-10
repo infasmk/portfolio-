@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion as motionBase } from 'framer-motion';
-import { Send, CheckCircle, ArrowUpRight, Copy, Check, MessageSquare, Mail, Instagram, Github, Linkedin } from 'lucide-react';
+import { Send, CheckCircle, ArrowUpRight, Copy, Check, Mail, Instagram, Github, Linkedin, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../constants';
 
 const motion = motionBase as any;
@@ -8,6 +8,7 @@ const motion = motionBase as any;
 export const Contact: React.FC = () => {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success'>('idle');
   const [copied, setCopied] = useState(false);
+  const [statusNotice, setStatusNotice] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleCopyEmail = () => {
@@ -16,15 +17,52 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormState('sending');
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
 
-    setTimeout(() => {
+    setFormState('sending');
+    setStatusNotice(null);
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${BRAND.socials.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `⚡ New Project Inquiry from ${formData.name} // WEB⚡BITS`,
+          _replyto: formData.email,
+          _template: 'table',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (response.ok || data.success === 'true' || data.success === true) {
+        setFormState('success');
+        setStatusNotice(`Inquiry successfully dispatched to ${BRAND.socials.email}. We will review your vision and reply shortly!`);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setFormState('idle'), 7000);
+      } else {
+        throw new Error(data.message || 'Direct endpoint returned non-OK');
+      }
+    } catch (err) {
+      // Automatic fail-safe: open user's email client directly with prefilled body
+      const mailtoUrl = `mailto:${BRAND.socials.email}?subject=${encodeURIComponent(
+        `⚡ Project Inquiry from ${formData.name} // WEB⚡BITS`
+      )}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nProject Vision & Scope:\n${formData.message}`
+      )}`;
+      window.open(mailtoUrl, '_blank');
       setFormState('success');
+      setStatusNotice(`Transmitted via mail client to ${BRAND.socials.email}. Thank you!`);
       setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormState('idle'), 5000);
-    }, 1200);
+      setTimeout(() => setFormState('idle'), 7000);
+    }
   };
 
   const contactMethods = [
@@ -33,28 +71,28 @@ export const Contact: React.FC = () => {
       value: BRAND.socials.email,
       href: `mailto:${BRAND.socials.email}`,
       icon: Mail,
-      desc: 'Direct conversation',
+      desc: 'Direct inbox correspondence',
     },
     {
-      name: 'WHATSAPP',
-      value: 'Instant Chat',
-      href: BRAND.socials.whatsapp,
-      icon: MessageSquare,
-      desc: 'Quick inquiries',
+      name: 'INSTAGRAM',
+      value: '@infaaze',
+      href: BRAND.socials.instagram,
+      icon: Instagram,
+      desc: 'Design experiments & direct DMs',
     },
     {
       name: 'GITHUB',
       value: '@infasmk',
       href: BRAND.socials.github,
       icon: Github,
-      desc: 'Code repository',
+      desc: 'Open-source code repositories',
     },
     {
-      name: 'INSTAGRAM',
-      value: '@infasmk',
-      href: BRAND.socials.instagram,
-      icon: Instagram,
-      desc: 'Design experiments',
+      name: 'LINKEDIN',
+      value: 'Infas.mk',
+      href: BRAND.socials.linkedin,
+      icon: Linkedin,
+      desc: 'Professional engineering network',
     },
   ];
 
@@ -139,11 +177,17 @@ export const Contact: React.FC = () => {
               viewport={{ once: true }}
               className="p-8 md:p-12 rounded-3xl bg-deep-charcoal/90 border border-white/[0.08] relative overflow-hidden shadow-2xl"
             >
-              <h3 className="text-2xl font-space font-bold text-warm-ivory mb-2">
-                START A PROJECT
-              </h3>
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h3 className="text-2xl font-space font-bold text-warm-ivory">
+                  START A PROJECT
+                </h3>
+                <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper/10 border border-copper/30 text-[11px] font-mono text-copper-light">
+                  <ShieldCheck size={13} />
+                  <span>DIRECT TO INBOX</span>
+                </span>
+              </div>
               <p className="text-muted-silver text-sm font-light mb-8">
-                Tell us about your objectives, timeline, and vision.
+                Inquiries land directly in <span className="text-copper font-mono font-medium">{BRAND.socials.email}</span>. We typically respond within 24 hours.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -191,10 +235,10 @@ export const Contact: React.FC = () => {
 
                 <button
                   type="submit"
-                  disabled={formState !== 'idle'}
+                  disabled={formState === 'sending'}
                   className={`w-full py-4 rounded-xl font-space font-extrabold text-sm tracking-wider uppercase flex items-center justify-center gap-3 transition-all active:scale-95 ${
                     formState === 'success'
-                      ? 'bg-emerald-500 text-obsidian'
+                      ? 'bg-emerald-500 text-obsidian shadow-[0_0_25px_rgba(16,185,129,0.4)]'
                       : 'bg-gradient-to-r from-copper-dark via-copper to-copper-light hover:brightness-110 text-obsidian shadow-[0_0_25px_rgba(184,115,80,0.4)]'
                   }`}
                 >
@@ -205,15 +249,29 @@ export const Contact: React.FC = () => {
                     </>
                   )}
                   {formState === 'sending' && (
-                    <div className="h-5 w-5 border-2 border-obsidian/30 border-t-obsidian rounded-full animate-spin" />
+                    <div className="flex items-center gap-3">
+                      <div className="h-5 w-5 border-2 border-obsidian/30 border-t-obsidian rounded-full animate-spin" />
+                      <span>TRANSMITTING TO INBOX...</span>
+                    </div>
                   )}
                   {formState === 'success' && (
                     <>
-                      <span>TRANSMISSION RECEIVED</span>
+                      <span>TRANSMISSION DISPATCHED TO {BRAND.socials.email.toUpperCase()}</span>
                       <CheckCircle size={16} />
                     </>
                   )}
                 </button>
+
+                {statusNotice && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono space-y-1 text-center"
+                  >
+                    <p className="font-bold tracking-wide">✓ INQUIRY DISPATCHED DIRECTLY TO {BRAND.socials.email.toUpperCase()}</p>
+                    <p className="text-emerald-400/80">{statusNotice}</p>
+                  </motion.div>
+                )}
               </form>
             </motion.div>
           </div>

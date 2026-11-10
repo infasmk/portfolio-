@@ -16,9 +16,8 @@ export const BRAND = {
   ],
   socials: {
     github: "https://github.com/infasmk",
-    instagram: "https://instagram.com/infasmk",
-    email: "infasmk@gmail.com",
-    whatsapp: "https://wa.me/919876543210",
+    instagram: "https://instagram.com/infaaze",
+    email: "infaazmk@gmail.com",
     linkedin: "https://linkedin.com/in/infasmk",
   }
 };
@@ -73,7 +72,7 @@ export const TEAM: TeamMember[] = [
     socials: {
       github: "https://github.com/infasmk",
       linkedin: "https://linkedin.com/in/infasmk",
-      instagram: "https://instagram.com/infasmk"
+      instagram: "https://instagram.com/infaaze"
     }
   },
   {

@@ -120,15 +120,6 @@ export const Footer: React.FC = () => {
               <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
             </a>
             <a
-              href={BRAND.socials.whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-copper-light transition-colors uppercase relative group"
-            >
-              <span>WHATSAPP</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-copper group-hover:w-full transition-all duration-300" />
-            </a>
-            <a
               href={BRAND.socials.linkedin}
               target="_blank"
               rel="noreferrer"

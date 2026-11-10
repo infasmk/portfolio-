@@ -208,8 +208,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateProjects, isProjectVie
                 <a href={BRAND.socials.instagram} target="_blank" rel="noreferrer" className="hover:text-white">
                   INSTAGRAM
                 </a>
-                <a href={BRAND.socials.whatsapp} target="_blank" rel="noreferrer" className="hover:text-white">
-                  WHATSAPP
+                <a href={BRAND.socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-white">
+                  LINKEDIN
                 </a>
               </div>
             </div>
