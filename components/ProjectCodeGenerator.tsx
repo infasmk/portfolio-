@@ -30,7 +30,7 @@ const SAMPLE_PRESET = {
 export const ProjectCodeGenerator: React.FC<ProjectCodeGeneratorProps> = ({
   isOpen,
   onClose,
-  nextId = 9,
+  nextId = 7,
 }) => {
   const [id, setId] = useState<number>(nextId);
   const [title, setTitle] = useState('');

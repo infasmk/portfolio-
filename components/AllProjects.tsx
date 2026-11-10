@@ -114,7 +114,7 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ onBack, onProjectSelec
               >
                 <div>
                   {/* Project Image Banner */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <div className="relative aspect-video w-full overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
